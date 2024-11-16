@@ -1,4 +1,4 @@
-import express, { json, urlencoded } from "express";
+import express, { json, urlencoded , static as static_ } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
@@ -11,12 +11,13 @@ app.use(cors());
 app.use(cookieParser());
 app.use(json({limit: '16kb'}));
 app.use(urlencoded({ extended: true }));
+app.use(static_("public"))
 
 
 // User routes
 import userRoutes from './routes/user.routes.js';
-
 app.use('/api/users', userRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 

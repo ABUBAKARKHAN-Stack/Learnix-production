@@ -2,6 +2,7 @@ import userModel from '../models/user.model.js'
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { ApiResponse, ApiError } from '../utils/index.js';
+import { uploadOnCloudinary , deleteFromCloudinary} from "../config/cloudinary.config.js"
 
 const createUser = async (req, res) => {
     const { username, email, password, isAdmin } = req.body;
@@ -89,5 +90,7 @@ const logout = async (req, res) => {
         .clearCookie('token')
         .json(new ApiResponse(200, null, 'Logout successful'));
 }
+
+const uploadAvatar = async (req, res) => {}
 
 export { createUser, loginUser, logout };
