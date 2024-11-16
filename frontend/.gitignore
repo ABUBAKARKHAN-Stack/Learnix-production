@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -22,3 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+=======
+/frontend/node_modules
+/backend/node_modules
+>>>>>>> a291ed02d01be7018d3e4f5bf8447ec6b92e9b7e
