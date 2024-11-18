@@ -5,6 +5,8 @@ import LandingPage from "./Pages/LandingPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SigninPage from "./Pages/SigninPage";
 import SignupPage from "./Pages/SignupPage";
+import Dashboard from "./Pages/Dashboard";
+import CourseData from "../src/Data/CourseData.json";
 
 const router = createBrowserRouter([
   {
