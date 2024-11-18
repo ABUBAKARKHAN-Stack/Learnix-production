@@ -4,7 +4,7 @@ import email from '../assets/imgs/email.png'
 
 function LandingFooter() {
   return (
-    <div className='px-2 mt-5'>
+    <div className='px-2 mt-5 sm:mx-auto sm:w-fit'>
       <img src={logo} className='w-[120px] h-auto' alt="" />
       <div className='flex flex-wrap gap-5'>
         <div>

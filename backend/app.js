@@ -1,4 +1,4 @@
-import express, { json, urlencoded , static as static_ } from "express";
+import express, { json, urlencoded, static as static_ } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
@@ -9,14 +9,22 @@ const app = express();
 
 app.use(cors());
 app.use(cookieParser());
-app.use(json({limit: '16kb'}));
+app.use(json({ limit: '16kb' }));
 app.use(urlencoded({ extended: true }));
 app.use(static_("public"))
 
 
-// User routes
-import userRoutes from './routes/user.routes.js';
-app.use('/api/users', userRoutes);
+// User Routes
+import userRoutes from './routes/user.routes.js'
+app.use("/users", userRoutes)
+
+// Course Routes
+import courseRoutes from './routes/course.routes.js'
+app.use("/courses", courseRoutes)
+
+// Video Routes
+import videoRoutes from './routes/video.routes.js'
+app.use("/videos", videoRoutes)
 
 
 const PORT = process.env.PORT || 5000;
@@ -26,5 +34,6 @@ connectDB().then(
         console.log(`Server running on port ${PORT}`);
     })
 );
+
 
 

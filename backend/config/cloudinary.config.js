@@ -16,10 +16,9 @@ const uploadOnCloudinary = async (fileLocalPath) => {
             .json(new ApiError(400, 'File is required'));
     }
     try {
-        const response = await cloudinary.uploader.upload(fileLocalPath, {
-            resource_type: 'auto',
-        })
+        const response = await cloudinary.uploader.upload(fileLocalPath)
         console.log(`File uploaded on cloudinary LINK ${response.secure_url} `);
+        fs.unlinkSync(fileLocalPath)
         return response
 
     } catch (error) {
@@ -37,4 +36,19 @@ const deleteFromCloudinary = async (publicId) => {
     }
 }
 
-export { uploadOnCloudinary , deleteFromCloudinary }
+const thumbnailImageForCourse =  (publicId) => {
+    try {
+        const options = {
+            width: 600,
+            height: 600,
+            crop: "scale"
+        }
+        const response =  cloudinary.url(publicId, options)
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+
+export { uploadOnCloudinary, deleteFromCloudinary ,     thumbnailImageForCourse} 

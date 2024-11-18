@@ -20,9 +20,15 @@ const courseSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
-    }
+    },
+    videos: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'videos'
+        }
+    ]
 })
 
 const courseModel = mongoose.model('courses', courseSchema)
 
-export default courseModel
+export default courseModel;
