@@ -12,7 +12,7 @@ import { uploadOnCloudinary, deleteFromCloudinary } from '../config/cloudinary.c
 const createUser = async (req, res) => {
     const { username, email, password, isAdmin } = req.body
 
-    if (!username || !email || !password || !isAdmin) {
+    if (!username || !email || !password) {
         return res
             .status(400)
             .json(new ApiError(400, "Fill all fields"))
