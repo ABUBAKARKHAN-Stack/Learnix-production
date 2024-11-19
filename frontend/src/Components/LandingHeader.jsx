@@ -1,30 +1,56 @@
-import React from 'react'
-import Logo from '../assets/imgs/LogoText.png'
-import Image from '../assets/imgs/Book.jpg'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import Logo from '../assets/imgs/LogoText.png';
+import Image from '../assets/imgs/Book.jpg';
+import { Link } from 'react-router-dom';
 
 function LandingHeader() {
   return (
-    <div>
-      <nav className='flex  items-center h-16 justify-between px-5 bg-[#F3EBE5] rounded-full mx-2 mt-2'>
-        <img src={Logo} className='w-[80px] sm:w-[100px] h-auto' alt="" />
-        <div className='flex gap-2'>
-         <Link to='/signin'> <button className='bg-black text-[10px] sm:text-base outline-none text-white rounded-3xl px-5 p-2 '>Sign In</button></Link>
+    <div className="bg-gradient-to-b from-[#F9F6F3] to-[#F3EBE5] min-h-screen pt-5">
+      {/* Navigation */}
+      <nav className="flex items-center h-20 justify-between px-8 bg-white shadow-md rounded-full mx-4 ">
+        <img src={Logo} className="w-[90px] sm:w-[110px] h-auto" alt="Logo" />
+        <div className="flex gap-4">
+          <Link to="/signin">
+            <button className="bg-black text-white text-sm sm:text-base px-6 py-2 rounded-full shadow-lg hover:bg-gray-800 transition">
+              Sign In
+            </button>
+          </Link>
         </div>
       </nav>
 
-      <div className='sm:flex sm:items-start sm:mt-10 md:mt-20'>
-      
-        <div className='px-2 mt-10 sm:mt-0'>
-         <h1 className='font-bold text-[24px] sm:text-[30px] sm:leading-[35px] md:text-[52px] lg:text-[70px] lg:leading-[80px] md:leading-[50px] pl-5'>Learn, <br/> Grow, <br/> Succeed </h1>
-         <p className='text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px] md:w-[350px] pl-5 sm:w-[300px] lg:w-[500px] text-[#535050]'>Empowering learners with expert-led courses and tools to master skills anytime, anywhere.</p>
+      {/* Hero Section */}
+      <div className="flex flex-col sm:flex-row items-start justify-between mt-12 sm:mt-20 px-6 sm:px-12">
+        {/* Text Content */}
+        <div className="max-w-xl sm:pr-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-gray-800">
+            Learn, <br /> Grow, <br /> Succeed
+          </h1>
+          <p className="mt-6 text-gray-600 text-sm sm:text-[12px] lg:text-base lg:w-[400px]">
+            Empowering learners with expert-led courses and tools to master skills anytime, anywhere.
+          </p>
+          <div className="mt-8">
+            <Link to="/explore">
+              <button className="bg-black text-white text-sm sm:text-base px-8 py-3 rounded-full shadow-lg hover:bg-gray-800 transition">
+                Explore Courses
+              </button>
+            </Link>
+          </div>
         </div>
-        <img src={Image} className='rounded-2xl w-[300px] md:w-[400px] lg:w-[450px]  mt-5 sm:mt-0 h-auto mx-auto ' alt="" />
+
+        {/* Image */}
+        <div className="mt-8 sm:mt-0">
+          <img
+            src={Image}
+            className="rounded-3xl shadow-2xl w-[320px] sm:w-[900px] lg:w-[500px] xl:w-[600px] h-auto"
+            alt="Learning"
+          />
+        </div>
       </div>
-      <hr className='mt-5 lg:mt-32 h-1 rounded-3xl bg-black mx-2' />
+
+      {/* Divider */}
+      <hr className="mt-12 sm:mt-20 lg:mt-32 h-1 rounded-full bg-black mx-6" />
     </div>
-  )
+  );
 }
 
-export default LandingHeader
-
+export default LandingHeader;

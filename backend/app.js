@@ -7,7 +7,10 @@ import { connectDB } from "./config/index.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
+}));
 app.use(cookieParser());
 app.use(json({ limit: '16kb' }));
 app.use(urlencoded({ extended: true }));
