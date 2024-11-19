@@ -27,20 +27,24 @@ const createUser = async (req, res) => {
             isAdmin
         })
 
-        return res
-            .status(201)
-            .json(new ApiResponse(201, user, "User created successfully"))
+        setTimeout(() => {
+            return res
+                .status(201)
+                .json(new ApiResponse(201, user, "User created successfully"))
+        }, 1500);
 
     } catch (error) {
-        if (error.code === 11000) {
-            return res
-                .status(400)
-                .json(new ApiError(400, "User already exists"))
+        setTimeout(() => {
+            if (error.code === 11000) {
+                return res
+                    .status(400)
+                    .json(new ApiError(400, error.keyValue, "User already exists"))
 
-        }
-        return res
-            .status(500)
-            .json(new ApiError(500, error))
+            }
+            return res
+                .status(500)
+                .json(new ApiError(500, error, "Something went wrong"))
+        }, 1500);
 
     }
 
@@ -67,7 +71,6 @@ const loginUser = async (req, res) => {
             return res
                 .status(404)
                 .json(new ApiError(404, "Invalid email"))
-
         }
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
@@ -89,7 +92,7 @@ const loginUser = async (req, res) => {
                 })
 
 
-            const verificationURL = `http://localhost:4000/users/verify-email/${verifyEmailToken}` // I will change client url after connecting to frontend 
+            const verificationURL = `${process.env.CLIENT_URL}/verification-email/${verifyEmailToken}` 
 
             // await sendEmailVerification(user.email, verificationURL)
             await sendEmails(user.email, "Email Verification", `
@@ -99,9 +102,11 @@ const loginUser = async (req, res) => {
             <p>This link will expire in 1 hour.</p>
             `)
 
-            return res
-                .status(200)
-                .json(new ApiResponse(200, null, "Check your email to verify your account"))
+            setTimeout(() => {
+                return res
+                    .status(202)
+                    .json(new ApiResponse(202, null, "A verification email has been sent to your inbox."))
+            }, 1500);
 
         } else {
 
@@ -114,22 +119,20 @@ const loginUser = async (req, res) => {
                 expiresIn: "30d"
             })
 
-
-
-            return res
-                .status(200)
-                .cookie("token", token)
-                .json(new ApiResponse(200, null, "User logged in successfully"))
+            setTimeout(() => {
+                return res
+                    .status(200)
+                    .cookie("token", token)
+                    .json(new ApiResponse(200, null, "User logged in successfully"))
+            }, 1500);
         }
 
-
-
-
-
     } catch (error) {
-        return res
-            .status(500)
-            .json(new ApiError(500, error.message))
+        setTimeout(() => {
+            return res
+                .status(500)
+                .json(new ApiError(500, error.message))
+        }, 1500);
     }
 
 }
@@ -167,14 +170,18 @@ const verifyEmail = async (req, res) => {
         }
 
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, null, "Email verified successfully"))
+       setTimeout(() => {
+         return res
+             .status(200)
+             .json(new ApiResponse(200, null, "Email verified successfully"))
+       }, 1000);
 
     } catch (error) {
-        return res
-            .status(500)
-            .json(new ApiError(500, error))
+        setTimeout(() => {
+            return res
+                .status(500)
+                .json(new ApiError(500, error))
+        }, 1000);
 
     }
 

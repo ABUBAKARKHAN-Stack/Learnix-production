@@ -6,7 +6,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SigninPage from "./Pages/SigninPage";
 import SignupPage from "./Pages/SignupPage";
 import Dashboard from "./Pages/Dashboard";
+import EmailVerificationPage from "./Pages/EmailVerificationPage";
 import CourseData from "../src/Data/CourseData.json";
+import Protected from "./Components/AuthLayout/Protected";
 
 const router = createBrowserRouter([
   {
@@ -15,15 +17,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/signin",
-    element: <SigninPage />,
+    element: <Protected authenticationRequired={false}>
+      <SigninPage />
+    </Protected>,
   },
   {
     path: "/signup",
-    element: <SignupPage />,
+    element: <Protected authenticationRequired={false} >
+      <SignupPage />
+    </Protected>,
   },
   {
-    path: "/Dashboard",
-    element: <Dashboard courses={CourseData} />,
+    path: "/verification-email/:token",
+    element: <Protected authenticationRequired={false}>
+      <EmailVerificationPage />
+    </Protected>,
+  },
+  {
+    path: "/dashboard",
+    element: <Protected authenticationRequired={true}>
+      <Dashboard />
+    </Protected>,
   },
 ]);
 
