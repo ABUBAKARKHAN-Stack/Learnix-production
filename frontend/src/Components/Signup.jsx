@@ -7,6 +7,8 @@ import logo from '../assets/imgs/LogoText.png'
 import { Link } from 'react-router-dom';
 import { signUpUser } from '../API/mainFetching';
 import PasswordValidation from './PasswordValidation'; // Component for password validation feedback
+import img from '../assets/imgs/loginImage.webp'
+import { FiArrowLeft } from 'react-icons/fi';
 
 export function SignUp() {
   // React Hook Form setup
@@ -62,23 +64,27 @@ export function SignUp() {
     }
   };
 
+  const handleRefresh = () => {
+    window.location.reload();
+  }
+
   return (
     <div className=''>
       {/* Logo */}
-      <img src={logo} className='w-[120px] mx-auto mt-5 h-auto' alt="" />
+      <img src={logo} className='w-[120px] lg:w-[190px] mx-auto mt-5 h-auto' alt="" />
 
       {/* Option Selection: Teacher or Student */}
       {option ? <>
         <h1 className='text-center mt-20 font-medium flex mx-auto w-fit items-center gap-3 text-[30px]'>
           Join Us <GiPartyPopper />
         </h1>
-        <div className='flex flex-col justify-center items-center mt-20 mx-16 gap-5'>
+        <div className='flex flex-col sm:flex-row sm:mx-20 md:mx-40 justify-center items-center mt-20 mx-16 gap-5'>
           {/* Student Option */}
-          <div onClick={handleStudent} className='bg-white flex items-center cursor-pointer gap-2 border-4 rounded-3xl w-full p-2 '>
+          <div onClick={handleStudent} className='bg-white flex items-center cursor-pointer lg:h-32 gap-2 border-4 rounded-3xl w-full p-2 '>
             Student <MdSchool />
           </div>
           {/* Teacher Option */}
-          <div onClick={handleTeacher} className='bg-black border-4 flex items-center gap-2 cursor-pointer border-black text-white p-2 rounded-3xl w-full '>
+          <div onClick={handleTeacher} className='bg-black border-4 flex items-center lg:h-32 gap-2 cursor-pointer border-black text-white p-2 rounded-3xl w-full '>
             Teacher <FaChalkboardTeacher />
           </div>
         </div>
@@ -88,13 +94,23 @@ export function SignUp() {
       {!option && (
         <div>
           {teacher ? (
-            <div className='mx-10'>
+            <div className='mx-5 lg:flex lg:justify-between lg:px-16 lg:gap-16 rounded-md px-5 pb-5 sm:mx-16 md:mx-40 lg:mx-16 xl:mx-20  '>
+              <div className='flex items-center'>
+                <FiArrowLeft className='absolute top-10 left-10 lg:top-20 lg:left-20 ' onClick={handleRefresh} size={40} />
+              </div>
               {/* Teacher Sign-Up Form */}
-              <form onSubmit={handleSubmit(onSubmit)}>
+
+              <div className='hidden lg:block mt-10 bg-black px-5 pt-5 rounded-xl  text-white w-[50%] h-[61vh] '>
+                <div className='h-52 xxl:h-60 overflow-hidden flex justify-center items-center rounded-lg'><img src={img} className='object-cover object-center h-full w-full' alt="" /></div>
+                <h2 className='mt-5 text-[12px] xxl:text-[14px]  text-center'>A teacher plants seeds of knowledge that bloom for a lifetime.</h2>
+              </div>
+              <form onSubmit={handleSubmit(onSubmit)}
+                className='lg:w-[50%]'
+              >
                 <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>
                   Welcome <FaRegSmile />
                 </h1>
-               
+
                 {/* Username Input */}
                 <div>
                   <label htmlFor="username" className='text-[14px]'>Username</label>
@@ -113,7 +129,7 @@ export function SignUp() {
                     )}
                     className=' outline-none pl-2  border text-xs py-2 w-full rounded-md'
                   />
-                   {errors.username && <p className='text-red-500 tracking-wide text-[10px]'>{errors.username.message}</p>}
+                  {errors.username && <p className='text-red-500 tracking-wide text-[10px]'>{errors.username.message}</p>}
                 </div>
                 {/* Email Input */}
                 <div className=''>
@@ -160,14 +176,23 @@ export function SignUp() {
                 </div>
                 {/* Sign In Link */}
                 <p className='text-center text-[12px] mt-10 cursor-pointer'>
-                  <Link to="/signin">Already have an account? <span className='text-red-700'>Sign In</span></Link>
+                  Already have an account? <Link to="/signin"> <span className='text-red-700'>Sign In</span></Link>
                 </p>
               </form>
             </div>
           ) : (
-            <div className=' mx-5  rounded-md px-5 pb-5'>
+            <div className='mx-5 lg:flex lg:justify-between lg:px-16 lg:gap-16 rounded-md px-5 pb-5 sm:mx-16 md:mx-40 lg:mx-16 xl:mx-20  '>
+              <div className='flex items-center'>
+                <FiArrowLeft className='absolute top-10 left-10 lg:top-20 lg:left-20 ' onClick={handleRefresh} size={40} />
+              </div>
               {/* Student Sign-Up Form (same as Teacher) */}
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <div className='hidden lg:block mt-10 bg-black px-5 pt-5 rounded-xl  text-white w-[50%] h-[61vh] '>
+                <div className='h-52 xxl:h-60 overflow-hidden flex justify-center items-center rounded-lg'><img src={img} className='object-cover object-center h-full w-full' alt="" /></div>
+                <h2 className='mt-5 text-[12px] xxl:text-[14px]  text-center'>A student's curiosity turns learning into a journey of discovery.</h2>
+              </div>
+              <form onSubmit={handleSubmit(onSubmit)}
+                className='lg:w-[50%]'
+              >
                 <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>
                   Welcome <FaRegSmile />
                 </h1>
@@ -175,6 +200,7 @@ export function SignUp() {
                   <label htmlFor="username" className='text-[14px]'>UserName</label>
                   <input
                     type="text"
+                    placeholder='username'
                     id="username"
                     {...register('username', { required: 'username is required' })}
                     className=' outline-none pl-2  border text-xs py-2 w-full rounded-md'
