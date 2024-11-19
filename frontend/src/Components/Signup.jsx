@@ -9,6 +9,8 @@ import img from '../assets/imgs/loginImage.webp'
 import { Link, useNavigate } from 'react-router-dom';
 import { signUpUser } from '../API/mainFetching';
 import PasswordValidation from './PasswordValidation'; // Component for password validation feedback
+import img from '../assets/imgs/loginImage.webp'
+import { FiArrowLeft } from 'react-icons/fi';
 
 export function SignUp() {
   // React Hook Form setup
@@ -83,36 +85,22 @@ export function SignUp() {
   return (
     <div>
       {/* Logo */}
-      <img src={logo} className='w-[120px] lg:w-[190px] mx-auto mt-16 h-auto' alt="" />
+      <img src={logo} className='w-[120px] mx-auto mt-5 h-auto' alt="" />
 
       {/* Option Selection: Teacher or Student */}
       {option ? <>
-        <div className="flex flex-col items-center mt-12 justify-center text-center">
-          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
-            <h1 className="font-medium text-lg sm:text-xl lg:text-[30px]">
-              Are You a Teacher or a Student?
-            </h1>
-            <GiPartyPopper className="hidden sm:block sm:text-3xl lg:text-4xl text-black" />
-          </div>
-          <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-600">
-            Define your role to get started. Join us and take the next step in your learning or teaching journey!
-          </p>
-        </div>
-
-        <div className='flex flex-col sm:flex-row sm:mx-20 md:mx-40 justify-center items-center mt-20 mx-16 gap-5'>
+        <h1 className='text-center mt-20 font-medium flex mx-auto w-fit items-center gap-3 text-[30px]'>
+          Join Us <GiPartyPopper />
+        </h1>
+        <div className='flex flex-col justify-center items-center mt-20 mx-16 gap-5'>
           {/* Student Option */}
-          <div
-            onClick={handleStudent}
-            className='bg-white hover:bg-black transition-colors duration-300 ease-linear border-4 flex lg:justify-center items-center lg:h-32 gap-x-4 cursor-pointer border-[#E5E7EB] hover:border-black hover:text-white text-black p-4 rounded-3xl w-full'
-          >
-            <p className='lg:text-2xl lg:font-semibold'>Student</p>
-            <MdSchool className='lg:text-4xl' />
+          <div onClick={handleStudent} className='bg-white flex items-center cursor-pointer gap-2 border-4 rounded-3xl w-full p-2 '>
+            Student <MdSchool />
           </div>
 
           {/* Teacher Option */}
-          <div onClick={handleTeacher} className='bg-black hover:bg-white transition-colors duration-300 ease-linear border-4 flex lg:justify-center items-center lg:h-32 gap-x-4 cursor-pointer border-black text-white hover:border-[#E5E7EB] hover:text-black p-4 rounded-3xl w-full '>
-            <p className='lg:text-2xl lg:font-semibold'>Teacher</p>
-            <FaChalkboardTeacher className='lg:text-4xl' />
+          <div onClick={handleTeacher} className='bg-black border-4 flex items-center gap-2 cursor-pointer border-black text-white p-2 rounded-3xl w-full '>
+            Teacher <FaChalkboardTeacher />
           </div>
         </div>
       </> : null}
@@ -122,27 +110,14 @@ export function SignUp() {
       {!option && (
         <div>
           {teacher ? (
-            <div className='mx-5 lg:flex lg:justify-between lg:px-16 lg:gap-16 rounded-md px-5 pb-5 sm:mx-16 md:mx-40 lg:mx-16 xl:mx-20'>
-              {/* Back Button */}
-              <div className='flex items-center'>
-                <FiArrowLeft className='absolute cursor-pointer top-10 left-10 lg:top-20 lg:left-20' onClick={handleRefresh} size={40} />
-              </div>
-
-              {/* Teacher Info Section */}
-              <div className='hidden lg:block mt-10 bg-black px-5 pt-5 rounded-xl text-white w-[50%] '>
-                <div className='h-52 xxl:h-60 overflow-hidden flex justify-center items-center rounded-lg'>
-                  <img src={img} className='object-cover object-center h-full w-full' alt="Teacher" />
-                </div>
-                <h2 className='mt-5 leading-loose text-[12px] xxl:text-[14px] font-medium text-center'>
-                  Welcome to learnix our e-learning platform! As a teacher, you have the power to inspire, educate, and shape future minds with your knowledge.
-                </h2>
-              </div>
-
+            <div className='mx-10'>
               {/* Teacher Sign-Up Form */}
-              <form onSubmit={handleSubmit(onSubmit)} className='lg:w-[50%]'>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>
                   Welcome <FaRegSmile />
                 </h1>
+               
+                {/* Username Input */}
                 <div>
                   <label htmlFor="username" className='text-[14px]'>Username</label>
                   <input
@@ -202,30 +177,16 @@ export function SignUp() {
                     Sign Up
                   </button>
                 </div>
-                <p className='text-center text-[12px] mt-10'>
-                  Already have an account? <Link to="/signin"><span className='text-red-700'>Sign In</span></Link>
+                {/* Sign In Link */}
+                <p className='text-center text-[12px] mt-10 cursor-pointer'>
+                  <Link to="/signin">Already have an account? <span className='text-red-700'>Sign In</span></Link>
                 </p>
               </form>
             </div>
           ) : (
-            <div className='mx-5 lg:flex lg:justify-between lg:px-16 lg:gap-16 rounded-md px-5 pb-5 sm:mx-16 md:mx-40 lg:mx-16 xl:mx-20'>
-              {/* Back Button */}
-              <div className='flex items-center'>
-                <FiArrowLeft className='absolute top-10 cursor-pointer left-10 lg:top-20 lg:left-20' onClick={handleRefresh} size={40} />
-              </div>
-
-              {/* Student Info Section */}
-              <div className='hidden lg:block mt-10 bg-black px-5 pt-5 rounded-xl text-white w-[50%]'>
-                <div className='h-52 xxl:h-60 overflow-hidden flex justify-center items-center rounded-lg'>
-                  <img src={img} className='object-cover object-center h-full w-full' alt="Student" />
-                </div>
-                <h2 className='mt-5 text-[12px] xxl:text-[14px] leading-loose font-medium text-center'>
-                  Welcome to learnix our e-learning platform! As a student, you're embarking on a journey of knowledge, growth, and limitless learning opportunities.
-                </h2>
-              </div>
-
-              {/* Student Sign-Up Form */}
-              <form onSubmit={handleSubmit(onSubmit)} className='lg:w-[50%]'>
+            <div className=' mx-5  rounded-md px-5 pb-5'>
+              {/* Student Sign-Up Form (same as Teacher) */}
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>
                   Welcome <FaRegSmile />
                 </h1>
