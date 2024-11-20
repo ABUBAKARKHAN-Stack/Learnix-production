@@ -57,7 +57,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Protected authenticationRequired={true}>
+    element: <Protected authenticationRequired={false}>
       <Dashboard courses={CourseData} />
     </Protected>,
   },
