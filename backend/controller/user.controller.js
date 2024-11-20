@@ -213,7 +213,7 @@ const forgotPassword = async (req, res) => {
             expiresIn: "1h"
         })
 
-        const resetURL = `http://localhost:4000/users/reset-password/${resetToken}`
+        const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`
 
         const emailSent = await sendEmails(user.email, "Reset Password", ` 
        <h1>Reset your password</h1>
@@ -229,8 +229,8 @@ const forgotPassword = async (req, res) => {
         }
 
         return res
-            .status(200)
-            .json(new ApiResponse(200, null, "Check your email to reset your password"))
+            .status(202)
+            .json(new ApiResponse(202, null, "A reset password email has been sent to your inbox."))
 
     } catch (error) {
 
@@ -268,9 +268,11 @@ const resetPassword = async (req, res) => {
             }
         })
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, null, "Password reset successfully"))
+       setTimeout(() => {
+         return res
+             .status(200)
+             .json(new ApiResponse(200, null, "Password reset successfully"))
+       }, 500);
     } catch (error) {
 
         return res

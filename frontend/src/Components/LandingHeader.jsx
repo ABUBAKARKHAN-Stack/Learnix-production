@@ -15,6 +15,11 @@ function LandingHeader() {
               Sign In
             </button>
           </Link>
+          <Link to="/signup">
+            <button className="bg-black text-white text-sm sm:text-base px-6 py-2 rounded-full shadow-lg hover:bg-gray-800 transition">
+              Sign Up
+            </button>
+          </Link>
         </div>
       </nav>
 
@@ -29,7 +34,7 @@ function LandingHeader() {
             Empowering learners with expert-led courses and tools to master skills anytime, anywhere.
           </p>
           <div className="mt-8">
-            <Link to="/explore">
+            <Link to="/signin">
               <button className="bg-black text-white text-sm sm:text-base px-8 py-3 rounded-full shadow-lg hover:bg-gray-800 transition">
                 Explore Courses
               </button>

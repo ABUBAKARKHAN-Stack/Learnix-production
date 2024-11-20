@@ -22,8 +22,20 @@ const verifyEmail = async (token) => {
     return await api.get(`users/verify-email/${token}`)
 }
 
+//  API call to send a password reset link to the user
+const forgotPasswordLink = async (data) => {
+    return await api.post('users/forgot-password', data)
+}
+
+// API call to reset the user's password
+const resetPassword = async (data, token) => {
+    return await api.post(`users/reset-password/${token}`, data)
+}
+
 export {
     signUpUser,
     signInUser,
-    verifyEmail
+    verifyEmail,
+    forgotPasswordLink,
+    resetPassword
 }

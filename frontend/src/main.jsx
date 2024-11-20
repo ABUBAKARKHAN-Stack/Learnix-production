@@ -7,18 +7,16 @@ import SigninPage from "./Pages/SigninPage";
 import SignupPage from "./Pages/SignupPage";
 import Dashboard from "./Pages/Dashboard";
 import EmailVerificationPage from "./Pages/EmailVerificationPage";
-import CourseData from "../src/Data/CourseData.json";
+import CourseData from "./Data/CourseData.json";
 import Protected from "./Components/AuthLayout/Protected";
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
+import ResetPasswordPage from "./Pages/REsetPasswordPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/signin",
     element: <Protected authenticationRequired={false}>
-      <SigninPage />
+      <LandingPage />
     </Protected>,
   },
   {
@@ -28,15 +26,33 @@ const router = createBrowserRouter([
     </Protected>,
   },
   {
+    path: "/signin",
+    element: <Protected authenticationRequired={false}>
+      <SigninPage />
+    </Protected>,
+  },
+  {
+    path: "/forgot-password",
+    element: <Protected authenticationRequired={false}>
+      <ForgotPasswordPage />
+    </Protected>,
+  },
+  {
     path: "/verification-email/:token",
     element: <Protected authenticationRequired={false}>
       <EmailVerificationPage />
     </Protected>,
   },
   {
+    path: "/reset-password/:token",
+    element: <Protected authenticationRequired={false}>
+      <ResetPasswordPage />
+    </Protected>,
+  },
+  {
     path: "/dashboard",
     element: <Protected authenticationRequired={true}>
-      <Dashboard />
+      <Dashboard courses={CourseData} />
     </Protected>,
   },
 ]);

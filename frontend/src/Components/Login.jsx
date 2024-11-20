@@ -100,16 +100,16 @@ export function SignIn() {
               {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
             </div>
             <div className='mx-auto'>
-              <button
+            <button
                 disabled={loading ? true : false}
                 type='submit'
                 className='w-full rounded-md mt-5 bg-black transition-colors duration-200 ease-linear disabled:opacity-50 disabled:cursor-not-allowed text-white py-2 shadow-lg outline-none'>
                 Sign In
               </button>
             </div>
-            <div className='mt-20'>
-              <p className='text-center text-[12px] cursor-pointer '>Forgot password?</p>
-              <p className='text-center text-[12px]'>Not have account <Link to='/signup'> <span className='text-red-600 hover:underline '>Create One</span></Link></p>
+            <div className='mt-20 flex flex-col justify-center items-center gap-y-1 text-xs'>
+              <Link to={'/forgot-password'} className='text-gray-950 hover:underline' >Forgot password?</Link>
+              <p>Not have account <Link to='/signup'> <span className='text-red-600 hover:underline '>Create One</span></Link></p>
             </div>
           </form>
         </div>

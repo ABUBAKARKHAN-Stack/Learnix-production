@@ -11,6 +11,7 @@ export default {
       },
       screens: {
         'ss': '450px',
+        "ssm": '500px',
         'xxl': '1150px',
         '3xl': '1600px',  
       },
