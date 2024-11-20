@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Logo from "../assets/imgs/mobile-logo.png";
 import LogoText from "../assets/imgs/LogoText.png";
+
 const Sidebar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -24,137 +25,116 @@ const Sidebar = () => {
   return (
     <div>
       {/* Desktop Sidebar */}
-      <div className="hidden  sm:flex h-[95vh] mt-5 w-[100px] bg-[#F3EBE5] text-white flex-col justify-between py-6 rounded-2xl fixed left-0">
+      <div className="hidden md:flex h-[95vh] w-[100px] bg-[#F3EBE5] text-white flex-col justify-between py-6 rounded-2xl fixed left-0 mt-5">
         {/* Logo Section */}
         <div className="flex justify-center mb-4">
           <Link to="/">
-            <img src={Logo} alt="" className="h-16 w-14" />
+            <img src={Logo} alt="Logo" className="h-16 w-14" />
           </Link>
         </div>
 
         {/* Middle Navigation Section */}
         <div className="flex flex-col gap-8 items-center">
-          <Link to="/Dashboard/Assignments">
-            <HiOutlineBookOpen
-              className="text-3xl text-black cursor-pointer hover:text-gray-400"
-              title="Assignments"
-            />
+          <Link to="/Dashboard/Assignments" title="Assignments">
+            <HiOutlineBookOpen className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
-          <Link to="/Dashboard/Quizes">
-            <HiOutlineClipboardCheck
-              className="text-3xl text-black cursor-pointer hover:text-gray-400"
-              title="Quizzes"
-            />
+          <Link to="/Dashboard/Quizes" title="Quizzes">
+            <HiOutlineClipboardCheck className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
-          <Link to="/Dashboard/VideoLectures">
-            <HiOutlineVideoCamera
-              className="text-3xl text-black cursor-pointer hover:text-gray-400"
-              title="Video Lectures"
-            />
+          <Link to="/Dashboard/VideoLectures" title="Video Lectures">
+            <HiOutlineVideoCamera className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
         </div>
 
         {/* Bottom Navigation Section */}
         <div className="flex flex-col gap-8 items-center">
-          <Link to="/Dashboard/Settings">
-            <HiOutlineCog
-              className="text-3xl text-black cursor-pointer hover:text-gray-400"
-              title="Settings"
-            />
+          <Link to="/Dashboard/Settings" title="Settings">
+            <HiOutlineCog className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
-          <Link to="/Dashboard/Profile">
-            <HiOutlineUserCircle
-              className="text-3xl text-black cursor-pointer hover:text-gray-400"
-              title="Profile"
-            />
+          <Link to="/Dashboard/Profile" title="Profile">
+            <HiOutlineUserCircle className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
-          <Link to="/Logout">
-            <HiOutlineLogout
-              className="text-3xl text-black cursor-pointer hover:text-gray-400"
-              title="Logout"
-            />
+          <Link to="/Logout" title="Logout">
+            <HiOutlineLogout className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
         </div>
       </div>
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 right-0 w-[80%] bg-[#F3EBE5] h-full transform transition-transform ease-in-out ${
+        className={`fixed top-0 right-0 w-[70%] bg-[#F3EBE5] h-full transform transition-transform duration-300 ease-in-out z-50 ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } lg:hidden`}>
         {/* Close Button */}
-        <div className="flex justify-end items-center p-4 bg-[#F3EBE5]">
+        <div className="flex justify-between items-center p-4 bg-[#F3EBE5]">
           <HiOutlineX
-            className="text-3xl text-black cursor-pointer hover:text-gray-400"
+            className="text-3xl text-black cursor-pointer hover:text-gray-600"
             onClick={toggleMobileMenu}
           />
+          <img src={LogoText} alt="Logo Text" className="h-10 w-auto" />
         </div>
 
-        {/* Mobile Navigation Links (Full Screen) */}
-        <div className="flex flex-col items-start justify-start h-full py-6 px-6 space-y-4">
+        {/* Mobile Navigation Links */}
+        <div className="flex flex-col px-6 py-4 space-y-6">
           <Link
             to="/"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineHome className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">Home</span>
+            <HiOutlineHome className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Home</span>
           </Link>
           <Link
             to="/Dashboard/Assignments"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineBookOpen className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">Assignments</span>
+            <HiOutlineBookOpen className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Assignments</span>
           </Link>
           <Link
             to="/Dashboard/Quizes"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineClipboardCheck className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">Quizzes</span>
+            <HiOutlineClipboardCheck className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Quizzes</span>
           </Link>
           <Link
             to="/Dashboard/VideoLectures"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineVideoCamera className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">
-              Video Lectures
-            </span>
+            <HiOutlineVideoCamera className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Video Lectures</span>
           </Link>
           <Link
             to="/Dashboard/Settings"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineCog className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">Settings</span>
+            <HiOutlineCog className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Settings</span>
           </Link>
           <Link
             to="/Dashboard/Profile"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineUserCircle className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">Profile</span>
+            <HiOutlineUserCircle className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Profile</span>
           </Link>
           <Link
             to="/Logout"
-            className="flex items-center w-full py-4"
+            className="flex items-center py-4"
             onClick={toggleMobileMenu}>
-            <HiOutlineLogout className="text-3xl text-black cursor-pointer hover:text-gray-400 mr-4" />
-            <span className="text-black text-lg font-medium">Logout</span>
+            <HiOutlineLogout className="text-3xl text-black mr-4" />
+            <span className="text-lg font-medium text-black">Logout</span>
           </Link>
         </div>
       </div>
 
       {/* Header with Hamburger Icon (Mobile only) */}
-      <div className="sm:hidden fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-[#F3EBE5] z-50 ">
-        {/* Logo */}
+      <div className="md:hidden fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-[#F3EBE5]">
         <Link to="/">
-          <img src={LogoText} alt="" className="h-12 w-22" />
+          <img src={LogoText} alt="Logo" className="h-12" />
         </Link>
-        {/* Hamburger Icon */}
         <HiOutlineMenu
-          className="text-3xl text-black cursor-pointer hover:text-gray-400"
+          className="text-3xl text-black cursor-pointer"
           onClick={toggleMobileMenu}
         />
       </div>

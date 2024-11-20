@@ -47,8 +47,8 @@ const DashboardMain = ({ courses, onGetNow }) => {
 
   // Function to render the stars based on rating
   const renderStars = (rating) => {
-    const filledStars = Math.floor(rating); // The number of filled stars
-    const emptyStars = 5 - filledStars; // The number of empty stars
+    const filledStars = Math.floor(rating);
+    const emptyStars = 5 - filledStars;
     const stars = [];
 
     // Add filled stars
@@ -65,12 +65,32 @@ const DashboardMain = ({ courses, onGetNow }) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-8 p-6 bg-gray-50 w-[950px] ml-[15vh]">
+    <div className="flex flex-col items-center space-y-6 p-4 bg-gray-50 w-full max-w-[1100px] mx-auto">
       {/* Header Section */}
-      <h1 className="font-bold text-gray-800 text-[58px] text-left w-[98%] leading-[77px]">
-        Empower Your Future <br /> with Our Expert-Led  Courses!
+      <h1 className="font-bold text-gray-800 text-3xl sm:text-4xl md:text-5xl lg:text-[58px] text-center md:text-left leading-tight md:leading-[77px]">
+        Empower Your Future <br className="hidden md:block" /> with Our Expert-Led Courses!
       </h1>
-      <div className="w-[920px]">
+
+      {/* Category Selection */}
+      <div className="flex flex-wrap justify-center gap-4 mt-4">
+        {categories.map((category, index) => (
+          <button
+            key={index}
+            className={`h-12 text-sm px-4 gap-2 rounded-full flex items-center transition-all duration-300 ${
+              selectedCategory === category
+                ? "bg-black text-white"
+                : "bg-[#F3EBE5] text-black hover:bg-[#ffe6d3]"
+            }`}
+            onClick={() => setSelectedCategory(category)}
+          >
+            {categoryIcons[category] || <FaCode />} {/* Default icon if no specific one is mapped */}
+            <span>{category}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Display Filtered Courses */}
+      <div className="w-full mt-6">
         {/* Pass the onGetNow function to DashboardCourses */}
         <DashboardCourses courses={filteredCourses} onGetNow={onGetNow} />
       </div>
