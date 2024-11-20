@@ -61,7 +61,7 @@ const DashboardProfile = ({ userProfileCourses, onCancelCourse }) => {
 
   return (
     <div
-      className="bg-[#F3EBE5] w-full max-w-[600px] md:max-w-[450px] h-full md:h-[95vh] p-4 space-y-6 rounded-[15px] mx-auto">
+      className="bg-[#F3EBE5] w-full max-w-[600px] md:max-w-[450px] h-full md:h-[95vh] lg:pt-10 lg:pr-5 rounded-[15px] mx-auto">
       {/* Header Section */}
       <div className="bg-white p-2 rounded-lg shadow-lg">
         <div className="flex flex-col justify-center items-center">

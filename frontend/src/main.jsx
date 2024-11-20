@@ -13,6 +13,7 @@ import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ResetPasswordPage from "./Pages/REsetPasswordPage";
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CoursesPage from "./Pages/CoursesPage";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +61,13 @@ const router = createBrowserRouter([
     element: <Protected authenticationRequired={false}>
       <Dashboard courses={CourseData} />
     </Protected>,
-  },
+    },
+    {
+      path: "/courses",
+      element: <Protected authenticationRequired={false}>
+      <CoursesPage/>
+      </Protected>,
+      },
 ]);
 
 createRoot(document.getElementById("root")).render(

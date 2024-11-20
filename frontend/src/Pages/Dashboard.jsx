@@ -26,10 +26,12 @@ function Dashboard({ courses }) {
   };
 
   return (
-    <div className="relative m-0 gap-4 pl-5 bg-[#FBF8F6] overflow-hidden">
+    <div className="relative m-0 gap-4 pl-5 bg-[#F3EBE5] overflow-hidden">
       {/* Show on screens larger than md */}
-      <div className="hidden md:flex flex-row justify-between">
+      <div className="hidden md:flex flex-row overflow-hidden justify-between">
+        <div className="my-auto">
         <Sidebar />
+        </div>
         <DashboardMain courses={courses} onGetNow={handleGetNow} />
         <DashboardProfile
           userProfileCourses={userProfileCourses}

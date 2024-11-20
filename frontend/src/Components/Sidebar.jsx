@@ -23,9 +23,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div>
+    <div className="">
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex h-[95vh] w-[100px] bg-[#F3EBE5] text-white flex-col justify-between py-6 rounded-2xl fixed left-0 mt-5">
+      <div className="hidden md:flex h-[90vh] w-[90px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
         {/* Logo Section */}
         <div className="flex justify-center mb-4">
           <Link to="/">
@@ -35,7 +35,7 @@ const Sidebar = () => {
 
         {/* Middle Navigation Section */}
         <div className="flex flex-col gap-8 items-center">
-          <Link to="/Dashboard/Assignments" title="Assignments">
+          <Link to="/courses" title="Courses">
             <HiOutlineBookOpen className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
           <Link to="/Dashboard/Quizes" title="Quizzes">

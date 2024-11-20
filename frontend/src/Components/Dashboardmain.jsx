@@ -13,6 +13,7 @@ import {
   FaRegStar,
 } from "react-icons/fa"; // Importing icons
 import DashboardCourses from "./DashboardCourses";
+import Sidebar from "./Sidebar";
 
 const DashboardMain = ({ courses, onGetNow }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -65,14 +66,12 @@ const DashboardMain = ({ courses, onGetNow }) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-6 p-4 bg-gray-50 w-full max-w-[1100px] mx-auto">
-      {/* Header Section */}
-      <h1 className="font-bold text-gray-800 text-3xl sm:text-4xl md:text-5xl lg:text-[58px] text-center md:text-left leading-tight md:leading-[77px]">
-        Empower Your Future <br className="hidden md:block" /> with Our Expert-Led Courses!
-      </h1>
+    <div className="flex flex-col lg:pt-5 lg:pl-5 overflow-hidden h-screen items-center bg-[#F3EBE5] w-full max-w-[1100px] mx-auto">
+
+      
 
       {/* Category Selection */}
-      <div className="flex flex-wrap justify-center gap-4 mt-4">
+      {/* <div className="flex flex-wrap justify-center gap-4 mt-4">
         {categories.map((category, index) => (
           <button
             key={index}
@@ -83,11 +82,11 @@ const DashboardMain = ({ courses, onGetNow }) => {
             }`}
             onClick={() => setSelectedCategory(category)}
           >
-            {categoryIcons[category] || <FaCode />} {/* Default icon if no specific one is mapped */}
-            <span>{category}</span>
+            {categoryIcons[category] || <FaCode />} Default icon if no specific one is mapped */}
+            {/* <span>{category}</span>
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Display Filtered Courses */}
       <div className="w-full mt-6">

@@ -2,6 +2,7 @@ import React from 'react';
 import img from '../assets/imgs/Team.jpg';
 import abubakar from '../assets/imgs/abubakar.webp'
 import mansoor from '../assets/imgs/mansoor.webp'
+import awais from '../assets/imgs/awais.webp'
 import Card from './Card';
 
 function LandingMain() {
@@ -9,7 +10,7 @@ function LandingMain() {
     {
       name: 'Awais',
       role: 'Frontend Developer',
-      img: '../assets/imgs/Awais.jpg',
+      img: awais,
       social: {
         github: 'https://github.com/',
         linkedin: 'https://www.linkedin.com/',
