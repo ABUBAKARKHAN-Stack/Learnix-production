@@ -61,7 +61,7 @@ const DashboardProfile = ({ userProfileCourses, onCancelCourse }) => {
 
   return (
     <div
-      className="bg-[#F3EBE5] w-full max-w-[600px] md:max-w-[450px] h-full md:h-[95vh] lg:pt-10 lg:pr-5 rounded-[15px] mx-auto">
+      className="bg-[#F3EBE5] w-full max-w-[400px]  h-full md:h-[95vh] pt-20 pr-5 rounded-[15px] mx-auto">
       {/* Header Section */}
       <div className="bg-white p-2 rounded-lg shadow-lg">
         <div className="flex flex-col justify-center items-center">
@@ -88,13 +88,13 @@ const DashboardProfile = ({ userProfileCourses, onCancelCourse }) => {
       </div>
 
       {/* Activity Chart */}
-      <div className="bg-white p-2 rounded-lg shadow-lg h-[240px]">
+      <div className="bg-white p-2 mt-5 md:mt-10 rounded-lg shadow-lg">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">Weekly Activity</h3>
         <canvas ref={canvasRef}></canvas>
       </div>
 
       {/* User Added Courses */}
-      <div className="h-[250px] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+      {/* <div className="h-[250px] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
         <div className="flex flex-col gap-4">
           {userProfileCourses.length === 0 ? (
             <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-center items-center">
@@ -106,8 +106,8 @@ const DashboardProfile = ({ userProfileCourses, onCancelCourse }) => {
               <div
                 key={course.id}
                 className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between">
-                {/* Course Info */}
-                <div className="flex justify-between items-center">
+                Course Info */}
+                {/* <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <div className="flex justify-center items-center w-9 h-9 bg-[#F3EBE5] rounded-full">
                       <div className="text-2xl text-gray-700">
@@ -123,12 +123,12 @@ const DashboardProfile = ({ userProfileCourses, onCancelCourse }) => {
                     <FaRegStar className="text-gray-700 text-sm" />
                     <span className="text-sm font-semibold">{course.rating.toFixed(1)}</span>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Course Name */}
-                <h3 className="text-xl font-semibold text-gray-900">{course.name}</h3>
+                {/* <h3 className="text-xl font-semibold text-gray-900">{course.name}</h3> */}
 
-                {/* Actions */}
+                {/* Actions
                 <div className="flex justify-between items-center">
                   <button
                     onClick={() => onCancelCourse()}
@@ -146,7 +146,7 @@ const DashboardProfile = ({ userProfileCourses, onCancelCourse }) => {
             ))
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

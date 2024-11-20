@@ -28,7 +28,7 @@ const Sidebar = () => {
       <div className="hidden md:flex h-[90vh] w-[90px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
         {/* Logo Section */}
         <div className="flex justify-center mb-4">
-          <Link to="/">
+          <Link to="/dashboard">
             <img src={Logo} alt="Logo" className="h-16 w-14" />
           </Link>
         </div>

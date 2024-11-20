@@ -7,7 +7,7 @@ import SigninPage from "./Pages/SigninPage";
 import SignupPage from "./Pages/SignupPage";
 import Dashboard from "./Pages/Dashboard";
 import EmailVerificationPage from "./Pages/EmailVerificationPage";
-import CourseData from "./Data/CourseData.json";
+import { CourseData } from "./Data/CourseData";
 import Protected from "./Components/AuthLayout/Protected";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ResetPasswordPage from "./Pages/REsetPasswordPage";

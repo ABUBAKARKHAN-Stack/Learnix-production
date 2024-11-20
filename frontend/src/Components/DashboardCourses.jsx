@@ -1,116 +1,50 @@
-import React, { useState } from "react";
-import { FaRegStar, FaShoppingCart } from "react-icons/fa";
-import {
-  HiOutlineCode,
-  HiOutlineDesktopComputer,
-  HiOutlineCloud,
-} from "react-icons/hi";
-import { AiOutlineBulb } from "react-icons/ai";
+import React from "react";
+import { PurchasedCourses } from "../Data/PurchaseCourse";
+import { Link } from "react-router-dom";
+import { FaExclamationCircle } from 'react-icons/fa';
 
-const DashboardCourses = ({ courses, onGetNow }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const categories = [
-    { name: "All", icon: <HiOutlineCode className="text-xl ml-2" /> },
-    { name: "Programming", icon: <HiOutlineCode className="text-xl ml-2" /> },
-    {
-      name: "Web Development",
-      icon: <HiOutlineDesktopComputer className="text-xl ml-2" />,
-    },
-    {
-      name: "Artificial Intelligence",
-      icon: <AiOutlineBulb className="text-xl ml-2" />,
-    },
-    {
-      name: "Cloud Computing",
-      icon: <HiOutlineCloud className="text-xl ml-2" />,
-    },
-  ];
-
-  const filteredCourses =
-    selectedCategory === "All"
-      ? courses
-      : courses.filter((course) => course.category === selectedCategory);
+const DashboardCourses = () => {
 
   return (
-    <div className="space-y-6 w-full mx-auto p-4">
-      {/* Filter Bar */}
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
-        {categories.map((category, index) => (
-          <button
-            key={index}
-            className={`h-12 text-sm px-4 gap-2 rounded-full flex items-center transition-all duration-300 ${
-              selectedCategory === category.name
-                ? "bg-black text-white"
-                : "bg-[#F3EBE5] text-black hover:bg-[#ffe6d3]"
-            }`}
-            onClick={() => setSelectedCategory(category.name)}
-          >
-            {category.icon}
-            <span>{category.name}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Courses List */}
-      <div className="flex flex-wrap justify-center gap-4 overflow-y-scroll max-h-[70vh] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-        {filteredCourses.length === 0 ? (
-          <p className="text-lg font-semibold text-gray-700">No courses available.</p>
-        ) : (
-          filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="w-[280px] md:w-[240px] lg:w-[220px] h-[220px] bg-[#F3EBE5] shadow-lg rounded-lg p-4 flex flex-col justify-between transition-transform duration-300 hover:scale-105"
-            >
-              {/* Course Info */}
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="flex justify-center items-center w-9 h-9 bg-white rounded-full">
-                    <div className="text-xl text-gray-700">
-                      {course.category === "Programming" && <HiOutlineCode />}
-                      {course.category === "Web Development" && (
-                        <HiOutlineDesktopComputer />
-                      )}
-                      {course.category === "Artificial Intelligence" && (
-                        <AiOutlineBulb />
-                      )}
-                      {course.category === "Cloud Computing" && (
-                        <HiOutlineCloud />
-                      )}
-                    </div>
-                  </div>
-                  <p className="text-sm font-semibold text-gray-900">{course.category}</p>
-                </div>
-                <div className="flex items-center px-2 py-1 bg-white rounded-full border border-gray-300">
-                  <FaRegStar className="text-gray-700 text-sm" />
-                  <span className="ml-1 text-sm font-semibold text-gray-700">
-                    {course.rating.toFixed(1)}
-                  </span>
+    <div className=" w-full mx-auto px-4">
+    {
+      PurchasedCourses.length === 0 ?<div className=" lg:w-[40vw] xl:w-[55vw]"> <div className="bg-[#dac9bc] mt-5 h-[270px] w-[240px] p-5 rounded-xl text-center"><h2 className="font-bold text-[20px] ">You have'nt purchase any course yet <FaExclamationCircle className="mx-auto" /> </h2>
+      <p className="text-gray-500 my-3">Explore courses and enhance your learning</p>
+      <Link to='/courses'><button className="bg-black hover:bg-white hover:text-black transition-all duration-500 text-white p-2 mt-2 rounded-3xl">Browse Courses</button></Link></div>
+        
+      </div> :
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+          {PurchasedCourses.map((course, index) => (
+            <div key={course.id} className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+              
+              {/* Course Icon */}
+              <div className="flex justify-center mt-4">
+                <div className="text-4xl text-gray-600">
+                  {React.createElement(course.icon)}  {/* Render the icon dynamically */}
                 </div>
               </div>
 
-              {/* Course Name */}
-              <h3 className="text-lg md:text-xl font-semibold text-gray-900">
-                {course.name}
-              </h3>
-
-              {/* Students and Button */}
-              <div className="flex justify-between items-center">
-                <p className="text-sm font-semibold text-gray-900">
-                  {course.joinPersons} students
-                </p>
-                <button
-                  onClick={() => onGetNow(course)}
-                  className="flex items-center gap-2 px-3 py-1 bg-white text-black border border-gray-300 rounded-full hover:bg-gray-100"
-                >
-                  <FaShoppingCart className="text-sm" />
-                  <span className="text-sm font-semibold">Get Now</span>
-                </button>
+              {/* Course Details */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900">{course.name}</h3>
+                <p className="text-sm text-gray-600">{course.category}</p>
+                <div className="flex items-center gap-5 mt-2">
+                  {/* Rating */}
+                  <div className="flex items-center text-yellow-500">
+                    <span className="mr-2">{course.rating}</span>
+                    <span>⭐</span>
+                  </div>
+                  {/* Number of People */}
+                  <div className="text-sm text-gray-600">{course.joinPersons} students</div>
+                </div>
+                {/* Buy Button */}
+                <button className="bottom-0 relative mt-10 bg-blue-500 text-white py-2 px-4 rounded-full">{course.details}</button>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+    }
+      
     </div>
   );
 };
