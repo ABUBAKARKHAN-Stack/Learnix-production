@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { resetPassword } from '../API/mainFetching';
 import { useNavigate } from 'react-router-dom';
+import { showErrorToast, showSuccessToast } from '../utils/ToastNotification';
 function ResetPassword({ token }) {
     // React Hook Form setup
     const {
@@ -25,9 +26,10 @@ function ResetPassword({ token }) {
             console.log('API response:', res.data);
             if (res.status === 200) {
                 setPasswordReset(res.data.message);
+                showSuccessToast(res.data.message);
                 setTimeout(() => {
                     navigate('/signin')
-                }, 1000);
+                }, 3000);
             }
 
 
@@ -35,7 +37,7 @@ function ResetPassword({ token }) {
             console.log(error);
             // Handle error
             const errorMessage = error.response?.data?.message || error.message || 'An error occurred. Please try again.';
-            alert(errorMessage);
+            showErrorToast(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -74,7 +76,7 @@ function ResetPassword({ token }) {
                                 },
                             })}
                             className={`mt-1 block w-full px-4 py-3 border ${errors.password ? 'border-red-500' : 'border-gray-300'
-                                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-700 placeholder-gray-400`}
+                                } rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-transparent text-gray-700 placeholder-gray-400`}
                         />
                         {errors.password && (
                             <p className="mt-2 text-xs text-red-500">{errors.password.message}</p>
@@ -94,7 +96,7 @@ function ResetPassword({ token }) {
                                 validate: (value) => value === watch('newPassword') || 'Passwords do not match',
                             })}
                             className={`mt-1 block w-full px-4 py-3 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-700 placeholder-gray-400`}
+                                } rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-transparent text-gray-700 placeholder-gray-400`}
                         />
                         {errors.confirmPassword && (
                             <p className="mt-2 text-xs text-red-500">{errors.confirmPassword.message}</p>

@@ -5,12 +5,13 @@ import logo from '../assets/imgs/LogoText.png'
 import img from '../assets/imgs/loginImage.webp'
 import mobileLogo from '../assets/imgs/mobile-logo.png'
 import { FiArrowLeft } from 'react-icons/fi';
-import { FaRegSmile } from 'react-icons/fa';
+import { FaRegSmile } from 'react-icons/fa'
 import { signInUser } from '../API/mainFetching';
+import { showErrorToast, showSuccessToast } from '../utils/ToastNotification'
+
 
 export function SignIn() {
   const { handleSubmit, register, formState: { errors } } = useForm()
-  const [verificationMessage, setVerificationMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -20,15 +21,18 @@ export function SignIn() {
       setLoading(true);
       const res = await signInUser(data);
       if (res.status === 202) {
-        setVerificationMessage(res.data.message);
+        showSuccessToast(res.data.message);
       }
       if (res.status === 200) {
-        alert(res.data.message);
-        navigate('/dashboard');
+        showSuccessToast(res.data.message);
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 2500);
       }
       console.log(res);
     } catch (error) {
-      console.log(error);
+      const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
+      showErrorToast(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -70,9 +74,6 @@ export function SignIn() {
             <img src={logo} className='w-[120px] h-auto mx-auto' alt="" />
             <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>Welcome Back!  <FaRegSmile /></h1>
 
-            {/* Verification Message Moved Here */}
-            {verificationMessage && <p className='text-green-500 tracking-wide text-sm mb-4'>{verificationMessage}</p>}
-
             <div className=' '>
               <label htmlFor="email" className='text-[14px]'>
                 Email
@@ -100,7 +101,7 @@ export function SignIn() {
               {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
             </div>
             <div className='mx-auto'>
-            <button
+              <button
                 disabled={loading ? true : false}
                 type='submit'
                 className='w-full rounded-md mt-5 bg-black transition-colors duration-200 ease-linear disabled:opacity-50 disabled:cursor-not-allowed text-white py-2 shadow-lg outline-none'>

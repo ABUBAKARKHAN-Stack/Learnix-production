@@ -38,7 +38,7 @@ const createUser = async (req, res) => {
             if (error.code === 11000) {
                 return res
                     .status(400)
-                    .json(new ApiError(400, error.keyValue, "User already exists"))
+                    .json(new ApiError(400, error.keyValue, `User with ${error.keyValue.email || error.keyValue.username} already exists`))
 
             }
             return res

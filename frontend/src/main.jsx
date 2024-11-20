@@ -11,6 +11,8 @@ import CourseData from "./Data/CourseData.json";
 import Protected from "./Components/AuthLayout/Protected";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ResetPasswordPage from "./Pages/REsetPasswordPage";
+import { Slide, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
@@ -23,18 +25,21 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Protected authenticationRequired={false} >
       <SignupPage />
+      <ToastContainer />
     </Protected>,
   },
   {
     path: "/signin",
     element: <Protected authenticationRequired={false}>
       <SigninPage />
+      <ToastContainer />
     </Protected>,
   },
   {
     path: "/forgot-password",
     element: <Protected authenticationRequired={false}>
       <ForgotPasswordPage />
+      <ToastContainer />
     </Protected>,
   },
   {
@@ -47,6 +52,7 @@ const router = createBrowserRouter([
     path: "/reset-password/:token",
     element: <Protected authenticationRequired={false}>
       <ResetPasswordPage />
+      <ToastContainer />
     </Protected>,
   },
   {

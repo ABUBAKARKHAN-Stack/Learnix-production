@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { forgotPasswordLink } from '../API/mainFetching';
 import { useNavigate } from 'react-router-dom';
+import { showErrorToast, showSuccessToast } from '../utils/ToastNotification';
 
 function ForgotPassword() {
     // React Hook Form
@@ -9,6 +10,7 @@ function ForgotPassword() {
         register,
         handleSubmit,
         formState: { errors },
+        resetField
     } = useForm();
 
     const [emailSent, setEmailSent] = useState("");
@@ -25,15 +27,20 @@ function ForgotPassword() {
             const res = await forgotPasswordLink(data);
             console.log('API response:', res.data);
             if (res.status === 202) {
+                showSuccessToast(res.data.message);
                 setEmailSent(res.data.message);
             }
         } catch (error) {
             console.log(error);
             // Handle error
             const errorMessage = error.response?.data?.message || error.message || 'An error occurred. Please try again.';
-            alert(errorMessage);
+            showErrorToast(errorMessage);
         } finally {
             setLoading(false);
+            setTimeout(() => {
+                setEmailSent('');
+                resetField("email");
+            }, 3000);
         }
     };
 
@@ -49,8 +56,12 @@ function ForgotPassword() {
                 </p>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                    {/* Block notification for persistent feedback */}
                     {emailSent && (
-                        <div className="bg-green-100 border text-xs text-center border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        <div
+                            className="bg-green-100 border text-xs border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-md mt-4 text-center"
+                            role="alert"
+                        >
                             <span className="block sm:inline">{emailSent}</span>
                         </div>
                     )}
@@ -70,7 +81,7 @@ function ForgotPassword() {
                                 },
                             })}
                             className={`mt-1 block w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'
-                                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-700 placeholder-gray-400`}
+                                } rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-transparent text-gray-700 placeholder-gray-400`}
                         />
                         {errors.email && (
                             <p className="mt-2 text-xs text-red-500">{errors.email.message}</p>

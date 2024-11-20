@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signUpUser } from '../API/mainFetching';
 import PasswordValidation from './PasswordValidation'; // Component for password validation feedback
 import img from '../assets/imgs/loginImage.webp'
+import { showErrorToast, showSuccessToast } from '../utils/ToastNotification';
 
 export function SignUp() {
   // React Hook Form setup
@@ -53,7 +54,7 @@ export function SignUp() {
   const onSubmit = async (data) => {
     // Prevent submission if password is invalid
     if (!isPasswordValid) {
-      return alert('Please fulfill all password requirements.');
+      return showErrorToast('Please fulfill all password requirements.');
     }
     const formData = { ...data, isAdmin: teacher ? true : false }; // Add teacher role if applicable
 
@@ -61,16 +62,18 @@ export function SignUp() {
       setLoading(true);
       const res = await signUpUser(formData); // API call to sign up the user
       console.log(res.data);
-      alert(res.data?.message);
+      showSuccessToast(res.data?.message);
       if (res.status === 201) {
-        navigate('/signin');
+        setTimeout(() => {
+          navigate('/signin');
+        }, 2500);
       }
     } catch (error) {
       setLoading(false)
       console.log(error);
       // Handle error response
       const errorMessage = error.response?.data?.message || error.message || 'An error occurred. Please try again.';
-      alert(errorMessage);
+      showErrorToast(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -223,8 +226,8 @@ export function SignUp() {
             <div className='mx-5 lg:flex lg:justify-between lg:px-16 lg:gap-16 rounded-md px-5 pb-5 sm:mx-16 md:mx-40 lg:mx-16 xl:mx-20'>
 
 
-               {/* Back Button */}
-               <div className='flex items-center'>
+              {/* Back Button */}
+              <div className='flex items-center'>
                 <FiArrowLeft className='absolute top-10 cursor-pointer left-10 lg:top-20 lg:left-20' onClick={handleRefresh} size={40} />
               </div>
 
@@ -238,84 +241,84 @@ export function SignUp() {
                   Welcome to learnix our e-learning platform! As a student, you're embarking on a journey of knowledge, growth, and limitless learning opportunities.
                 </h2>
               </div>
-         
-            
+
+
 
               {/* Student Sign-Up Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className='lg:w-[50%]'>
+              <form onSubmit={handleSubmit(onSubmit)} className='lg:w-[50%]'>
 
 
-            <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>
-              Welcome <FaRegSmile />
-            </h1>
-            <div>
-              <label htmlFor="username" className='text-[14px]'>Username</label>
-              <input
-                type="text"
-                placeholder='username'
-                id="username"
-                {...register('username', {
-                  required: 'Username is required',
-                  pattern: {
-                    value: /^[A-Za-z0-9]+$/,
-                    message: 'Username can only contain letters and numbers'
-                  }
-                })}
-                className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
-              />
-              {errors.username && <p className='text-red-500 tracking-wide text-[10px]'>{errors.username.message}</p>}
-            </div>
-            <div>
-              <label htmlFor="email" className='text-[14px]'>Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder='email'
-                {...register('email', {
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address'
-                  }
-                })}
-                className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
-              />
-              {errors.email && <p className='text-red-500 tracking-wide text-[10px]'>{errors.email.message}</p>}
-            </div>
-            <div>
-              <label htmlFor="password" className='text-[14px]'>Password</label>
-              <input
-                type="password"
-                placeholder='••••••••'
-                id="password"
-                {...register('password', { required: 'Password is required' })}
-                className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
-              />
-              {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
-            </div>
+                <h1 className='mt-10 mb-5 flex items-center gap-2 text-xl'>
+                  Welcome <FaRegSmile />
+                </h1>
+                <div>
+                  <label htmlFor="username" className='text-[14px]'>Username</label>
+                  <input
+                    type="text"
+                    placeholder='username'
+                    id="username"
+                    {...register('username', {
+                      required: 'Username is required',
+                      pattern: {
+                        value: /^[A-Za-z0-9]+$/,
+                        message: 'Username can only contain letters and numbers'
+                      }
+                    })}
+                    className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
+                  />
+                  {errors.username && <p className='text-red-500 tracking-wide text-[10px]'>{errors.username.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="email" className='text-[14px]'>Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder='email'
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: 'Invalid email address'
+                      }
+                    })}
+                    className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
+                  />
+                  {errors.email && <p className='text-red-500 tracking-wide text-[10px]'>{errors.email.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="password" className='text-[14px]'>Password</label>
+                  <input
+                    type="password"
+                    placeholder='••••••••'
+                    id="password"
+                    {...register('password', { required: 'Password is required' })}
+                    className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
+                  />
+                  {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
+                </div>
 
-            {/* Password Validation Component */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              <PasswordValidation password={passwordFieldWatch} onPasswordValidity={onValidityChange} />
-            </div>
+                {/* Password Validation Component */}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  <PasswordValidation password={passwordFieldWatch} onPasswordValidity={onValidityChange} />
+                </div>
 
-            <div className='mx-auto'>
-              <button
-                disabled={loading ? true : false}
-                type='submit'
-                className='w-full rounded-md mt-5 transition-opacity duration-200 ease-linear bg-black text-white disabled:cursor-not-allowed disabled:opacity-50 py-2 shadow-lg outline-none'>
-                Sign Up
-              </button>
+                <div className='mx-auto'>
+                  <button
+                    disabled={loading ? true : false}
+                    type='submit'
+                    className='w-full rounded-md mt-5 transition-opacity duration-200 ease-linear bg-black text-white disabled:cursor-not-allowed disabled:opacity-50 py-2 shadow-lg outline-none'>
+                    Sign Up
+                  </button>
+                </div>
+                <p className='text-center text-[12px] mt-10 '>
+                  Already have an account? <Link to="/signin"><span className='text-red-700'>Sign In</span></Link>
+                </p>
+              </form>
             </div>
-            <p className='text-center text-[12px] mt-10 '>
-              Already have an account? <Link to="/signin"><span className='text-red-700'>Sign In</span></Link>
-            </p>
-          </form>
+          )}
         </div>
-      )}
-    </div>
-  )
-}
+      )
+      }
 
     </div >
   )
