@@ -6,14 +6,22 @@ import img from '../assets/imgs/loginImage.webp'
 import mobileLogo from '../assets/imgs/mobile-logo.png'
 import { FiArrowLeft } from 'react-icons/fi';
 import { FaRegSmile } from 'react-icons/fa'
+import { FaEye } from 'react-icons/fa';
+import { FaEyeSlash } from 'react-icons/fa';
 import { signInUser } from '../API/mainFetching';
 import { showErrorToast, showSuccessToast } from '../utils/ToastNotification'
 
 
 export function SignIn() {
   const { handleSubmit, register, formState: { errors } } = useForm()
+  const[password,SetPassword] = useState(false)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+
+  const handlePass = ()=>{
+    SetPassword(!password)
+  }
 
   const onSubmit = async (data) => {
     console.log('data', data);
@@ -91,13 +99,18 @@ export function SignIn() {
               <label htmlFor="password" className='text-[14px]'>
                 Password
               </label>
-              <input
-                type="password"
+              <div className='relative'>
+                <input
+                type={password ? 'text' : 'password' }
                 placeholder='password'
                 id="password"
                 {...register('password', { required: 'Password is required' })}
-                className='outline-none pl-2 border text-xs focus:ring-1 py-2 w-full rounded-md'
+                className='outline-none pl-2 relative border text-xs focus:ring-1 py-2 w-full rounded-md'
               />
+             {
+              password ? <FaEyeSlash className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} />
+             }</div>
+              
               {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
             </div>
             <div className='mx-auto'>

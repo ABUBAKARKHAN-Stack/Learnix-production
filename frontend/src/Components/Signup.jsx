@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 import logo from '../assets/imgs/LogoText.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { signUpUser } from '../API/mainFetching';
+import { FaEye } from 'react-icons/fa';
+import { FaEyeSlash } from 'react-icons/fa';
 import PasswordValidation from './PasswordValidation'; // Component for password validation feedback
 import img from '../assets/imgs/loginImage.webp'
 import { showErrorToast, showSuccessToast } from '../utils/ToastNotification';
@@ -25,10 +27,17 @@ export function SignUp() {
   const [teacher, setTeacher] = useState(false);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState(true);
+  const [password,SetPassword] = useState(false)
   const navigate = useNavigate();
 
   // State to track password validity
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+
+  //Toggle password hide show
+  const handlePass = ()=>{
+    SetPassword(!password)
+  }
 
   // Toggle to student mode
   const handleStudent = () => {
@@ -192,13 +201,18 @@ export function SignUp() {
                 </div>
                 <div>
                   <label htmlFor="password" className='text-[14px]'>Password</label>
+             <div className='relative'> 
                   <input
-                    type="password"
+                    type={password ? 'text' : 'password'}
                     placeholder='••••••••'
                     id="password"
                     {...register('password', { required: 'Password is required' })}
                     className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
                   />
+                  {
+              password ? <FaEyeSlash className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} />
+             }
+             </div>
                   {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
                 </div>
 
@@ -287,13 +301,19 @@ export function SignUp() {
                 </div>
                 <div>
                   <label htmlFor="password" className='text-[14px]'>Password</label>
+                  <div className='relative'>
                   <input
-                    type="password"
+                    type={password ? 'text' :'password'}
                     placeholder='••••••••'
                     id="password"
                     {...register('password', { required: 'Password is required' })}
                     className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
                   />
+                      {
+              password ? <FaEyeSlash className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} />
+             }
+                  </div>
+                  
                   {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
                 </div>
 
