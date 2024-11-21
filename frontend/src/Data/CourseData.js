@@ -7,12 +7,12 @@ import { AiFillRobot } from 'react-icons/ai';
 export const CourseData = [
   {
     id: 1,
-    icon: FaPython,  // Use the imported icon component directly
+    icon: FaPython, // Use the imported icon component directly
     category: "Programming",
     rating: 4.9,
     name: "Python for AI Integration",
     joinPersons: 3200,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const CourseData = [
     rating: 4.7,
     name: "JavaScript Essentials",
     joinPersons: 2800,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const CourseData = [
     rating: 4.8,
     name: "Master React.js",
     joinPersons: 3500,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const CourseData = [
     rating: 4.6,
     name: "Node.js for Beginners",
     joinPersons: 2700,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 5,
@@ -48,7 +48,7 @@ export const CourseData = [
     rating: 4.8,
     name: "SQL for Data Management",
     joinPersons: 4000,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const CourseData = [
     rating: 4.9,
     name: "AWS Certified Solutions Architect",
     joinPersons: 1500,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 7,
@@ -66,7 +66,7 @@ export const CourseData = [
     rating: 4.7,
     name: "Intro to Machine Learning",
     joinPersons: 2200,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 8,
@@ -75,7 +75,7 @@ export const CourseData = [
     rating: 4.8,
     name: "Frontend Development with HTML, CSS, JS",
     joinPersons: 3000,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 9,
@@ -84,7 +84,7 @@ export const CourseData = [
     rating: 4.6,
     name: "Build Android Apps with Kotlin",
     joinPersons: 1800,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 10,
@@ -93,7 +93,7 @@ export const CourseData = [
     rating: 4.8,
     name: "Swift Programming for iOS",
     joinPersons: 2500,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 11,
@@ -102,7 +102,7 @@ export const CourseData = [
     rating: 4.7,
     name: "Mechanical Engineering Basics",
     joinPersons: 1700,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 12,
@@ -111,7 +111,7 @@ export const CourseData = [
     rating: 4.9,
     name: "Data Analysis with Python and Pandas",
     joinPersons: 4200,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 13,
@@ -120,7 +120,7 @@ export const CourseData = [
     rating: 4.8,
     name: "Advanced Data Visualization",
     joinPersons: 1900,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 14,
@@ -129,7 +129,7 @@ export const CourseData = [
     rating: 4.6,
     name: "Java for Beginners",
     joinPersons: 3000,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 15,
@@ -138,7 +138,7 @@ export const CourseData = [
     rating: 4.8,
     name: "Docker Essentials",
     joinPersons: 2300,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 16,
@@ -147,7 +147,7 @@ export const CourseData = [
     rating: 4.7,
     name: "Git and GitHub for Beginners",
     joinPersons: 2700,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 17,
@@ -156,7 +156,7 @@ export const CourseData = [
     rating: 4.9,
     name: "Deep Learning with Python",
     joinPersons: 3200,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 18,
@@ -165,7 +165,7 @@ export const CourseData = [
     rating: 4.7,
     name: "Sass for Responsive Web Design",
     joinPersons: 2400,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 19,
@@ -174,7 +174,7 @@ export const CourseData = [
     rating: 4.6,
     name: "Express.js for Backend Development",
     joinPersons: 2000,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 20,
@@ -183,7 +183,7 @@ export const CourseData = [
     rating: 4.9,
     name: "Node.js with AWS Lambda",
     joinPersons: 1600,
-    buyButton: "Get Now"
+    buyButton: "Get Now",
   },
   {
     id: 21,
@@ -192,6 +192,6 @@ export const CourseData = [
     rating: 4.8,
     name: "Complete C++ Course",
     joinPersons: 2800,
-    buyButton: "Get Now"
-  }
+    buyButton: "Get Now",
+  },
 ];
