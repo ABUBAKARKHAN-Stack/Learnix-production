@@ -8,7 +8,7 @@ const DashboardCourses = () => {
   return (
     <div className=" w-full mx-auto px-4">
     {
-      PurchasedCourses.length === 0 ?<div className=" lg:w-[40vw] xl:w-[55vw]"> <div className="bg-[#dac9bc] mt-5 h-[270px] w-[240px] p-5 rounded-xl text-center"><h2 className="font-bold text-[20px] ">You have'nt purchase any course yet <FaExclamationCircle className="mx-auto" /> </h2>
+      PurchasedCourses.length ===0 ?<div className=" lg:w-[40vw] xl:w-[55vw]"> <div className="bg-[#dac9bc] mt-5 h-[270px] w-[240px] p-5 rounded-xl text-center"><h2 className="font-bold text-[20px] ">You have'nt purchase any course yet <FaExclamationCircle className="mx-auto" /> </h2>
       <p className="text-gray-500 my-3">Explore courses and enhance your learning</p>
       <Link to='/courses'><button className="bg-black hover:bg-white hover:text-black transition-all duration-500 text-white p-2 mt-2 rounded-3xl">Browse Courses</button></Link></div>
         
