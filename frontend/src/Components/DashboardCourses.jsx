@@ -1,50 +1,71 @@
 import React from "react";
 import { PurchasedCourses } from "../Data/PurchaseCourse";
-import { Link } from "react-router-dom";
 import { FaExclamationCircle } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 const DashboardCourses = () => {
 
+  const navigate = useNavigate();
+
+  const handleDetailsClick = (courseId) => {
+    navigate(`/course/${courseId}`);
+  };
+
+  const handleBrowse = ()=>{
+    navigate('/courses')
+  }
+  
   return (
-    <div className=" w-full mx-auto px-4">
-    {
-      PurchasedCourses.length ===0 ?<div className=" lg:w-[40vw] xl:w-[55vw]"> <div className="bg-[#dac9bc] mt-5 h-[270px] w-[240px] p-5 rounded-xl text-center"><h2 className="font-bold text-[20px] ">You have'nt purchase any course yet <FaExclamationCircle className="mx-auto" /> </h2>
-      <p className="text-gray-500 my-3">Explore courses and enhance your learning</p>
-      <Link to='/courses'><button className="bg-black hover:bg-white hover:text-black transition-all duration-500 text-white p-2 mt-2 rounded-3xl">Browse Courses</button></Link></div>
-        
-      </div> :
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-          {PurchasedCourses.map((course, index) => (
-            <div key={course.id} className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-              
+    <div className="w-full mx-auto px-4">
+      {PurchasedCourses.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-[400px]">
+          <FaExclamationCircle className="text-red-500 text-6xl mb-4" />
+          <h1 className="text-2xl text-center font-semibold text-gray-700">
+            You don't have purchased courses
+          </h1>
+          <button onClick={handleBrowse} className="bg-black p-2 px-4 text-white rounded-3xl mt-10">
+            Browse Courses
+          </button>
+        </div>
+      ) : (
+        <div className="relative grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+          {PurchasedCourses.map((course) => (
+            <div
+              key={course.id}
+              className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300 w-[300px] md:w-[270px] md:h-[400px] lg:w-[270px] xl:w-[240px] h-[400px] mx-auto"
+            >
               {/* Course Icon */}
-              <div className="flex justify-center mt-4">
-                <div className="text-4xl text-gray-600">
-                  {React.createElement(course.icon)}  {/* Render the icon dynamically */}
+              <div className="flex justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 w-full h-1/3">
+                <div className="text-5xl text-white">
+                  {React.createElement(course.icon)} {/* Render the icon dynamically */}
                 </div>
               </div>
 
               {/* Course Details */}
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900">{course.name}</h3>
-                <p className="text-sm text-gray-600">{course.category}</p>
-                <div className="flex items-center gap-5 mt-2">
-                  {/* Rating */}
-                  <div className="flex items-center text-yellow-500">
-                    <span className="mr-2">{course.rating}</span>
-                    <span>⭐</span>
+              <div className="p-5 h-2/3 flex flex-col justify-between">
+                <div>
+                  {/* Course Name */}
+                  <h3 className="text-lg font-bold text-gray-800">{course.name}</h3>
+                  {/* Course Category */}
+                  <p className="text-sm text-gray-600 mt-2">{course.category}</p>
+                  {/* Course Rating and People */}
+                  <div className="flex items-center justify-between mt-4">
+                    <div className="flex items-center text-yellow-500 text-base">
+                      <span className="mr-1">{course.rating}</span>
+                      <span>⭐</span>
+                    </div>
+                    <div className="text-sm text-gray-600">{course.joinPersons} students</div>
                   </div>
-                  {/* Number of People */}
-                  <div className="text-sm text-gray-600">{course.joinPersons} students</div>
                 </div>
-                {/* Buy Button */}
-                <button className="bottom-0 relative mt-10 bg-blue-500 text-white py-2 px-4 rounded-full">{course.details}</button>
+                {/* Details Button */}
+                <button onClick={() => handleDetailsClick(course.id)} className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 shadow-lg">
+                  {course.details}
+                </button>
               </div>
             </div>
           ))}
         </div>
-    }
-      
+      )}
     </div>
   );
 };
