@@ -92,7 +92,7 @@ const loginUser = async (req, res) => {
                 })
 
 
-            const verificationURL = `${process.env.CLIENT_URL}/verification-email/${verifyEmailToken}` 
+            const verificationURL = `${process.env.CLIENT_URL}/verification-email/${verifyEmailToken}`
 
             // await sendEmailVerification(user.email, verificationURL)
             await sendEmails(user.email, "Email Verification", `
@@ -170,11 +170,11 @@ const verifyEmail = async (req, res) => {
         }
 
 
-       setTimeout(() => {
-         return res
-             .status(200)
-             .json(new ApiResponse(200, null, "Email verified successfully"))
-       }, 1000);
+        setTimeout(() => {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, null, "Email verified successfully"))
+        }, 1000);
 
     } catch (error) {
         setTimeout(() => {
@@ -268,11 +268,11 @@ const resetPassword = async (req, res) => {
             }
         })
 
-       setTimeout(() => {
-         return res
-             .status(200)
-             .json(new ApiResponse(200, null, "Password reset successfully"))
-       }, 500);
+        setTimeout(() => {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, null, "Password reset successfully"))
+        }, 500);
     } catch (error) {
 
         return res
@@ -335,6 +335,50 @@ const uploadAvatar = async (req, res) => {
     }
 }
 
+
+
+// Update user profile
+const updateUser = async (req, res) => {
+    const { username, email, password  } = req.body
+    const avatar = req?.file?.path
+    const userID = req.user._id
+
+    if (!userID) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "User ID is required"))
+    }
+
+
+
+    try {
+        const user = await userModel.findByIdAndUpdate(userID, {
+            $set: {
+                username,
+                email,
+                password,
+                avatar
+            }
+        }, {
+            new: true
+        })
+
+        if (!user) {
+            return res
+                .status(404)
+                .json(new ApiError(404, "User not found"))
+        }
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, user, "User updated successfully"))
+    } catch (error) {
+
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message, "Something went wrong while updating user"))
+    }
+}
 
 export {
     createUser,

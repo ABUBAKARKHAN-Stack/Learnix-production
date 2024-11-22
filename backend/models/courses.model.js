@@ -17,10 +17,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    user: {
+    user: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
-    },
+    }],
     videos: [
         {
             type: mongoose.Schema.Types.ObjectId,
