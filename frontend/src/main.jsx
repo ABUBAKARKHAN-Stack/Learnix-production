@@ -11,11 +11,12 @@ import { CourseData } from "./Data/CourseData";
 import Protected from "./Components/AuthLayout/Protected";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ResetPasswordPage from "./Pages/REsetPasswordPage";
-import { Slide, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DashboardCoursePage from "./Components/DashboardCoursePage";
 import CoursesPage from "./Pages/CoursesPage";
 
+import Settings from "./Pages/Setting";
 
 const router = createBrowserRouter([
   {
@@ -87,12 +88,23 @@ const router = createBrowserRouter([
     ),
   },
 
-    {
-      path: "/courses",
-      element: <Protected authenticationRequired={false}>
-      <CoursesPage/>
-      </Protected>,
-      },
+  {
+    path: "/courses",
+    element: (
+      <Protected authenticationRequired={false}>
+        <CoursesPage />
+      </Protected>
+    ),
+  },
+
+  {
+    path: "/setting",
+    element: (
+      <Protected authenticationRequired={false}>
+        <Settings />
+      </Protected>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
