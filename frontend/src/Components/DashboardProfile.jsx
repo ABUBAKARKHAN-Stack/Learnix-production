@@ -57,8 +57,13 @@ const DashboardProfile = ({ user }) => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <div className=" h-[90vh] mt-20 md:mt-0 mx-auto min-w-[300px] md:w-[500px] lg:w-[400px] w-fit relative right-0 p-2  flex justify-center">
       <div className="bg-white   rounded-2xl shadow-lg p-6 space-y-8">
+=======
+    <div className=" min-h-screen w-1/3 p-2 h-[90%] flex justify-center">
+      <div className="bg-white   rounded-lg shadow-lg p-6 space-y-8">
+>>>>>>> 5734c7ef641c90d03b92c381b90f4498ad75cddb
         {/* Header Section */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
@@ -72,10 +77,17 @@ const DashboardProfile = ({ user }) => {
               </p>
             </div>
           </div>
+<<<<<<< HEAD
           {/* <div className="flex items-center gap-4">
             <FaBell className="text-gray-600 text-2xl cursor-pointer hover:text-gray-800" />
             <FaCog className="text-gray-600 text-2xl cursor-pointer hover:text-gray-800" />
           </div> */}
+=======
+          <div className="flex items-center gap-4">
+            <FaBell className="text-gray-600 text-2xl cursor-pointer hover:text-gray-800" />
+            <FaCog className="text-gray-600 text-2xl cursor-pointer hover:text-gray-800" />
+          </div>
+>>>>>>> 5734c7ef641c90d03b92c381b90f4498ad75cddb
         </div>
 
         {/* Activity Chart */}

@@ -25,7 +25,11 @@ const Sidebar = () => {
   return (
     <div className="">
       {/* Desktop Sidebar */}
+<<<<<<< HEAD
       <div className="hidden md:flex md:ml-5 h-[90vh] w-[90px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
+=======
+      <div className="hidden md:flex h-[90vh]  w-[90px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
+>>>>>>> 5734c7ef641c90d03b92c381b90f4498ad75cddb
         {/* Logo Section */}
         <div className="flex justify-center mb-4">
           <Link to="/dashboard">

@@ -216,4 +216,8 @@ const DashboardCoursePage = ({ courses }) => {
   );
 };
 
+<<<<<<< HEAD
 export default DashboardCoursePage;
+=======
+export default DashboardCoursePage;
+>>>>>>> 5734c7ef641c90d03b92c381b90f4498ad75cddb
