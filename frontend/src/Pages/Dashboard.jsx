@@ -28,7 +28,6 @@ function Dashboard({ courses }) {
   };
 
   return (
-<<<<<<< HEAD
     <div className="relative m-0 gap-4  bg-[#F3EBE5] overflow-hidden">
       {/* Show on screens larger than md */}
       <div className="hidden md:relative md:flex flex-row overflow-hidden justify-between">
@@ -41,25 +40,6 @@ function Dashboard({ courses }) {
           onCancelCourse={handleCancelCourse}
         /></div>
         
-=======
-    <div className="relative m-0 gap-4 pl-5 bg-[#FBF8F6] overflow-hidden h-screen">
-      {/* Large screens */}
-      <div className="hidden md:flex flex-row justify-between">
-        <div className="ml-[2px] mt-[39px]  ">
-          {" "}
-          <Sidebar />
-        </div>
-        <DashboardMain
-          courses={courses}
-          onGetNow={handleGetNow}
-          onViewCourse={handleViewCourse}
-        />
-        <DashboardProfile
-          userProfileCourses={userProfileCourses}
-          onCancelCourse={handleCancelCourse}
-          onViewCourse={handleViewCourse}
-        />
->>>>>>> 5734c7ef641c90d03b92c381b90f4498ad75cddb
       </div>
 
       {/* Small screens */}
