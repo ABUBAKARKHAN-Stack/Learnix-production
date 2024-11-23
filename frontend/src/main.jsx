@@ -18,6 +18,7 @@ import CoursesPage from "./Pages/CoursesPage";
 import CourseDetailsPage from "./Pages/CourseDetailsPage";
 
 import Settings from "./Pages/Setting";
+import CreateCoursePage from "./Pages/CreateCoursePage";
 
 const router = createBrowserRouter([
   {
@@ -81,9 +82,17 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/create_course",
+    element: (
+      <Protected authenticationRequired={false}>
+       <CreateCoursePage />
+      </Protected>
+    ),
+  },
+  {
     path: "/your-courses/course/:id",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <DashboardCoursePage courses={CourseData} />
       </Protected>
     ),
@@ -91,7 +100,7 @@ const router = createBrowserRouter([
   {
     path: "/courses",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <CoursesPage />
       </Protected>
     ),
@@ -107,7 +116,7 @@ const router = createBrowserRouter([
   {
     path: "/setting",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <Settings />
       </Protected>
     ),

@@ -3,6 +3,8 @@ import { PurchasedCourses } from "../Data/PurchaseCourse";
 import { FaExclamationCircle } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import { getPurchasedCourses } from "../API/mainFetching";
+import { MdAdd, MdDelete, MdEdit } from 'react-icons/md';
+
 
 const DashboardCourses = () => {
 
@@ -35,21 +37,25 @@ const DashboardCourses = () => {
     navigate("/courses");
   };
 
+  //handle createCourse
+  const handleCreateCourse = ()=>{
+    navigate('/create_course')
+  }
+
   return (
     <div className="w-full mx-auto px-4">
       {
         teacher ? <>
-        <div className="flex justify-end shadow-xl rounded-xl bg-white p-2 border-b-0"><button className="p-3 bg-black rounded-lg text-white">Create Course</button>         </div>
-
+      
         <div>
           {PurchasedCourses.length === 0 ?  (
-          <div className="flex flex-col items-center justify-center h-[400px]">
+          <div className="flex mt-10 flex-col items-center justify-center h-[400px]">
             <h1 className="text-2xl text-center font-semibold text-gray-700">
               You have not created any course
             </h1>
           </div>
         ) : (
-          <div className="relative  overflow-hidden grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:flex xl:flex-col gap-8 mt-8">
+          <div className="relative overflow-hidden grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:flex xl:flex-col gap-8 mt-8 ">
             {PurchasedCourses.map((course) => (
               <div
                 key={course.id}
@@ -81,9 +87,16 @@ const DashboardCourses = () => {
                     </div>
                   </div>
                   {/* Details Button */}
-                  <button onClick={() => handleDetailsClick(course.id)} className="w-full xl:w-[120px] mt-4 xl:mt-0 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 shadow-lg">
-                    {course.details}
+                  <div className="flex mx-auto w-fit md:mx-0 gap-5"><button onClick={() => handleDetailsClick(course.id)} className="  p-5   rounded-full transition-all duration-300 shadow-lg">
+                    <MdAdd/>
                   </button>
+                  <button onClick={() => handleDetailsClick(course.id)} className="  p-5   rounded-full transition-all duration-300 shadow-lg">
+                    <MdEdit/>
+                  </button> 
+                  <button onClick={() => handleDetailsClick(course.id)} className="  p-5   rounded-full transition-all duration-300 shadow-lg">
+                    <MdDelete/>
+                  </button> </div>
+                  
                 </div>
               </div>
             ))}

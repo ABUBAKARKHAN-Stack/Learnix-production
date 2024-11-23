@@ -28,7 +28,7 @@ function Dashboard({ courses }) {
   };
 
   return (
-    <div className="relative m-0 gap-4 h-screen bg-[#F3EBE5] overflow-hidden">
+    <div className="relative m-0 gap-4 bg-[#F3EBE5] ">
       {/* Show on screens larger than md */}
       <div className="hidden md:relative md:flex flex-row overflow-hidden justify-between">
         <div className="my-auto">
@@ -44,7 +44,7 @@ function Dashboard({ courses }) {
 
       {/* Small screens */}
       <div className="flex flex-col ss:flex md:hidden">
-        <Sidebar />
+       <div className="z-20"> <Sidebar /></div>
         <DashboardProfile
           userProfileCourses={userProfileCourses}
           onCancelCourse={handleCancelCourse}
