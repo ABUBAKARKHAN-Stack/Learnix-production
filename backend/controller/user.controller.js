@@ -335,7 +335,20 @@ const uploadAvatar = async (req, res) => {
     }
 }
 
-
+// Get Logged in user
+const getLoggedInUser = async (req, res) => {
+    const userID = req.user._id
+    try {
+        const user = await userModel.findById(userID)
+        return res
+            .status(200)
+            .json(new ApiResponse(200, user, "User fetched successfully"))
+    } catch (error) {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message, "Something went wrong while fetching user"))
+    }
+ }
 
 // Update user profile
 const updateUser = async (req, res) => {
@@ -414,5 +427,6 @@ export {
     forgotPassword,
     resetPassword,
     uploadAvatar,
-    updateUser
+    updateUser,
+    getLoggedInUser
 }

@@ -30,7 +30,11 @@ const courseSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'videos'
         }
-    ]
+    ],
+    isPurchased: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const courseModel = mongoose.model('courses', courseSchema)

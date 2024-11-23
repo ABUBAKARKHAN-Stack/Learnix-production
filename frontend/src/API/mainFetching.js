@@ -32,6 +32,13 @@ const resetPassword = async (data, token) => {
     return await api.post(`users/reset-password/${token}`, data)
 }
 
+//  API call to get logged in user
+const getLoggedInUser = async () => {
+    return await api.get('users/me', {
+        withCredentials: true
+    })
+}
+
 // API call to get all courses
 const getAllCourses = async () => {
     return await api.get('courses' , {
@@ -60,6 +67,13 @@ const getPurchaseCourseById = async (id) => {
     })
 }
 
+// 
+const getAdminCourses = async () => {
+    return await api.get('courses/admin-courses' , {
+        withCredentials: true
+    })
+}
+
 
 export {
     signUpUser,
@@ -67,8 +81,10 @@ export {
     verifyEmail,
     forgotPasswordLink,
     resetPassword,
+    getLoggedInUser,
     getAllCourses,
     getCourseById,
     getPurchasedCourses,
-    getPurchaseCourseById
+    getPurchaseCourseById,
+    getAdminCourses
 }

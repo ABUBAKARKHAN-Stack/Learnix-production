@@ -7,7 +7,8 @@ import {
     resetPassword,
     logout,
     uploadAvatar,
-    updateUser
+    updateUser,
+    getLoggedInUser
 } from "../controller/user.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import { upload } from "../config/multer.config.js";
@@ -40,6 +41,10 @@ router.post('/upload-avatar', authMiddleware, upload.single('avatar'), uploadAva
 
 // Update user route
 router.put('/update-settings', authMiddleware, upload.single('update-avatar'), updateUser)
+
+
+// Get logged in user route
+router.get('/me', authMiddleware, getLoggedInUser)
 
 
 
