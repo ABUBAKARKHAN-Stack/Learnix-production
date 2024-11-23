@@ -6,7 +6,7 @@ import fs from "fs";
 const client = new Vimeo(
     "5ff63b5c6a81742af5d222712c80f0aa9b749259",
     "BCBbabJKIRnsDBOu2LkyXlIVSH73yWJir6sDBD5oCJZCxikqxNpR1mbzJ4TNJ1SYTxiQfLrde6/+PW0wX2NqntiAf/eAJEplG2BVz6vrBzAkYGehXdOCLvSpPcpGll6k",
-    "2692f8a0889b4fd67d31c26176018c5a"
+    "577f43fff3e9f22aeb2d4db635392978"
 )
 
 
