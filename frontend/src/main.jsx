@@ -7,7 +7,6 @@ import SigninPage from "./Pages/SigninPage";
 import SignupPage from "./Pages/SignupPage";
 import Dashboard from "./Pages/Dashboard";
 import EmailVerificationPage from "./Pages/EmailVerificationPage";
-import { CourseData } from "./Data/CourseData";
 import Protected from "./Components/AuthLayout/Protected";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ResetPasswordPage from "./Pages/REsetPasswordPage";
@@ -77,15 +76,15 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Protected authenticationRequired={false}>
-        <Dashboard courses={CourseData} />
+      <Protected authenticationRequired={true}>
+        <Dashboard  />
       </Protected>
     ),
   },
   {
     path: "/create_course",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
        <CreateCoursePage />
       </Protected>
     ),
@@ -93,15 +92,15 @@ const router = createBrowserRouter([
   {
     path: "/your-courses/course/:id",
     element: (
-      <Protected authenticationRequired={false}>
-        <DashboardCoursePage courses={CourseData} />
+      <Protected authenticationRequired={true}>
+        <DashboardCoursePage  />
       </Protected>
     ),
   },
   {
     path: "/courses",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <CoursesPage />
       </Protected>
     ),
@@ -109,7 +108,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/course-details/:id",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <CourseDetailsPage />
       </Protected>
     ),
@@ -117,7 +116,7 @@ const router = createBrowserRouter([
   {
     path: "/setting",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Settings />
       </Protected>
     ),

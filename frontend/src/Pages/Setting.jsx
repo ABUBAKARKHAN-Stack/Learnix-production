@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   FiEdit2,
@@ -11,11 +11,11 @@ import {
   FiCheck,
   FiX,
 } from "react-icons/fi";
+import { getLoggedInUser } from '../API/mainFetching'
+import { FaUserCircle } from "react-icons/fa";
+import { Navigate } from "react-router-dom";
 
 const SettingsPage = () => {
-  const [profilePicture, setProfilePicture] = useState(
-    "https://via.placeholder.com/80"
-  );
   const [editableFields, setEditableFields] = useState({
     name: false,
     username: false,
@@ -24,6 +24,25 @@ const SettingsPage = () => {
   });
   const [successMessage, setSuccessMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await getLoggedInUser();
+        const userData = res.data.data;
+        setUser(userData);
+        setValue("name", userData.username);
+        setValue("username", userData.username);
+        setValue("email", userData.email);
+        setValue("password", userData.password);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const {
     register,
@@ -33,10 +52,10 @@ const SettingsPage = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "John Doe",
-      username: "johndoe",
-      email: "john.doe@example.com",
-      password: "password123",
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      password: user.password,
     },
   });
 
@@ -61,7 +80,7 @@ const SettingsPage = () => {
       password: false,
     });
     setSuccessMessage("Changes saved successfully!");
-    setTimeout(() => setSuccessMessage(""), 3000);
+    setTimeout(() => setSuccessMessage(""), 1000);
   };
 
   const handleLogout = () => {
@@ -74,12 +93,16 @@ const SettingsPage = () => {
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden relative">
         {/* Header */}
         <div className="bg-gray-900 text-white px-6 py-4 flex items-center gap-4 flex-wrap">
-          <img
-            src={profilePicture}
-            alt="Profile"
-            className="w-16 h-16 rounded-full object-cover border-2 border-white cursor-pointer"
-            onClick={() => setShowModal(true)}
-          />
+          {
+            user.avatar ? (
+              <img
+                src={user.avatar}
+                alt="Profile"
+                className="w-16 h-16 rounded-full object-cover border-2 border-white cursor-pointer"
+                onClick={() => setShowModal(true)}
+              />
+            ) : <FaUserCircle className="w-16 h-16 rounded-full object-cover border-2 border-white cursor-pointer" onClick={() => setShowModal(true)} />
+          }
           <div>
             <h2 className="text-lg sm:text-xl font-bold">{watch("name")}</h2>
             <p className="text-sm">@{watch("username")}</p>
@@ -133,11 +156,10 @@ const SettingsPage = () => {
                     })}
                     readOnly={!editableFields[field]}
                     onChange={(e) => setValue(field, e.target.value)}
-                    className={`w-full border-2 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all ${
-                      editableFields[field]
-                        ? "border-black"
-                        : "border-gray-300 bg-gray-100"
-                    }`}
+                    className={`w-full border-2 px-3 py-2 rounded-lg focus:outline-none  focus:border-black transition-all ${editableFields[field]
+                      ? "border-black"
+                      : "border-gray-300 bg-gray-100"
+                      }`}
                   />
                   <button
                     type="button"
@@ -181,15 +203,15 @@ const SettingsPage = () => {
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
           onClick={() => setShowModal(false)}>
           <div
-            className="bg-white p-6 rounded-lg relative max-w-md w-full"
+            className="bg-white p-10 rounded-lg relative max-w-md w-full"
             onClick={(e) => e.stopPropagation()}>
             <img
-              src={profilePicture}
+              src={user?.avatar}
               alt="Profile Preview"
               className="w-full h-auto object-cover rounded-lg"
             />
             <button
-              className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+              className="absolute top-2 right-2 "
               onClick={() => setShowModal(false)}>
               <FiX className="text-black text-2xl" />
             </button>

@@ -42,7 +42,7 @@ function Dashboard() {
 
       {/* Small screens */}
       <div className="flex flex-col ss:flex md:hidden">
-       <div className="z-20"><Sidebar  /></div> 
+        <div className="z-20"><Sidebar /></div>
         <DashboardProfile user={activeUser} />
         <DashboardMain isAdmin={activeUser.isAdmin} />
       </div>

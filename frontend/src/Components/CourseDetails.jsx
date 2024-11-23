@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCourseById } from "../API/mainFetching";
+import { getCourseById, purchaseCourse } from "../API/mainFetching";
 
 function CourseDetail({ id }) {
     const navigate = useNavigate();
@@ -21,6 +21,15 @@ function CourseDetail({ id }) {
             }
         })();
     }, [id]);
+
+    const handlePurchase = async () => {
+        try {
+            await purchaseCourse(id);
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Error purchasing course:", error);
+        }
+    }
 
     if (loading) {
         // Loading state
@@ -84,7 +93,8 @@ function CourseDetail({ id }) {
                 <div className="mt-8 flex flex-col sm:flex-row gap-4">
                     {/* Proceed to Checkout Button */}
                     <button
-                        onClick={() => navigate(`/checkout`, { state: { course } })}
+                        // onClick={() => navigate(`/checkout`, { state: { course } })}
+                        onClick={handlePurchase}
                         className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition-transform duration-300 hover:scale-[1.025] shadow-md"
                     >
                         Proceed to Checkout

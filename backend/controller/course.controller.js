@@ -217,17 +217,14 @@ const purchaseCourse = async (req, res) => {
             return res.status(400).json(new ApiError(400, "Invalid user ID"));
         }
 
-        const course = await courseModel.findById(courseId);
+        const course = await courseModel.findById(courseId).populate("");
 
         if (!course) {
             return res.status(404).json(new ApiError(404, "Course not found"));
         }
 
-        if (course.isPurchased) {
-            return res.status(400).json(new ApiError(400, "Course is already purchased"));
-        }
-
         course.isPurchased = true;
+        course.enrollments.push(userID);
         await course.save();
 
         return res
@@ -249,7 +246,7 @@ const getPurchasedCourses = async (req, res) => {
 
         // Query courses where the user is enrolled
         const courses = await courseModel
-            .find({ user: userID, isPurchased: true })
+            .find({ enrollments: userID })
             .select("name description price image videos")
             .lean();
 

@@ -39,6 +39,12 @@ const getLoggedInUser = async () => {
     })
 }
 
+const logoutUser = async () => {
+    return await api.get('users/logout', {
+        withCredentials: true
+    })
+}
+
 // API call to get all courses
 const getAllCourses = async () => {
     return await api.get('courses' , {
@@ -54,7 +60,7 @@ const getCourseById = async (id) => {
 }
 
 const purchaseCourse = async (id) => {
-    return await api.post(`courses/purchase/${id}` , {
+    return await api.post(`courses/purchase/${id}` , {} , {
         withCredentials: true
     })
 }
@@ -88,6 +94,7 @@ export {
     forgotPasswordLink,
     resetPassword,
     getLoggedInUser,
+    logoutUser,
     getAllCourses,
     getCourseById,
     getPurchasedCourses,
