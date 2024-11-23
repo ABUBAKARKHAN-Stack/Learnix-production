@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardCoursePage from "./Components/DashboardCoursePage";
 import CoursesPage from "./Pages/CoursesPage";
+import CourseDetailsPage from "./Pages/CourseDetailsPage";
 
 import Settings from "./Pages/Setting";
 
@@ -80,14 +81,13 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/course/:id",
+    path: "/your-courses/course/:id",
     element: (
       <Protected authenticationRequired={true}>
         <DashboardCoursePage courses={CourseData} />
       </Protected>
     ),
   },
-
   {
     path: "/courses",
     element: (
@@ -96,7 +96,14 @@ const router = createBrowserRouter([
       </Protected>
     ),
   },
-
+  {
+    path: "/courses/course-details/:id",
+    element: (
+      <Protected authenticationRequired={true}>
+        <CourseDetailsPage />
+      </Protected>
+    ),
+  },
   {
     path: "/setting",
     element: (

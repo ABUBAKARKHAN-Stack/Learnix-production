@@ -4,23 +4,26 @@ import { FaRupeeSign } from "react-icons/fa6";
 import { FaSearch } from 'react-icons/fa';
 import { getAllCourses } from "../API/mainFetching";
 import useDebouce from '../hooks/useDebounce';
+import { useNavigate } from 'react-router-dom';
 
 function Courses() {
   const [allCourses, setAllCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
   const debouncedSearchTerm = useDebouce(searchTerm, 500);
 
   useEffect(() => {
     (async () => {
       try {
         const res = await getAllCourses();
+        console.log(res.data.data);
         const courses = res.data.data.map((course) => ({
           id: course._id,
           description: course.description,
           name: course.name,
           price: course.price,
           image: course.image,
-          enrolled: course.user.length,
+          enrolled: course.enrollments.length,
           rating: course.rating || 4.5,
         }));
         setAllCourses(courses);
@@ -106,7 +109,9 @@ function Courses() {
                     </span>
                     <span className="text-sm">{course.enrolled} students</span>
                   </div>
-                  <button className="mt-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500 text-white font-medium py-2 rounded-lg transition-transform duration-300 hover:scale-[1.025]">
+                  <button
+                    onClick={() => navigate(`/courses/course-details/${course.id}`)}
+                    className="mt-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500 text-white font-medium py-2 rounded-lg transition-transform duration-300 hover:scale-[1.025]">
                     Get Now
                   </button>
                 </div>

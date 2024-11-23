@@ -17,10 +17,14 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    user: [{
+    enrollments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
     }],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+    },
     videos: [
         {
             type: mongoose.Schema.Types.ObjectId,

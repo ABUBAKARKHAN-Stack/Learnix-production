@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createCourse, updateCourse, deleteCourse, getAllCourses, getCourseWithLectures } from "../controller/course.controller.js";
-import { createQuiz , addQuestionToQuiz  , getFullQuiz} from '../controller/quiz.controller.js'
+import { createCourse, updateCourse, deleteCourse, getAllCourses, getCourseWithLectures, getSingleCourse, getPurchasedCourses } from "../controller/course.controller.js";
+import { createQuiz, addQuestionToQuiz, getFullQuiz } from '../controller/quiz.controller.js'
 import authMiddleware from "../middlewares/auth.middleware.js";
 import isAdmin from "../middlewares/isAdmin.middleware.js";
 import { upload } from "../config/multer.config.js";
@@ -23,8 +23,15 @@ router.delete("/delete/:courseId", authMiddleware, isAdmin, deleteCourse)
 // Get all courses route
 router.get("/", authMiddleware, getAllCourses)
 
+// Get Single Course Details without lectures
+router.get("/course-details/:courseId", authMiddleware, getSingleCourse)
+
 // Get Single course with all Lectures
 router.get("/:courseId", authMiddleware, getCourseWithLectures)
+
+
+// Get Purchased Courses
+router.get("/your-courses", authMiddleware, getPurchasedCourses)
 
 //  Create new quiz route
 router.post("/quiz/create/:courseId", authMiddleware, isAdmin, createQuiz)

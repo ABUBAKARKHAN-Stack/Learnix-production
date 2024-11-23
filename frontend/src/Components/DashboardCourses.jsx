@@ -9,13 +9,13 @@ const DashboardCourses = () => {
 
 
   const handleDetailsClick = (courseId) => {
-    navigate(`/course/${courseId}`);
+    navigate(`/your-courses/course/${courseId}`);
   };
 
-  const handleBrowse = ()=>{
+  const handleBrowse = () => {
     navigate('/courses')
   }
-  
+
   return (
     <div className="w-full mx-auto px-4">
       {PurchasedCourses.length === 0 ? (

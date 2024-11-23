@@ -24,7 +24,7 @@ function Dashboard({ courses }) {
 
   // Handle navigation to a specific course page
   const handleViewCourse = (course) => {
-    navigate(`/dashboard/course/${course.id}`);
+    navigate(`/your-courses/course/${course.id}`);
   };
 
   return (
@@ -32,14 +32,14 @@ function Dashboard({ courses }) {
       {/* Show on screens larger than md */}
       <div className="hidden md:relative md:flex flex-row overflow-hidden justify-between">
         <div className="my-auto">
-        <Sidebar />
+          <Sidebar />
         </div>
         <DashboardMain courses={courses} onGetNow={handleGetNow} />
         <div className="my-10"><DashboardProfile
           userProfileCourses={userProfileCourses}
           onCancelCourse={handleCancelCourse}
         /></div>
-        
+
       </div>
 
       {/* Small screens */}

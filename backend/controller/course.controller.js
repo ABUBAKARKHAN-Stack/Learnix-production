@@ -167,12 +167,34 @@ const getCourseWithLectures = async (req, res) => {
     }
 }
 
+// Get Single Course Details without lectures
+const getSingleCourse = async (req, res) => {
+    const { courseId } = req.params
+    try {
+        const course = await courseModel.findById(courseId).select("name description price image enrollments")
+
+        if (!course) {
+            return res
+                .status(404)
+                .json(new ApiError(404, "Course not found"))
+        }
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, course, "Course fetched successfully"))
+    } catch (error) {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message))
+    }
+}
+
 
 // Get all courses 
 const getAllCourses = async (req, res) => {
     try {
         const courses = await courseModel.find({})
-            .select("name description price image user")
+            .select("name description price image enrollments user")
             .lean()
         return res
             .status(200)
@@ -184,11 +206,21 @@ const getAllCourses = async (req, res) => {
     }
 }
 
+// Get Purchased Courses
+const getPurchasedCourses = async (req, res) => {
+    const userID = req.user._id;
+    const user = await userModel.findById(userID);
+
+    console.log(user);
+};
+
 
 export {
     createCourse,
     updateCourse,
     deleteCourse,
     getAllCourses,
-    getCourseWithLectures
+    getCourseWithLectures,
+    getSingleCourse,
+    getPurchasedCourses
 } 
