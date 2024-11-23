@@ -35,7 +35,7 @@ const courseSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-})
+}, { timestamps: true })
 
 const courseModel = mongoose.model('courses', courseSchema)
 

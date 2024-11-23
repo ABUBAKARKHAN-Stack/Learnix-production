@@ -10,6 +10,40 @@ const client = new Vimeo(
 )
 
 
+// Function to wait until the video has finished processing on Vimeo
+const waitForProcessing = async (videoId) => {
+    return new Promise((resolve, reject) => {
+        const interval = setInterval(async () => {
+            try {
+                client.request(
+                    {
+                        method: "GET",
+                        path: `/videos/${videoId}`,
+                    },
+                    (error, body) => {
+                        if (error) {
+                            clearInterval(interval);
+                            console.error("Error checking processing status:", error);
+                            reject(error);
+                        } else if (body.status === "available") {
+                            // Video is processed and available
+                            clearInterval(interval);
+                            resolve(body); // Resolve with the full metadata
+                        } else {
+                            console.log("Video still processing...");
+                        }
+                    }
+                );
+            } catch (err) {
+                clearInterval(interval);
+                console.error("Error waiting for processing:", err);
+                reject(err);
+            }
+        }, 2000); // Check every 2 seconds
+    });
+};
+
+// Function to upload video to Vimeo
 const uploadVideoToVimeo = async (videoPath, title, description) => {
     try {
         return new Promise((resolve, reject) => {
@@ -18,56 +52,49 @@ const uploadVideoToVimeo = async (videoPath, title, description) => {
                 {
                     name: title,
                     description: description,
-                    privacy: { view: 'unlisted' }, // Set privacy to "unlisted"
+                    privacy: { view: "unlisted" }, // Set privacy to "unlisted"
                 },
                 async (uri) => {
-                    fs.unlinkSync(videoPath) // Delete the local file
+                    // Delete the local file after successful upload
+                    fs.unlinkSync(videoPath);
+
                     try {
                         // Extract video ID from the URI
-                        const videoId = uri.split('/videos/')[1];
+                        const videoId = uri.split("/videos/")[1];
 
-                        // Make an API call to fetch video metadata
-                        const metadata = await new Promise((resolveMetadata, rejectMetadata) => {
-                            client.request(
-                                {
-                                    method: 'GET',
-                                    path: `/videos/${videoId}`,
-                                },
-                                (error, body) => {
-                                    if (error) {
-                                        console.error('Failed to fetch video metadata:', error);
-                                        rejectMetadata(error);
-                                    } else {
-                                        resolveMetadata(body);
-                                    }
-                                }
-                            );
-                        });
+                        // Wait for the video to finish processing
+                        console.log("Waiting for video processing...");
+                        const processedMetadata = await waitForProcessing(videoId);
 
-                        // Get the embed URL containing the hash
-                        const embedUrl = metadata.embed.html.match(/src="([^"]+)"/)[1];
-                        console.log('Embed URL:', embedUrl);
+                        // Extract the embed URL and duration
+                        const embedUrl = processedMetadata.embed.html.match(/src="([^"]+)"/)[1];
+                        const duration = processedMetadata.duration; // Duration in seconds
 
-                        // Resolve the embed URL
-                        resolve(embedUrl);
+                        console.log("Video upload completed!");
+                        console.log("Embed URL:", embedUrl);
+                        console.log("Video Duration:", duration, "seconds");
+
+                        // Resolve the result
+                        resolve({ embedUrl, duration });
                     } catch (error) {
-                        console.error('Failed to fetch embed URL:', error);
+                        console.error("Error fetching metadata after processing:", error);
                         reject(error);
                     }
                 },
                 (bytesUploaded, bytesTotal) => {
+                    // Progress callback
                     const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
                     console.log(`Upload progress: ${percentage}%`);
                 },
                 (error) => {
-                    console.error('Upload failed:', error);
+                    console.error("Upload failed:", error);
                     reject(error);
                 }
             );
         });
     } catch (error) {
-        console.error('An unexpected error occurred:', error.message);
-        throw new Error('Failed to upload video to Vimeo.');
+        console.error("Unexpected error during video upload:", error.message);
+        throw new Error("Failed to upload video to Vimeo.");
     }
 };
 

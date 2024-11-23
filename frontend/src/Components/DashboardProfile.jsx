@@ -2,13 +2,13 @@ import React, { useRef, useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Chart from "chart.js/auto";
 import { getAdminCourses } from "../API/mainFetching";
+import moment from "moment";
 
 const DashboardProfile = ({ user }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
   const [adminCourses, setAdminCourses] = useState([]);
 
-  // Fetch admin courses if the user is an admin
   useEffect(() => {
     if (user?.isAdmin) {
       const fetchAdminCourses = async () => {
@@ -23,9 +23,19 @@ const DashboardProfile = ({ user }) => {
     }
   }, [user?.isAdmin]);
 
-  console.log(adminCourses.map((course) => course.createdAt));
+  const calculateDailyUploads = (courses) => {
+    const dailyUploads = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
 
-  // Update the chart whenever the user or adminCourses changes
+    courses.forEach((course) => {
+      const dayOfWeek = moment(course.createdAt).format("ddd");
+      if (dailyUploads[dayOfWeek] !== undefined) {
+        dailyUploads[dayOfWeek]++;
+      }
+    });
+
+    return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => dailyUploads[day]);
+  };
+
   useEffect(() => {
     if (chartRef.current) {
       chartRef.current.destroy();
@@ -36,16 +46,16 @@ const DashboardProfile = ({ user }) => {
       let chartData, chartLabel, chartBackgroundColor, chartBorderColor;
 
       if (user?.isAdmin) {
-        // Generate daily course upload counts (mocked data here for simplicity)
-        const dailyUploads = [1, 3, 2, 4, 5, 1, 0]; // Replace with real logic if available
+        // Admin Chart: Use real daily upload counts
+        const dailyUploads = calculateDailyUploads(adminCourses);
         chartLabel = "Uploaded Courses";
         chartData = dailyUploads;
         chartBackgroundColor = "rgba(54, 162, 235, 0.5)";
         chartBorderColor = "rgba(54, 162, 235, 1)";
       } else {
-        // Weekly learning hours for students
+        // Student Chart: Weekly learning hours
         chartLabel = "Learning Hours";
-        chartData = [2, 4, 3, 5, 6, 4, 7]; // Example: replace with real logic
+        chartData = [2, 4, 3, 5, 6, 4, 7]; // Example data
         chartBackgroundColor = "rgba(243, 235, 229, 0.5)";
         chartBorderColor = "rgba(0, 0, 0, 0.8)";
       }
