@@ -19,6 +19,7 @@ import CourseDetailsPage from "./Pages/CourseDetailsPage";
 
 import Settings from "./Pages/Setting";
 import CreateCoursePage from "./Pages/CreateCoursePage";
+import Loading from "./Components/Loading";
 
 const router = createBrowserRouter([
   {
@@ -108,7 +109,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/course-details/:id",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <CourseDetailsPage />
       </Protected>
     ),
@@ -118,6 +119,14 @@ const router = createBrowserRouter([
     element: (
       <Protected authenticationRequired={false}>
         <Settings />
+      </Protected>
+    ),
+  },
+  {
+    path: "/loading",
+    element: (
+      <Protected authenticationRequired={false}>
+        <Loading />
       </Protected>
     ),
   },

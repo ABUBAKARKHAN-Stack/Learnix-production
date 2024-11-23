@@ -27,13 +27,14 @@ const createVideo = async (req, res) => {
             .json(new ApiError(400, "Course ID is required"))
     }
 
-    const videoUrl = await uploadVideoToVimeo(videoPath, title, description)
+    const response = await uploadVideoToVimeo(videoPath, title, description)
 
+     console.log(response);
     try {
         const video = await videoModel.create({
             title,
             description,
-            videoUrl: videoUrl,
+            videoUrl: response.embedUrl,
             course: courseId
         })
 

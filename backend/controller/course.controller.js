@@ -218,7 +218,7 @@ const getPurchasedCourses = async (req, res) => {
 
         // Query courses where the user is enrolled
         const courses = await courseModel
-            .find({ user: userID })
+            .find({ user: userID  , isPurchased: true})
             .select("name description price image videos")
             .lean();
 
@@ -239,6 +239,38 @@ const getPurchasedCourses = async (req, res) => {
     }
 };
 
+// Get Admin Courses
+const getAdminCourses = async (req, res) => {
+    const userID = req.user._id; // Get the logged-in user's ID
+    const isAdmin = req.user.isAdmin; // Check if the user is an admin
+
+    // Ensure that only admin users can fetch admin courses
+    if (!isAdmin) {
+        return res
+            .status(403)
+            .json(new ApiError(403, "You are not authorized to access admin courses"));
+    }
+
+    try {
+        // Fetch courses created by this admin user with the `isAdminCourse` field set to true
+        const courses = await courseModel.find({ user: userID })
+        if (!courses || courses.length === 0) {
+            return res
+                .status(404)
+                .json(new ApiResponse(404, [], "No admin courses found for this user"));
+        }
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, courses, "Admin courses fetched successfully"));
+    } catch (error) {
+        console.error("Error fetching admin courses:", error);
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message || "An unexpected error occurred"));
+    }
+};
+
 
 
 export {
@@ -248,5 +280,6 @@ export {
     getAllCourses,
     getCourseWithLectures,
     getSingleCourse,
-    getPurchasedCourses
+    getPurchasedCourses,
+    getAdminCourses
 } 
