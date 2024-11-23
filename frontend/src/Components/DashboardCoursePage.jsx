@@ -30,6 +30,7 @@ const DashboardCoursePage = () => {
     })();
   }, [id]);
 
+
   const handleVideoClick = (video) => {
     setActiveVideo(video); // Set the clicked video as the active video
     setIsModalOpen(true); // Open the modal

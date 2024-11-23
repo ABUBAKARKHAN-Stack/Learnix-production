@@ -26,7 +26,35 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
-    }
+    },
+    courseProgress: [
+        {
+            course: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'courses'
+            },
+            totalWatchDuration: {
+                type: Number,
+                default: 0
+            },
+            videos: [
+                {
+                    video: {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: 'videos'
+                    },
+                    watchDuration: {
+                        type: Number,
+                        default: 0
+                    },
+                    isCompleted: {
+                        type: Boolean,
+                        default: false
+                    }
+                }
+            ]
+        }
+    ]
 }, { timestamps: true })
 
 const userModel = mongoose.model('User', userSchema)

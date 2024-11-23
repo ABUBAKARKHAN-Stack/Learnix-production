@@ -53,6 +53,12 @@ const getCourseById = async (id) => {
     })
 }
 
+const purchaseCourse = async (id) => {
+    return await api.post(`courses/purchase/${id}` , {
+        withCredentials: true
+    })
+}
+
 // API call to get purchased courses
 const getPurchasedCourses = async () => {
     return await api.get('courses/purchased-courses' , {
@@ -67,7 +73,7 @@ const getPurchaseCourseById = async (id) => {
     })
 }
 
-// 
+//  API call to get admin courses
 const getAdminCourses = async () => {
     return await api.get('courses/admin-courses' , {
         withCredentials: true
@@ -86,5 +92,6 @@ export {
     getCourseById,
     getPurchasedCourses,
     getPurchaseCourseById,
-    getAdminCourses
+    getAdminCourses,
+    purchaseCourse
 }

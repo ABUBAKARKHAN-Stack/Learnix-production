@@ -26,6 +26,8 @@ const DashboardCourses = ({ isAdmin }) => {
     fetchCourses();
   }, [isAdmin]);
 
+  console.log(courses);
+
   // Navigate to course details page
   const handleDetailsClick = (courseId) => {
     navigate(`/your-courses/course/${courseId}`);

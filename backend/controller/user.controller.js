@@ -348,7 +348,7 @@ const getLoggedInUser = async (req, res) => {
             .status(500)
             .json(new ApiError(500, error.message, "Something went wrong while fetching user"))
     }
- }
+}
 
 // Update user profile
 const updateUser = async (req, res) => {
@@ -419,6 +419,55 @@ const updateUser = async (req, res) => {
 
 }
 
+// Get user progress
+const getProgress = async (req, res) => {
+    const userID = req.user._id; // Extract user ID from the authenticated request
+    try {
+        // Fetch the user's course progress
+        const progress = await getUserProgress(userID);
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, progress, "User progress fetched successfully"));
+    } catch (error) {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message, "Something went wrong while fetching user progress"));
+    }
+};
+
+const getUserProgress = async (userId) => {
+    const user = await userModel.findById(userId)
+        .populate({
+            path: 'courseProgress.course',
+            select: 'name courseDuration'
+        })
+        .populate({
+            path: 'courseProgress.videos.video',
+            select: 'title duration'
+        });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    return user.courseProgress.map((progress) => ({
+        courseName: progress.course.name,
+        courseDuration: progress.course.courseDuration,
+        totalWatchDuration: progress.totalWatchDuration,
+        videos: progress.videos.map((videoProgress) => ({
+            videoTitle: videoProgress.video.title,
+            watchDuration: videoProgress.watchDuration,
+            duration: videoProgress.video.duration,
+            isCompleted: videoProgress.isCompleted
+        }))
+    }));
+};
+
+
+
+
+// Export controllers
 export {
     createUser,
     loginUser,
@@ -428,5 +477,6 @@ export {
     resetPassword,
     uploadAvatar,
     updateUser,
-    getLoggedInUser
+    getLoggedInUser,
+    getProgress
 }

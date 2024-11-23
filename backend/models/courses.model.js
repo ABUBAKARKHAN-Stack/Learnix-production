@@ -31,11 +31,18 @@ const courseSchema = new mongoose.Schema({
             ref: 'videos'
         }
     ],
+    courseDuration: {
+        type: Number,
+        default: 0
+    },
     isPurchased: {
         type: Boolean,
         default: false
     }
 }, { timestamps: true })
+
+ 
+
 
 const courseModel = mongoose.model('courses', courseSchema)
 

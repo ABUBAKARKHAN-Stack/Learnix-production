@@ -207,6 +207,37 @@ const getAllCourses = async (req, res) => {
     }
 }
 
+// Purchase Course
+const purchaseCourse = async (req, res) => {
+    const { courseId } = req.params;
+    const userID = req.user._id;
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(userID)) {
+            return res.status(400).json(new ApiError(400, "Invalid user ID"));
+        }
+
+        const course = await courseModel.findById(courseId);
+
+        if (!course) {
+            return res.status(404).json(new ApiError(404, "Course not found"));
+        }
+
+        if (course.isPurchased) {
+            return res.status(400).json(new ApiError(400, "Course is already purchased"));
+        }
+
+        course.isPurchased = true;
+        await course.save();
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, course, "Course purchased successfully"));
+    } catch (error) {
+
+    }
+}
+
 // Get Purchased Courses
 const getPurchasedCourses = async (req, res) => {
     const userID = req.user._id;
@@ -218,7 +249,7 @@ const getPurchasedCourses = async (req, res) => {
 
         // Query courses where the user is enrolled
         const courses = await courseModel
-            .find({ user: userID  , isPurchased: true})
+            .find({ user: userID, isPurchased: true })
             .select("name description price image videos")
             .lean();
 
@@ -281,5 +312,6 @@ export {
     getCourseWithLectures,
     getSingleCourse,
     getPurchasedCourses,
+    purchaseCourse,
     getAdminCourses
 } 
