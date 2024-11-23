@@ -29,11 +29,11 @@ const DashboardCourses = () => {
           </button>
         </div>
       ) : (
-        <div className="relative grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+        <div className="relative  overflow-x-hidden grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
           {PurchasedCourses.map((course) => (
             <div
               key={course.id}
-              className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300 w-[300px] md:w-[270px] md:h-[400px] lg:w-[270px] xl:w-[240px] h-[400px] mx-auto"
+              className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300 w-[300px] md:w-[270px] md:h-[400px] lg:w-[250px] xl:w-[240px] h-[400px] mx-auto"
             >
               {/* Course Icon */}
               <div className="flex justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 w-full h-1/3">
