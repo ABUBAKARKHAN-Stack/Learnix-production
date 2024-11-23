@@ -36,19 +36,23 @@ const deleteFromCloudinary = async (publicId) => {
     }
 }
 
-const thumbnailImageForCourse =  (publicId) => {
+const thumbnailImageForCourse = (publicId) => {
     try {
         const options = {
-            width: 600,
-            height: 600,
-            crop: "scale"
-        }
-        const response =  cloudinary.url(publicId, options)
-        return response
+            width: 400, 
+            height: 200, 
+            crop: "fill",
+            gravity: "auto", 
+            responsive: true, // Enable responsive images
+            dpr: "auto", // Automatically adjust for the device's pixel density   
+        };
+        const response = cloudinary.url(publicId, options);
+        return response;
     } catch (error) {
-        return error
+        return error;
     }
-}
+};
 
 
-export { uploadOnCloudinary, deleteFromCloudinary ,     thumbnailImageForCourse} 
+
+export { uploadOnCloudinary, deleteFromCloudinary, thumbnailImageForCourse } 

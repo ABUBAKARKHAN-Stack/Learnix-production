@@ -32,10 +32,17 @@ const resetPassword = async (data, token) => {
     return await api.post(`users/reset-password/${token}`, data)
 }
 
+const getAllCourses = async () => {
+    return await api.get('courses' , {
+        withCredentials: true
+    })
+}
+
 export {
     signUpUser,
     signInUser,
     verifyEmail,
     forgotPasswordLink,
-    resetPassword
+    resetPassword,
+    getAllCourses
 }

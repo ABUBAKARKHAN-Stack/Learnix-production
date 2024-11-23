@@ -117,7 +117,6 @@ const updateCourse = async (req, res) => {
 };
 
 
-
 // Delete course
 const deleteCourse = async (req, res) => {
     const { courseId } = req.params
@@ -173,7 +172,7 @@ const getCourseWithLectures = async (req, res) => {
 const getAllCourses = async (req, res) => {
     try {
         const courses = await courseModel.find({})
-            .select("name description price image")
+            .select("name description price image user")
             .lean()
         return res
             .status(200)

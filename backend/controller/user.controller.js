@@ -339,8 +339,8 @@ const uploadAvatar = async (req, res) => {
 
 // Update user profile
 const updateUser = async (req, res) => {
-    const { username, email, password  } = req.body
-    const avatar = req?.file?.path
+    const { username, email, password } = req.body
+    const update_avatar = req?.file?.path
     const userID = req.user._id
 
     if (!userID) {
@@ -349,35 +349,61 @@ const updateUser = async (req, res) => {
             .json(new ApiError(400, "User ID is required"))
     }
 
+    if (!username && !email && !password && !update_avatar) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "Fill at least one field"))
+    }
+
+    const user = await userModel.findById(userID)
+
+    if (!user) {
+        return res
+            .status(404)
+            .json(new ApiError(404, "User not found"))
+    }
+
+    let file;
+    if (update_avatar) {
+        try {
+            file = await uploadOnCloudinary(update_avatar)
+        } catch (error) {
+            deleteFromCloudinary(file?.public_id)
+            console.log(error.message)
+        }
+    }
+
 
 
     try {
-        const user = await userModel.findByIdAndUpdate(userID, {
+        const updatedUser = await userModel.findByIdAndUpdate(userID, {
             $set: {
-                username,
-                email,
-                password,
-                avatar
+                username: username || user.username,
+                email: email || user.email,
+                password: password ? await bcrypt.hash(password, 10) : user.password,
+                avatar: file?.secure_url || user.avatar
             }
         }, {
             new: true
         })
 
-        if (!user) {
-            return res
-                .status(404)
-                .json(new ApiError(404, "User not found"))
-        }
-
         return res
             .status(200)
-            .json(new ApiResponse(200, user, "User updated successfully"))
+            .json(new ApiResponse(200, updatedUser, "User updated successfully"))
     } catch (error) {
+
+        if (file && file.public_id) {
+            await deleteFromCloudinary(file.public_id)
+        }
 
         return res
             .status(500)
             .json(new ApiError(500, error.message, "Something went wrong while updating user"))
     }
+
+
+
+
 }
 
 export {
@@ -387,5 +413,6 @@ export {
     verifyEmail,
     forgotPassword,
     resetPassword,
-    uploadAvatar
+    uploadAvatar,
+    updateUser
 }

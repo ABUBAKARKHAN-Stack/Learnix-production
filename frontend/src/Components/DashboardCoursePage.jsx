@@ -59,7 +59,6 @@ const DashboardCoursePage = ({ courses }) => {
   return (
     <div className="bg-[#F3EBE5] font-sans flex flex-row w-screen h-screen">
       <div className="ml-[25px] mt-[39px]  ">
-        {" "}
         <Sidebar />
       </div>
 

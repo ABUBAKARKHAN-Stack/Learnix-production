@@ -11,7 +11,7 @@ import { CourseData } from "./Data/CourseData";
 import Protected from "./Components/AuthLayout/Protected";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ResetPasswordPage from "./Pages/REsetPasswordPage";
-import { Slide, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardCoursePage from "./Components/DashboardCoursePage";
 import CoursesPage from "./Pages/CoursesPage";
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Dashboard courses={CourseData} />
       </Protected>
     ),
@@ -82,7 +82,7 @@ const router = createBrowserRouter([
   {
     path: "/course/:id",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <DashboardCoursePage courses={CourseData} />
       </Protected>
     ),
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
   {
     path: "/courses",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <CoursesPage />
       </Protected>
     ),
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
   {
     path: "/setting",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Settings />
       </Protected>
     ),
