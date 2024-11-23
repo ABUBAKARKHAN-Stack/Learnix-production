@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import {
   HiOutlineHome,
   HiOutlineBookOpen,
-  HiOutlineVideoCamera,
   HiOutlineClipboardCheck,
   HiOutlineCog,
-  HiOutlineUserCircle,
   HiOutlineLogout,
   HiOutlineMenu,
   HiOutlineX,
+  HiOutlineViewGrid
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import Logo from "../assets/imgs/mobile-logo.png";
@@ -25,7 +24,7 @@ const Sidebar = () => {
   return (
     <div className="">
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex md:ml-5 h-[90vh] w-[90px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
+      <div className="hidden md:flex md:ml-5 h-[90vh] w-[60px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
         {/* Logo Section */}
         <div className="flex justify-center mb-4">
           <Link to="/dashboard">
@@ -35,14 +34,14 @@ const Sidebar = () => {
 
         {/* Middle Navigation Section */}
         <div className="flex flex-col gap-8 items-center">
+          <Link to="/dashboard" title="Dashboard">
+            <HiOutlineViewGrid className="text-3xl text-black cursor-pointer hover:text-gray-600" />
+          </Link>
           <Link to="/courses" title="Courses">
             <HiOutlineBookOpen className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
-          <Link to="/Dashboard/Quizes" title="Quizzes">
+          <Link to="/Quizes" title="Quizzes">
             <HiOutlineClipboardCheck className="text-3xl text-black cursor-pointer hover:text-gray-600" />
-          </Link>
-          <Link to="/Dashboard/VideoLectures" title="Video Lectures">
-            <HiOutlineVideoCamera className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
         </div>
 
@@ -50,9 +49,6 @@ const Sidebar = () => {
         <div className="flex flex-col gap-8 items-center">
           <Link to="/Dashboard/Settings" title="Settings">
             <HiOutlineCog className="text-3xl text-black cursor-pointer hover:text-gray-600" />
-          </Link>
-          <Link to="/Dashboard/Profile" title="Profile">
-            <HiOutlineUserCircle className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
           <Link to="/Logout" title="Logout">
             <HiOutlineLogout className="text-3xl text-black cursor-pointer hover:text-gray-600" />
@@ -77,46 +73,25 @@ const Sidebar = () => {
         {/* Mobile Navigation Links */}
         <div className="flex flex-col px-6 py-4 space-y-6">
           <Link
-            to="/"
+            to="/dashboard"
             className="flex items-center py-4"
             onClick={toggleMobileMenu}>
             <HiOutlineHome className="text-3xl text-black mr-4" />
-            <span className="text-lg font-medium text-black">Home</span>
+            <span className="text-lg font-medium text-black">Dashboard</span>
           </Link>
           <Link
-            to="/Dashboard/Assignments"
-            className="flex items-center py-4"
-            onClick={toggleMobileMenu}>
-            <HiOutlineBookOpen className="text-3xl text-black mr-4" />
-            <span className="text-lg font-medium text-black">Assignments</span>
-          </Link>
-          <Link
-            to="/Dashboard/Quizes"
+            to="/Quizes"
             className="flex items-center py-4"
             onClick={toggleMobileMenu}>
             <HiOutlineClipboardCheck className="text-3xl text-black mr-4" />
             <span className="text-lg font-medium text-black">Quizzes</span>
           </Link>
           <Link
-            to="/Dashboard/VideoLectures"
-            className="flex items-center py-4"
-            onClick={toggleMobileMenu}>
-            <HiOutlineVideoCamera className="text-3xl text-black mr-4" />
-            <span className="text-lg font-medium text-black">Video Lectures</span>
-          </Link>
-          <Link
-            to="/Dashboard/Settings"
+            to="/Setting"
             className="flex items-center py-4"
             onClick={toggleMobileMenu}>
             <HiOutlineCog className="text-3xl text-black mr-4" />
             <span className="text-lg font-medium text-black">Settings</span>
-          </Link>
-          <Link
-            to="/Dashboard/Profile"
-            className="flex items-center py-4"
-            onClick={toggleMobileMenu}>
-            <HiOutlineUserCircle className="text-3xl text-black mr-4" />
-            <span className="text-lg font-medium text-black">Profile</span>
           </Link>
           <Link
             to="/Logout"
