@@ -18,6 +18,7 @@ import CoursesPage from "./Pages/CoursesPage";
 import CourseDetailsPage from "./Pages/CourseDetailsPage";
 
 import Settings from "./Pages/Setting";
+import Loading from "./Components/Loading";
 
 const router = createBrowserRouter([
   {
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <Dashboard courses={CourseData} />
       </Protected>
     ),
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
   {
     path: "/your-courses/course/:id",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <DashboardCoursePage courses={CourseData} />
       </Protected>
     ),
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
   {
     path: "/courses",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <CoursesPage />
       </Protected>
     ),
@@ -99,7 +100,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/course-details/:id",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <CourseDetailsPage />
       </Protected>
     ),
@@ -107,8 +108,16 @@ const router = createBrowserRouter([
   {
     path: "/setting",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <Settings />
+      </Protected>
+    ),
+  },
+  {
+    path: "/loading",
+    element: (
+      <Protected authenticationRequired={false}>
+        <Loading />
       </Protected>
     ),
   },
