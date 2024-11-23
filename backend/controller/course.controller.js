@@ -1,6 +1,7 @@
 import courseModel from "../models/courses.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
 import { uploadOnCloudinary, deleteFromCloudinary, thumbnailImageForCourse } from "../config/cloudinary.config.js";
+import mongoose from "mongoose";
 
 
 // Create new course 
@@ -209,10 +210,35 @@ const getAllCourses = async (req, res) => {
 // Get Purchased Courses
 const getPurchasedCourses = async (req, res) => {
     const userID = req.user._id;
-    const user = await userModel.findById(userID);
 
-    console.log(user);
+    try {
+        if (!mongoose.Types.ObjectId.isValid(userID)) {
+            return res.status(400).json(new ApiError(400, "Invalid user ID"));
+        }
+
+        // Query courses where the user is enrolled
+        const courses = await courseModel
+            .find({ user: userID })
+            .select("name description price image videos")
+            .lean();
+
+        if (courses.length === 0) {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, [], "You have not enrolled in any courses yet"));
+        }
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, courses, "Purchased courses fetched successfully"));
+    } catch (error) {
+        console.error("Error fetching purchased courses:", error);
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message || "An unexpected error occurred"));
+    }
 };
+
 
 
 export {

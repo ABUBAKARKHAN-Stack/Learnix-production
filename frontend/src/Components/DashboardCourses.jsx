@@ -1,21 +1,39 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { PurchasedCourses } from "../Data/PurchaseCourse";
 import { FaExclamationCircle } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
+import { getPurchasedCourses } from "../API/mainFetching";
 
 const DashboardCourses = () => {
 
   const [teacher , setTeacher] = useState(true)
   const navigate = useNavigate();
+  const [purchasedCourses, setPurchasedCourses] = useState([]);
 
+  // Fetch purchased courses
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getPurchasedCourses();
+        const courses = res.data.data || [];
+        setPurchasedCourses(courses);
+      } catch (error) {
+        console.error("Error fetching purchased courses:", error);
+      }
+    })();
+  }, []);
 
+  console.log(purchasedCourses);
+
+  // Handle "View Details" button click
   const handleDetailsClick = (courseId) => {
     navigate(`/your-courses/course/${courseId}`);
   };
 
+  // Handle "Browse Courses" button click
   const handleBrowse = () => {
-    navigate('/courses')
-  }
+    navigate("/courses");
+  };
 
   return (
     <div className="w-full mx-auto px-4">
