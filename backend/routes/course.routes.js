@@ -26,8 +26,10 @@ router.get("/", authMiddleware, getAllCourses)
 // Get Single Course Details without lectures
 router.get("/course-details/:courseId", authMiddleware, getSingleCourse)
 
+// Get Purchased Courses
 router.get("/purchased-courses", authMiddleware, getPurchasedCourses);
 
+// Get Single course with all Lectures
 router.get("/:courseId", authMiddleware, getCourseWithLectures);
 
 //  Create new quiz route

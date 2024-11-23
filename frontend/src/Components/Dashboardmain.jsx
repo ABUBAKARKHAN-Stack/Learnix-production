@@ -9,7 +9,6 @@ const DashboardMain = () => {
       <h1 className="text-3xl sm:text-4xl md:text-5xl pl-5 mt-10 lg:text-6xl lg:leading-[77px] font-bold leading-tight text-gray-800">Your Courses</h1>
       {/* Display Filtered Courses */}
       <div className="w-full overflow-y-auto mt-0">
-
         <DashboardCourses />
       </div>
     </div>

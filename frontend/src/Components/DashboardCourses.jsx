@@ -20,6 +20,8 @@ const DashboardCourses = () => {
     })();
   }, []);
 
+  console.log(purchasedCourses);
+
   // Handle "View Details" button click
   const handleDetailsClick = (courseId) => {
     navigate(`/your-courses/course/${courseId}`);
@@ -47,26 +49,21 @@ const DashboardCourses = () => {
           </button>
         </div>
       ) : (
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {purchasedCourses.map((course) => (
             <div
               key={course._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 hover:shadow-xl transition-all duration-300 mx-auto max-w-xs"
+              className="bg-white rounded-lg shadow-md h-fit transform hover:scale-105 hover:shadow-xl transition-all duration-300 mx-auto max-w-xs"
             >
-              {/* Course Thumbnail */}
-              <div className="relative">
+      
                 <img
                   src={course.image}
                   alt={course.name}
                   className="w-full h-40 object-cover"
                 />
-                <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-md">
-                  Rs {course.price}
-                </div>
-              </div>
-
+                
               {/* Course Details */}
-              <div className="p-6 flex flex-col justify-between h-full">
+              <div className="py-6 px-4 flex flex-col justify-between">
                 <h3 className="text-lg font-bold text-gray-800 truncate">
                   {course.name}
                 </h3>
@@ -74,21 +71,10 @@ const DashboardCourses = () => {
                   {course.description}
                 </p>
 
-                {/* Rating and Enrolled Students */}
-                <div className="flex items-center justify-between mt-4">
-                  <div className="flex items-center text-yellow-500 text-base">
-                    <span className="mr-1">{course.rating || 4.5}</span>
-                    <span>⭐</span>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {course.enrolled || 0} students
-                  </div>
-                </div>
-
                 {/* View Details Button */}
                 <button
                   onClick={() => handleDetailsClick(course._id)}
-                  className="mt-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500 text-white font-medium py-2 rounded-lg transition-transform duration-300 hover:scale-105 shadow-md"
+                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full shadow-lg transition-all duration-300"
                 >
                   View Details
                 </button>

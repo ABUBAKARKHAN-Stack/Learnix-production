@@ -53,6 +53,13 @@ const getPurchasedCourses = async () => {
     })
 }
 
+// API call to get a purchase course with lectures
+const getPurchaseCourseById = async (id) => {
+    return await api.get(`courses/${id}` , {
+        withCredentials: true
+    })
+}
+
 
 export {
     signUpUser,
@@ -62,5 +69,6 @@ export {
     resetPassword,
     getAllCourses,
     getCourseById,
-    getPurchasedCourses
+    getPurchasedCourses,
+    getPurchaseCourseById
 }
