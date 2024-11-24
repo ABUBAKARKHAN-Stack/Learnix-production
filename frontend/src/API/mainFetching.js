@@ -102,14 +102,14 @@ const getPurchaseCourseById = async (id) => {
     })
 }
 
-//  API call to get admin courses
+// API call to get admin courses
 const getAdminCourses = async () => {
     return await api.get('courses/admin-courses', {
         withCredentials: true
     })
 }
 
-// 
+// API call to add a video
 const addVideo = async (courseId, data, progressCallback) => {
     return await api.post(`videos/create/${courseId}`, data, {
         onUploadProgress: (progressEvent) => {
@@ -125,6 +125,14 @@ const addVideo = async (courseId, data, progressCallback) => {
         withCredentials: true,
     });
 };
+
+// API call to get all videos of a course
+const getAllVideosOfACourse = async (courseId) => {
+    return await api.get(`videos/${courseId}`, {
+        withCredentials: true
+    })
+}
+
 
 
 
@@ -145,5 +153,6 @@ export {
     getPurchaseCourseById,
     getAdminCourses,
     purchaseCourse,
-    addVideo
+    addVideo,
+    getAllVideosOfACourse
 }

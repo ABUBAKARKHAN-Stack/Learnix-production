@@ -68,7 +68,7 @@ const createVideo = async (req, res) => {
 }; 
 
 
-// Get all videos
+// Get all videos with course
 const getAllVideos = async (req, res) => {
 
     try {

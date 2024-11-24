@@ -11,7 +11,7 @@ const DashboardCoursePage = () => {
   const [activeVideo, setActiveVideo] = useState(null); // Store the currently active (playing) video
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [progress, setProgress] = useState(29);
-  
+
 
   // Fetch course data on load
   useEffect(() => {

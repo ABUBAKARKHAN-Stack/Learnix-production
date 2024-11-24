@@ -18,8 +18,9 @@ import CourseDetailsPage from "./Pages/CourseDetailsPage";
 import Settings from "./Pages/Setting";
 import CreateCoursePage from "./Pages/CreateCoursePage";
 import Loading from "./Components/Loading";
-import ManageCourseVideos from "./Pages/ManageCourseVideos";
 import EditCoursePage from "./Pages/EditCoursePage";
+import AdminCourseDetailsPage from "./Pages/AdminCourseDetailsPage";
+import UploadVideosPage from "./Pages/UploadVideosPage";
 
 const router = createBrowserRouter([
   {
@@ -78,7 +79,7 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <Protected authenticationRequired={true}>
-        <Dashboard  />
+        <Dashboard />
       </Protected>
     ),
   },
@@ -86,25 +87,34 @@ const router = createBrowserRouter([
     path: "/create-course",
     element: (
       <Protected authenticationRequired={true}>
-       <CreateCoursePage />
-       <ToastContainer />
-      </Protected>
-    ),
-  },
-  {
-    path: "/admin/course/videos/:courseId",
-    element: (
-      <Protected authenticationRequired={true}>
-        <ManageCourseVideos  />
+        <CreateCoursePage />
         <ToastContainer />
       </Protected>
     ),
   },
   {
-    path: "/admin/course/edit/:courseId",
+    path: "/admin/course-details/:courseId",
     element: (
       <Protected authenticationRequired={true}>
-        <EditCoursePage  />
+        <AdminCourseDetailsPage />
+        <ToastContainer />
+      </Protected>
+    ),
+  },
+  {
+    path: "/admin/course/:courseId/add-video",
+    element: (
+      <Protected authenticationRequired={true}>
+        <UploadVideosPage />
+        <ToastContainer />
+      </Protected>
+    ),
+  },
+  {
+    path: "/admin/course/:courseId/edit",
+    element: (
+      <Protected authenticationRequired={true}>
+        <EditCoursePage />
         <ToastContainer />
       </Protected>
     ),
@@ -113,7 +123,7 @@ const router = createBrowserRouter([
     path: "/your-courses/course/:id",
     element: (
       <Protected authenticationRequired={true}>
-        <DashboardCoursePage  />
+        <DashboardCoursePage />
       </Protected>
     ),
   },
@@ -145,7 +155,7 @@ const router = createBrowserRouter([
   {
     path: "/loading",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Loading />
       </Protected>
     ),

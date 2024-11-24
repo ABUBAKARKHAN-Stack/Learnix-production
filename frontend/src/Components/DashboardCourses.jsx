@@ -33,11 +33,18 @@ const DashboardCourses = ({ isAdmin }) => {
 
   // Navigate to course details page
   const handleDetailsClick = (courseId) => {
-    navigate(`/admin/course/videos/${courseId}`);
+    navigate(`/your-courses/course/${courseId}`);
   };
+
+
 
   const handleEditClick = (courseId) => {
     navigate(`/admin/course/edit/${courseId}`);
+  };
+
+  // Navigate to admin course details page
+  const handleAdminDetailsClick = (courseId) => {
+    navigate(`/admin/course-details/${courseId}`);
   };
 
   // Navigate to browse courses page for students
@@ -119,31 +126,14 @@ const DashboardCourses = ({ isAdmin }) => {
                         </div>
                       </div>
 
-                      {/* Admin Action Buttons */}
-                      <div className="flex flex-col gap-2 justify-center items-center mt-4 xl:mt-0">
-                        <button
-                          onClick={() => handleDetailsClick(course._id)}
-                          className="w-10 h-10 flex items-center justify-center rounded-full transition-transform duration-200 shadow-md bg-blue-500 hover:bg-blue-600 text-white hover:scale-110"
-                          aria-label="Add Details"
-                        >
-                          <MdAdd size={20} />
-                        </button>
-                        <button
-                          onClick={() => handleEditClick(course._id)}
-                          className="w-10 h-10 flex items-center justify-center rounded-full transition-transform duration-200 shadow-md bg-green-500 hover:bg-green-600 text-white hover:scale-110"
-                          aria-label="Edit Course"
-                        >
-                          <MdEdit size={20} />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteClick(course._id)}
-                          className="w-10 h-10 flex items-center justify-center rounded-full transition-transform duration-200 shadow-md bg-red-500 hover:bg-red-600 text-white hover:scale-110"
-                          aria-label="Delete Course"
-                        >
-                          <MdDelete size={20} />
-                        </button>
-                      </div>
+                      <button
+                        className="bg-blue-500 text-nowrap hover:bg-blue-600 text-white p-2 px-4 rounded-3xl my-auto"
+                        onClick={() => handleAdminDetailsClick(course._id)}
+                      >
+                        View Details
+                      </button>
 
+                  
 
                     </div>
                   </div>

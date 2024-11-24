@@ -33,9 +33,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="">
+    <>
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex md:ml-5 h-[90vh] w-[60px] bg-white text-white flex-col justify-between py-6 rounded-full sticky ">
+      <div className="hidden md:flex h-[90vh] w-[70px] bg-white text-white flex-col justify-between py-6 rounded-full fixed transform top-1/2 -translate-y-1/2 shadow-lg z-50">
         {/* Logo Section */}
         <div className="flex justify-center mb-4">
           <Link to="/dashboard">
@@ -66,6 +66,7 @@ const Sidebar = () => {
           </button>
         </div>
       </div>
+
 
       {/* Mobile Sidebar */}
       <div
@@ -121,7 +122,7 @@ const Sidebar = () => {
           onClick={toggleMobileMenu}
         />
       </div>
-    </div>
+    </>
   );
 };
 

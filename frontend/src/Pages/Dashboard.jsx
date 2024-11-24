@@ -27,16 +27,19 @@ function Dashboard() {
 
 
   return (
-    <div className="relative m-0 gap-4 bg-[#F3EBE5] ">
+    <div className="relative m-0 px-5 gap-4 bg-[#F3EBE5] ">
       {/* Show on screens larger than md */}
       <div className="hidden md:relative md:flex flex-row overflow-hidden justify-between">
-        <div className="my-auto">
-          <Sidebar />
-        </div>
-        <DashboardMain isAdmin={activeUser.isAdmin} />
-        <div className="my-32">
-          <DashboardProfile user={activeUser} />
-        </div>
+
+        <Sidebar />
+
+        <span className="ml-8">
+          <DashboardMain isAdmin={activeUser.isAdmin} />
+          </span>
+          <div className="my-32">
+            <DashboardProfile user={activeUser} />
+          </div>
+       
 
       </div>
 

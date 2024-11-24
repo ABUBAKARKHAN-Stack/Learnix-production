@@ -36,7 +36,7 @@ function EditCourse() {
                 setValue("description", data.description);
                 setValue("price", data.price);
                 setThumbnailPreview(data.image);
-                
+
             } catch (error) {
                 console.error("Error fetching course details:", error);
             } finally {
@@ -112,7 +112,7 @@ function EditCourse() {
                             rows={4}
                             {...register("description", { required: "Course description is required" })}
                             placeholder="Enter a detailed description"
-                            className="mt-2 border px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-700 focus:outline-none"
+                            className="mt-2 border text-xs tracking-wide px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-700 focus:outline-none"
                         ></textarea>
                         {errors.description && (
                             <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
@@ -150,7 +150,7 @@ function EditCourse() {
                         />
                         <label
                             htmlFor="courseThumbnail"
-                            className="mt-2 w-32 h-32 flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg overflow-hidden cursor-pointer hover:border-gray-600"
+                            className="mt-2 w-44 h-20 flex items-center justify-center  rounded-lg overflow-hidden cursor-pointer hover:border-gray-600"
                         >
                             {thumbnailPreview ? (
                                 <img

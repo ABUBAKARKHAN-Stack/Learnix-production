@@ -176,7 +176,7 @@ const getCourseWithLectures = async (req, res) => {
 const getSingleCourse = async (req, res) => {
     const { courseId } = req.params
     try {
-        const course = await courseModel.findById(courseId).select("name description price image enrollments")
+        const course = await courseModel.findById(courseId).select("name description price image enrollments courseDuration")
 
         if (!course) {
             return res
