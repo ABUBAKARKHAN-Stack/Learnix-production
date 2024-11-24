@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function Courses() {
   const [allCourses, setAllCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const debouncedSearchTerm = useDebouce(searchTerm, 500);
 
@@ -29,12 +30,27 @@ function Courses() {
         setAllCourses(courses);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
 
   const filteredCourses = allCourses.filter((course) => course.name.trim().toLowerCase().includes(debouncedSearchTerm.trim().toLowerCase()));
 
+  if (loading) {
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-[#F3EBE5] px-4">
+        <div className="text-gray-700 text-7xl mb-4">
+          <GiPartyPopper />
+        </div>
+        <p className="text-gray-700 text-lg font-medium animate-pulse text-center mb-6">
+          Fetching  courses. This might take a few seconds...
+        </p>
+
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col md:pl-2 pt-20 w-full pb-10 md:pt-10 lg:px-14 bg-[#F3EBE5]">

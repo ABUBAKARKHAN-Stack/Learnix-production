@@ -39,49 +39,57 @@ const getLoggedInUser = async () => {
     })
 }
 
+// API call to logout the user
 const logoutUser = async () => {
     return await api.get('users/logout', {
         withCredentials: true
     })
 }
 
+const updateAccountSettings = async (data) => {
+    return await api.put('users/update-settings', data, {
+        withCredentials: true
+    })
+}
+
+
 // API call to get all courses
 const getAllCourses = async () => {
-    return await api.get('courses' , {
+    return await api.get('courses', {
         withCredentials: true
     })
 }
 
 // API call to get a specific course without lectures
 const getCourseById = async (id) => {
-    return await api.get(`courses/course-details/${id}` , {
+    return await api.get(`courses/course-details/${id}`, {
         withCredentials: true
     })
 }
 
 const purchaseCourse = async (id) => {
-    return await api.post(`courses/purchase/${id}` , {} , {
+    return await api.post(`courses/purchase/${id}`, {}, {
         withCredentials: true
     })
 }
 
 // API call to get purchased courses
 const getPurchasedCourses = async () => {
-    return await api.get('courses/purchased-courses' , {
+    return await api.get('courses/purchased-courses', {
         withCredentials: true
     })
 }
 
 // API call to get a purchase course with lectures
 const getPurchaseCourseById = async (id) => {
-    return await api.get(`courses/${id}` , {
+    return await api.get(`courses/${id}`, {
         withCredentials: true
     })
 }
 
 //  API call to get admin courses
 const getAdminCourses = async () => {
-    return await api.get('courses/admin-courses' , {
+    return await api.get('courses/admin-courses', {
         withCredentials: true
     })
 }
@@ -95,6 +103,7 @@ export {
     resetPassword,
     getLoggedInUser,
     logoutUser,
+    updateAccountSettings,
     getAllCourses,
     getCourseById,
     getPurchasedCourses,

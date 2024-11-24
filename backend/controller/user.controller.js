@@ -400,9 +400,11 @@ const updateUser = async (req, res) => {
             new: true
         })
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, updatedUser, "User updated successfully"))
+        setTimeout(() => {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, updatedUser, "User updated successfully"))
+        }, 1000);
     } catch (error) {
 
         if (file && file.public_id) {

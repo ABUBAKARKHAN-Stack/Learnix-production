@@ -41,7 +41,7 @@ router.post('/upload-avatar', authMiddleware, upload.single('avatar'), uploadAva
 
 
 // Update user route
-router.put('/update-settings', authMiddleware, upload.single('update-avatar'), updateUser)
+router.put('/update-settings', authMiddleware, upload.single('update_avatar'), updateUser)
 
 
 // Get logged in user route

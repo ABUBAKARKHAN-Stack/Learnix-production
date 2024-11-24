@@ -118,6 +118,7 @@ const router = createBrowserRouter([
     element: (
       <Protected authenticationRequired={true}>
         <Settings />
+        <ToastContainer />
       </Protected>
     ),
   },
