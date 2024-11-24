@@ -8,13 +8,13 @@ import mongoose from "mongoose";
 const createCourse = async (req, res) => {
     const { name, description, price } = req.body
     const userID = req.user._id
-    const filePath = req?.file?.path
+    const courseThumbnail = req?.file?.path
 
     let courseImage;
 
     try {
-        if (filePath) {
-            courseImage = await uploadOnCloudinary(filePath);
+        if (courseThumbnail) {
+            courseImage = await uploadOnCloudinary(courseThumbnail);
         }
     } catch (error) {
         console.error(`Image upload failed: ${error.message}`);
@@ -40,16 +40,18 @@ const createCourse = async (req, res) => {
         })
 
 
-        return res
-            .status(201)
-            .json(new ApiResponse(201, course, "Course created successfully"))
+        setTimeout(() => {
+            return res
+                .status(201)
+                .json(new ApiResponse(201, course, "Course created successfully"))
+        }, 1000);
     } catch (error) {
         if (courseImage?.public_id) {
             deleteFromCloudinary(courseImage?.public_id)
         }
         return res
             .status(500)
-            .json(new ApiError(500, error.message))
+            .json(new ApiError(500, error, 'Course creation failed'))
     }
 }
 
@@ -106,9 +108,11 @@ const updateCourse = async (req, res) => {
         // Save the updated course
         const updatedCourse = await course.save();
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, updatedCourse, "Course updated successfully"));
+        setTimeout(() => {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, updatedCourse, "Course updated successfully!"));
+        }, 1000);
     } catch (error) {
         console.error("Error updating course:", error);
         return res

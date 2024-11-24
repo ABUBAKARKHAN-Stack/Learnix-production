@@ -39,7 +39,7 @@ const waitForProcessing = async (videoId) => {
                 console.error("Error waiting for processing:", err);
                 reject(err);
             }
-        }, 2000); // Check every 2 seconds
+        }, 10000); // Check every 5 seconds
     });
 };
 
@@ -84,6 +84,7 @@ const uploadVideoToVimeo = async (videoPath, title, description) => {
                 (bytesUploaded, bytesTotal) => {
                     // Progress callback
                     const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
+                    
                     console.log(`Upload progress: ${percentage}%`);
                 },
                 (error) => {

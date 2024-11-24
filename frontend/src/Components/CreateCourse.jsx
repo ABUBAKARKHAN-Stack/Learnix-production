@@ -1,169 +1,189 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiEdit2, FiSave, FiCamera, FiCheck } from "react-icons/fi";
+import { FiEdit2, FiCamera, FiCheck } from "react-icons/fi";
+import { createCourse } from "../API/mainFetching";
+import { showErrorToast, showSuccessToast } from "../utils/ToastNotification";
+import { useNavigate } from "react-router-dom";
 
 const CreateCourse = () => {
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      courseName: "",
-      courseDescription: "",
-      coursePrice: "",
-    },
-  });
+    watch,
+    setValue,
+  } = useForm();
 
-  const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageURL = URL.createObjectURL(file);
+  const navigate = useNavigate();
+
+  // Watch the file input field
+  const courseThumbnail = watch("courseThumbnail");
+
+  // Update thumbnail preview whenever the file changes
+  useEffect(() => {
+    if (courseThumbnail && courseThumbnail[0]) {
+      const imageURL = URL.createObjectURL(courseThumbnail[0]);
       setThumbnailPreview(imageURL);
-      setValue("courseThumbnail", file); // Save the file as the value
+    }
+  }, [courseThumbnail]);
+
+  const onSubmit = async (data) => {
+    // Create FormData object
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("courseThumbnail", data.courseThumbnail[0]);
+
+    try {
+      setLoading(true);
+      // Call createCourse API
+      const res = await createCourse(formData);
+      showSuccessToast(res.data.message);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || error.message || "An error occurred.";
+      showErrorToast(errorMessage);
+    } finally {
+      setLoading(false);
+      setValue("name", "");
+      setValue("description", "");
+      setValue("price", "");
+      setValue("courseThumbnail", null);
+      setThumbnailPreview(null);
     }
   };
 
-  const onSubmit = (data) => {
-    console.log("Course Data:", data);
-    setSuccessMessage("Course created successfully!");
-    setTimeout(() => setSuccessMessage(""), 3000);
-  };
-
   return (
-    <div className="min-h-screen w-fit mx-auto bg-[#F3EBE5] py-10 px-4 flex justify-center items-center">
-      <div className="w-full xl:w-[700px] bg-white shadow-lg rounded-lg overflow-hidden relative">
+    <div className="min-h-screen flex items-center justify-center py-10 px-4">
+      <div className="bg-white shadow-xl rounded-lg w-full max-w-[700px]">
         {/* Header */}
-        <div className="bg-gray-900 text-white px-6 py-4">
-          <h2 className="text-xl font-bold">Create New Course</h2>
+        <div className="bg-gray-900 text-white px-6 py-4 rounded-t-lg">
+          <h2 className="text-xl font-bold text-center">Create New Course</h2>
         </div>
-
-        {/* Success Message */}
-        {successMessage && (
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded-lg shadow-md transition-opacity duration-300 text-sm sm:text-base">
-            {successMessage}
-          </div>
-        )}
 
         {/* Form */}
-        <div className="p-6">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/** Reusable Component for Input Fields */}
-            {[
-              {
-                label: "Course Name",
-                id: "courseName",
-                type: "text",
-                icon: <FiEdit2 />,
-                placeholder: "Enter the course name",
-                registerProps: {
-                  ...register("courseName", { required: "Course name is required" }),
-                },
-              },
-              {
-                label: "Course Description",
-                id: "courseDescription",
-                isTextArea: true,
-                icon: <FiEdit2 />,
-                placeholder: "Enter a detailed description of the course",
-                registerProps: {
-                  ...register("courseDescription", {
-                    required: "Course description is required",
-                  }),
-                },
-              },
-              {
-                label: "Course Price",
-                id: "coursePrice",
-                type: "text",
-                icon: <FiEdit2 />,
-                placeholder: "Enter the price in USD $",
-                registerProps: {
-                  ...register("coursePrice", { required: "Course price is required" }),
-                },
-              },
-            ].map((field, index) => (
-              <div
-                key={index}
-                className="flex flex-col sm:flex-row items-center gap-4">
-                <label
-                  htmlFor={field.id}
-                  className="w-full sm:w-1/3 font-medium text-gray-700 capitalize flex items-center gap-2">
-                  {field.icon}
-                  {field.label}
-                </label>
-                <div className="flex-1 w-full">
-                  {field.isTextArea ? (
-                    <textarea
-                      id={field.id}
-                      rows={4}
-                      {...field.registerProps}
-                      placeholder={field.placeholder}
-                      className="w-full border-2 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
-                    ></textarea>
-                  ) : (
-                    <input
-                      id={field.id}
-                      type={field.type}
-                      {...field.registerProps}
-                      placeholder={field.placeholder}
-                      className="w-full border-2 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
-                    />
-                  )}
-                </div>
-              </div>
-            ))}
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+          {/* Course Name */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="name"
+              className="font-medium text-gray-800 flex items-center gap-2"
+            >
+               Course Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              {...register("name", { required: "Course name is required" })}
+              placeholder="Enter the course name"
+              className="mt-2 border px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-700 focus:outline-none"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
+          </div>
 
-            {/* Course Thumbnail */}
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <label
-                htmlFor="courseThumbnail"
-                className="w-full sm:w-1/3 font-medium text-gray-700 capitalize flex items-center gap-2">
-                <FiCamera className="text-black" />
-                Course Thumbnail
-              </label>
-              <div className="flex-1">
-                <input
-                  id="courseThumbnail"
-                  type="file"
-                  accept="image/*"
-                  {...register("courseThumbnail", {
-                    required: "Course thumbnail is required",
-                  })}
-                  className="hidden"
-                  onChange={handleThumbnailChange}
+          {/* Course Description */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="description"
+              className="font-medium text-gray-800 flex items-center gap-2"
+            >
+            Course Description
+            </label>
+            <textarea
+              id="description"
+              rows={4}
+              {...register("description", {
+                required: "Course description is required",
+              })}
+              placeholder="Enter a detailed description"
+              className="mt-2 border px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-700 focus:outline-none"
+            ></textarea>
+            {errors.description && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
+          {/* Course Price */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="price"
+              className="font-medium text-gray-800 flex items-center gap-2"
+            >
+              Course Price
+            </label>
+            <input
+              id="price"
+              type="number"
+              {...register("price", { required: "Course price is required" })}
+              placeholder="Enter the price in USD"
+              className="mt-2 border px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-700 focus:outline-none"
+            />
+            {errors.price && (
+              <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
+            )}
+          </div>
+
+          {/* Course Thumbnail */}
+          <div className="flex flex-col items-start">
+            <label
+              htmlFor="courseThumbnail"
+              className="font-medium text-gray-800 flex items-center gap-2"
+            >
+              <FiCamera className="text-2xl text-gray-700 mb-0.5" /> Course Thumbnail
+            </label>
+            <input
+              id="courseThumbnail"
+              type="file"
+              accept="image/*"
+              {...register("courseThumbnail", {
+                required: "Course thumbnail is required",
+              })}
+              className="hidden"
+            />
+            <label
+              htmlFor="courseThumbnail"
+              className="mt-2 w-32 h-32 flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg overflow-hidden cursor-pointer hover:border-gray-600"
+            >
+              {thumbnailPreview ? (
+                <img
+                  src={thumbnailPreview}
+                  alt="Thumbnail Preview"
+                  className="object-cover w-full h-full"
                 />
-                <label
-                  htmlFor="courseThumbnail"
-                  className="cursor-pointer flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-lg overflow-hidden">
-                  {thumbnailPreview ? (
-                    <img
-                      src={thumbnailPreview}
-                      alt="Thumbnail Preview"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <FiCamera className="text-xl text-gray-500" />
-                  )}
-                </label>
-              </div>
-            </div>
+              ) : (
+                <FiCamera className="text-4xl text-gray-400" />
+              )}
+            </label>
+            {errors.courseThumbnail && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.courseThumbnail.message}
+              </p>
+            )}
+          </div>
 
-            {/* Save Button */}
-            <div className="flex justify-end mt-6">
-              <button
-                type="submit"
-                className="bg-black hover:bg-white text-white hover:text-black border-4 border-black hover:border-gray-300 px-6 py-2 rounded-lg transition-colors duration-300 ease-linear flex items-center gap-2">
-                <FiCheck className="text-xl" />
-                Save Course
-              </button>
-            </div>
-          </form>
-        </div>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full border-2 border-black bg-gray-950 text-white px-4 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-gray-950 transition-colors duration-200 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            <FiCheck className="text-lg" />
+            {loading ? "Creating..." : "Create Course"}
+          </button>
+        </form>
       </div>
     </div>
   );

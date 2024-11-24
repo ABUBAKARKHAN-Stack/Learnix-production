@@ -11,10 +11,10 @@ const router = Router()
 
 
 // Create new course route
-router.post("/create", authMiddleware, isAdmin, upload.single("thumbnail"), createCourse)
+router.post("/create", authMiddleware, isAdmin, upload.single("courseThumbnail"), createCourse)
 
 // Update course route
-router.put("/update/:courseId", authMiddleware, isAdmin, upload.single("thumbnail"), updateCourse)
+router.put("/update/:courseId", authMiddleware, isAdmin, upload.single("courseThumbnail"), updateCourse)
 
 
 // Delete course route

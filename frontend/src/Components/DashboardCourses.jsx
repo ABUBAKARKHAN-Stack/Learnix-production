@@ -33,7 +33,11 @@ const DashboardCourses = ({ isAdmin }) => {
 
   // Navigate to course details page
   const handleDetailsClick = (courseId) => {
-    navigate(`/your-courses/course/${courseId}`);
+    navigate(`/admin/course/videos/${courseId}`);
+  };
+
+  const handleEditClick = (courseId) => {
+    navigate(`/admin/course/edit/${courseId}`);
   };
 
   // Navigate to browse courses page for students
@@ -41,11 +45,14 @@ const DashboardCourses = ({ isAdmin }) => {
     navigate("/courses");
   };
 
+  // Function to convert duration in seconds to hours and minutes
+  const convertDuration = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${hours}h ${minutes}m`;
+  };
 
-  //handle createCourse
-  const handleCreateCourse = () => {
-    navigate('/create_course')
-  }
+
 
   if (loading) {
     return (
@@ -81,7 +88,9 @@ const DashboardCourses = ({ isAdmin }) => {
                     className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 xl:hover:scale-100 transition-all duration-300 w-[300px] md:w-[270px] md:h-[400px] xl:flex xl:h-auto xl:w-full lg:w-[250px] h-[400px] mx-auto"
                   >
                     {/* Course Image */}
-                    <img src={course.image} alt={course.name} className="w-full h-full object-cover" />
+                    <div>
+                      <img src={course.image} alt={course.name} className="w-ful h-full object-cover" />
+                    </div>
 
                     {/* Course Details */}
                     <div className="p-5 flex flex-col justify-between h-2/3 xl:w-full xl:flex-row">
@@ -102,6 +111,10 @@ const DashboardCourses = ({ isAdmin }) => {
                           {/* Student Count */}
                           <div className="text-sm text-gray-600">
                             {course.enrollments?.length || 0} students
+                          </div>
+                          {/* Course Duration */}
+                          <div className="text-sm text-gray-600">
+                            {convertDuration(course.courseDuration)}
                           </div>
                         </div>
                       </div>

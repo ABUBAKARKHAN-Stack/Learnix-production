@@ -15,10 +15,11 @@ import "react-toastify/dist/ReactToastify.css";
 import DashboardCoursePage from "./Components/DashboardCoursePage";
 import CoursesPage from "./Pages/CoursesPage";
 import CourseDetailsPage from "./Pages/CourseDetailsPage";
-
 import Settings from "./Pages/Setting";
 import CreateCoursePage from "./Pages/CreateCoursePage";
 import Loading from "./Components/Loading";
+import ManageCourseVideos from "./Pages/ManageCourseVideos";
+import EditCoursePage from "./Pages/EditCoursePage";
 
 const router = createBrowserRouter([
   {
@@ -82,10 +83,29 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/create_course",
+    path: "/create-course",
     element: (
       <Protected authenticationRequired={true}>
        <CreateCoursePage />
+       <ToastContainer />
+      </Protected>
+    ),
+  },
+  {
+    path: "/admin/course/videos/:courseId",
+    element: (
+      <Protected authenticationRequired={true}>
+        <ManageCourseVideos  />
+        <ToastContainer />
+      </Protected>
+    ),
+  },
+  {
+    path: "/admin/course/edit/:courseId",
+    element: (
+      <Protected authenticationRequired={true}>
+        <EditCoursePage  />
+        <ToastContainer />
       </Protected>
     ),
   },

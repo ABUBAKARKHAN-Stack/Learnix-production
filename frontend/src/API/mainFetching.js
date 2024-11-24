@@ -46,12 +46,27 @@ const logoutUser = async () => {
     })
 }
 
+// API call to update account settings
 const updateAccountSettings = async (data) => {
     return await api.put('users/update-settings', data, {
         withCredentials: true
     })
 }
 
+
+// API call to create a course
+const createCourse = async (data) => {
+    return await api.post('courses/create', data, {
+        withCredentials: true
+    })
+}
+
+// API call to update a course
+const updateCourse = async (id, data) => {
+    return await api.put(`courses/update/${id}`, data, {
+        withCredentials: true
+    })
+}
 
 // API call to get all courses
 const getAllCourses = async () => {
@@ -94,6 +109,24 @@ const getAdminCourses = async () => {
     })
 }
 
+// 
+const addVideo = async (courseId, data, progressCallback) => {
+    return await api.post(`videos/create/${courseId}`, data, {
+        onUploadProgress: (progressEvent) => {
+            // Calculate progress percentage
+            const progress = Math.round(
+                (progressEvent.loaded / progressEvent.total) * 100
+            );
+            // Call the progress callback to update the progress state
+            if (progressCallback) {
+                progressCallback(progress);
+            }
+        },
+        withCredentials: true,
+    });
+};
+
+
 
 export {
     signUpUser,
@@ -104,10 +137,13 @@ export {
     getLoggedInUser,
     logoutUser,
     updateAccountSettings,
+    createCourse,
+    updateCourse,
     getAllCourses,
     getCourseById,
     getPurchasedCourses,
     getPurchaseCourseById,
     getAdminCourses,
-    purchaseCourse
+    purchaseCourse,
+    addVideo
 }
