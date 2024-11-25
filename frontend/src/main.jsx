@@ -17,7 +17,6 @@ import CoursesPage from "./Pages/CoursesPage";
 import CourseDetailsPage from "./Pages/CourseDetailsPage";
 import Settings from "./Pages/Setting";
 import CreateCoursePage from "./Pages/CreateCoursePage";
-import Loading from "./Components/Loading";
 import EditCoursePage from "./Pages/EditCoursePage";
 import AdminCourseDetailsPage from "./Pages/AdminCourseDetailsPage";
 import UploadVideosPage from "./Pages/UploadVideosPage";
@@ -152,14 +151,14 @@ const router = createBrowserRouter([
       </Protected>
     ),
   },
-  {
-    path: "/loading",
-    element: (
-      <Protected authenticationRequired={false}>
-        <Loading />
-      </Protected>
-    ),
-  },
+  // {
+  //   path: "/loading",
+  //   element: (
+  //     <Protected authenticationRequired={false}>
+  //       <Loading />
+  //     </Protected>
+  //   ),
+  // },
 ]);
 
 createRoot(document.getElementById("root")).render(
