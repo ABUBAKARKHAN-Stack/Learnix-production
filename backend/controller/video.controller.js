@@ -64,9 +64,79 @@ const createVideo = async (req, res) => {
         return res
             .status(500)
             .json(new ApiError(500, error.message));
-    } 
-}; 
+    }
+};
 
+// Update video
+const updateVideo = async (req, res) => {
+    const { title, description } = req.body;
+    const { videoId } = req.params;
+
+    if (!title || !description) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "Fill all fields"));
+    }
+
+    try {
+        const video = await videoModel.findById(videoId);
+
+        if (!video) {
+            return res
+                .status(404)
+                .json(new ApiError(404, "Video not found"));
+        }
+
+        video.title = title;
+        video.description = description;
+
+        await video.save();
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, video, "Video updated successfully"));
+    } catch (error) {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message));
+    }
+}
+
+// Delete video
+const deleteVideo = async (req, res) => {
+    const { videoId } = req.params;
+
+    try {
+        const video = await videoModel.findById(videoId);
+
+        if (!video) {
+            return res
+                .status(404)
+                .json(new ApiError(404, "Video not found"));
+        }
+
+        const course = await courseModel.findById(video.course);
+
+        if (!course) {
+            return res
+                .status(404)
+                .json(new ApiError(404, "Course not found"));
+        }
+
+        course.videos.pull(videoId);
+        await course.save();
+
+        await video.deleteOne();
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, video, "Video deleted successfully"));
+    } catch (error) {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message));
+    }
+}
 
 // Get all videos with course
 const getAllVideos = async (req, res) => {
@@ -160,4 +230,10 @@ const updateProgress = async (req, res) => {
 
 
 
-export { createVideo, getAllVideos, updateProgress }
+export {
+    createVideo,
+    deleteVideo,
+    updateVideo,
+    getAllVideos,
+    updateProgress
+}

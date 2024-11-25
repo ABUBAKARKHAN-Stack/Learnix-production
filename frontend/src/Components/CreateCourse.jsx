@@ -76,7 +76,7 @@ const CreateCourse = () => {
               htmlFor="name"
               className="font-medium text-gray-800 flex items-center gap-2"
             >
-               Course Name
+              Course Name
             </label>
             <input
               id="name"
@@ -96,7 +96,7 @@ const CreateCourse = () => {
               htmlFor="description"
               className="font-medium text-gray-800 flex items-center gap-2"
             >
-            Course Description
+              Course Description
             </label>
             <textarea
               id="description"
@@ -176,9 +176,8 @@ const CreateCourse = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full border-2 border-black bg-gray-950 text-white px-4 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-gray-950 transition-colors duration-200 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`w-full border-2 border-black bg-gray-950 text-white px-4 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-gray-950 transition-colors duration-200 ${loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             <FiCheck className="text-lg" />
             {loading ? "Creating..." : "Create Course"}

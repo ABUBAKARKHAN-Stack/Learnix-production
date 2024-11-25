@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCourse, updateCourse, deleteCourse, getAllCourses, getCourseWithLectures, getSingleCourse, getPurchasedCourses ,getAdminCourses , purchaseCourseWithPayment  } from "../controller/course.controller.js";
+import { createCourse, updateCourse, deleteCourse, getAllCourses, getCourseWithLectures, getSingleCourse, getPurchasedCourses ,getAdminCourses , purchaseCourseWithPayment , publishCourse } from "../controller/course.controller.js";
 import { createQuiz, addQuestionToQuiz, getFullQuiz } from '../controller/quiz.controller.js'
 import authMiddleware from "../middlewares/auth.middleware.js";
 import isAdmin from "../middlewares/isAdmin.middleware.js";
@@ -19,6 +19,9 @@ router.put("/update/:courseId", authMiddleware, isAdmin, upload.single("courseTh
 
 // Delete course route
 router.delete("/delete/:courseId", authMiddleware, isAdmin, deleteCourse)
+
+// Publish course route
+router.put("/publish/:courseId", authMiddleware, isAdmin, publishCourse)
 
 // Get all courses route
 router.get("/", authMiddleware, getAllCourses)

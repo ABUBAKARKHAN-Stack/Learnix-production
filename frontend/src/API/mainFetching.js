@@ -75,6 +75,13 @@ const deleteCourse = async (id) => {
     })
 }
 
+// API call to publish a course
+const publishCourse = async (id) => {
+    return await api.put(`courses/publish/${id}`, {}, {
+        withCredentials: true
+    })
+}
+
 // API call to get all courses
 const getAllCourses = async () => {
     return await api.get('courses', {
@@ -89,7 +96,7 @@ const getCourseById = async (id) => {
     })
 }
 
-const purchaseCourse = async (id , amount) => {
+const purchaseCourse = async (id, amount) => {
     return await api.post(`courses/purchase/${id}`, {
         amount
     }, {
@@ -135,6 +142,20 @@ const addVideo = async (courseId, data, progressCallback) => {
     });
 };
 
+// API call to update a video
+const updateVideo = async (id, data) => {
+    return await api.put(`videos/update/${id}`, data, {
+        withCredentials: true
+    })
+}
+
+// API call to delete a video
+const deleteVideo = async (id) => {
+    return await api.delete(`videos/delete/${id}`, {
+        withCredentials: true
+    })
+}
+
 // API call to get all videos of a course
 const getAllVideosOfACourse = async (courseId) => {
     return await api.get(`videos/${courseId}`, {
@@ -142,6 +163,26 @@ const getAllVideosOfACourse = async (courseId) => {
     })
 }
 
+// API call to create a quiz
+const createQuiz = async (id) => {
+    return await api.post(`courses/quiz/create/${id}`, {}, {
+        withCredentials: true
+    })
+}
+
+// API call to add a question
+const addQuestion = async (id, data) => {
+    return await api.post(`courses/quiz/add-question/${id}`, data, {
+        withCredentials: true
+    })
+}
+
+// API call to get a full quiz
+const getFullQuizForAdmin = async (id) => {
+    return await api.get(`courses/quiz/${id}`, {
+        withCredentials: true
+    })
+}
 
 
 
@@ -158,6 +199,7 @@ export {
     createCourse,
     updateCourse,
     deleteCourse,
+    publishCourse,
     getAllCourses,
     getCourseById,
     getPurchasedCourses,
@@ -165,5 +207,10 @@ export {
     getAdminCourses,
     purchaseCourse,
     addVideo,
+    updateVideo,
+    deleteVideo,
     getAllVideosOfACourse,
+    createQuiz,
+    addQuestion,
+    getFullQuizForAdmin
 }

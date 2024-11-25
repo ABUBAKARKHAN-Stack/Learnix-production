@@ -112,10 +112,10 @@ const SettingsPage = () => {
       {/* Back button */}
 
       <button
-        className="absolute top-4 left-4 text-gray-800 hover:text-gray-950"
+        className="absolute top-10 left-10 text-gray-800 hover:text-gray-950"
         onClick={() => navigate(-1)}
       >
-        <FiArrowLeft className="w-6 h-6" />
+        <FiArrowLeft className="w-7 h-7" />
       </button>
 
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden relative">

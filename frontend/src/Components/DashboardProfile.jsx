@@ -105,7 +105,7 @@ const DashboardProfile = ({ user }) => {
 
   return (
     <div className="h-fit mt-20 md:mt-0 mx-auto min-w-[300px] md:w-[300px] lg:w-[200px] w-fit relative right-0 p-2 flex justify-center">
-      <div className="bg-white rounded-2xl shadow-lg p-6 space-y-8">
+      <div className="bg-white rounded-2xl mt-4 shadow-lg p-6 space-y-8">
         {/* Header Section */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">

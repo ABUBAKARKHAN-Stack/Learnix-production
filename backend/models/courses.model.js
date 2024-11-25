@@ -31,13 +31,21 @@ const courseSchema = new mongoose.Schema({
             ref: 'videos'
         }
     ],
+    quiz: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'quizzes'
+    }],
     courseDuration: {
         type: Number,
         default: 0
     },
+    isPublish: {
+        type: Boolean,
+        default: false
+    },
 }, { timestamps: true })
 
- 
+
 
 
 const courseModel = mongoose.model('courses', courseSchema)

@@ -25,11 +25,12 @@ const quizQuestionSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function (value) {
-                return this.options && value >= 0 && value < this.options.length;
+                return Array.isArray(this.options) && value >= 0 && value < this.options.length;
             },
             message: "Correct answer index is out of bounds"
         }
     },
+    
 }, { timestamps: true });
 
 

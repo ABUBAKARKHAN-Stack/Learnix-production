@@ -39,7 +39,13 @@ const createQuiz = async (req, res) => {
             questions: [],
         });
 
-        return res.status(201).json(new ApiResponse(201, quiz, "Quiz created successfully"));
+        await course.updateOne({ $push: { quiz: quiz } });
+
+        return setTimeout(() => {
+            res
+                .status(201)
+                .json(new ApiResponse(201, quiz, "Quiz created successfully"));
+        }, 1000);
     } catch (error) {
         return res.status(500).json(new ApiError(500, error.message));
     }
@@ -105,7 +111,7 @@ const getFullQuiz = async (req, res) => {
     }
 
     try {
-        const quiz = await quizModel.findById(quizId).populate('course' , 'name , image');
+        const quiz = await quizModel.findById(quizId).populate('course', 'name , image');
 
         if (!quiz) {
             return res.status(404).json(new ApiError(404, "Quiz not found"));
