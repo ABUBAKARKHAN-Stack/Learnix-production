@@ -77,7 +77,7 @@ const DashboardCoursePage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="p-4 flex-1">
+      <div className="p-4 flex-1 ml-20">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left Section */}
           <div className="flex flex-col w-full">

@@ -155,7 +155,7 @@ const router = createBrowserRouter([
   {
     path: "/loading",
     element: (
-      <Protected authenticationRequired={true}>
+      <Protected authenticationRequired={false}>
         <Loading />
       </Protected>
     ),
