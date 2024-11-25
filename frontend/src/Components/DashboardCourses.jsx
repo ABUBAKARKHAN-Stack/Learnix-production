@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { FaExclamationCircle, FaRupeeSign } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getAdminCourses, getPurchasedCourses } from "../API/mainFetching";
-import { MdAdd, MdDelete, MdEdit } from 'react-icons/md';
 import { GiPartyPopper } from "react-icons/gi";
 
 

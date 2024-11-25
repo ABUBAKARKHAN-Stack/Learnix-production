@@ -308,7 +308,7 @@ const getPurchasedCourses = async (req, res) => {
         // Query courses where the user is enrolled
         const courses = await courseModel
             .find({ enrollments: userID })
-            .select("name description price image videos")
+            .select("name description price image videos quiz").populate("quiz")
             .lean();
 
         if (courses.length === 0) {

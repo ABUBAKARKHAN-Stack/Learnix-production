@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   HiOutlineHome,
   HiOutlineBookOpen,
@@ -12,16 +12,25 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/imgs/mobile-logo.png";
 import LogoText from "../assets/imgs/LogoText.png";
-import { logoutUser } from "../API/mainFetching";
+import { logoutUser, getLoggedInUser } from "../API/mainFetching";
 
 const Sidebar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [admin, setAdmin] = useState(null)
   const navigate = useNavigate()
 
   // Toggle the mobile menu
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  useEffect(() => {
+    const loggedInUser = async () => {
+      const res = await getLoggedInUser()
+      setAdmin(res.data.data.isAdmin)
+    }
+    loggedInUser()
+  }, [])
 
   const handleLogout = async () => {
     try {
@@ -48,12 +57,12 @@ const Sidebar = () => {
           <Link to="/dashboard" title="Dashboard">
             <HiOutlineViewGrid className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
-          <Link to="/courses" title="Courses">
+          {!admin && <Link to="/courses" title="Courses">
             <HiOutlineBookOpen className="text-3xl text-black cursor-pointer hover:text-gray-600" />
-          </Link>
-          <Link to="/Quizes" title="Quizzes">
+          </Link>}
+          {!admin && <Link to="/quizes" title="Quizzes">
             <HiOutlineClipboardCheck className="text-3xl text-black cursor-pointer hover:text-gray-600" />
-          </Link>
+          </Link>}
         </div>
 
         {/* Bottom Navigation Section */}
@@ -90,13 +99,13 @@ const Sidebar = () => {
             <HiOutlineHome className="text-3xl text-black mr-4" />
             <span className="text-lg font-medium text-black">Dashboard</span>
           </Link>
-          <Link
+         {!admin && <Link
             to="/quizes"
             className="flex items-center py-4"
             onClick={toggleMobileMenu}>
             <HiOutlineClipboardCheck className="text-3xl text-black mr-4" />
             <span className="text-lg font-medium text-black">Quizzes</span>
-          </Link>
+          </Link>}
           <Link
             to="/setting"
             className="flex items-center py-4"
