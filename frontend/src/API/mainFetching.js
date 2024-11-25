@@ -68,6 +68,13 @@ const updateCourse = async (id, data) => {
     })
 }
 
+// API call to delete a course
+const deleteCourse = async (id) => {
+    return await api.delete(`courses/delete/${id}`, {
+        withCredentials: true
+    })
+}
+
 // API call to get all courses
 const getAllCourses = async () => {
     return await api.get('courses', {
@@ -147,6 +154,7 @@ export {
     updateAccountSettings,
     createCourse,
     updateCourse,
+    deleteCourse, 
     getAllCourses,
     getCourseById,
     getPurchasedCourses,
