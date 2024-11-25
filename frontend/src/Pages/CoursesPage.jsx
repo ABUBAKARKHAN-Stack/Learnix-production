@@ -5,7 +5,7 @@ import Sidebar from '../Components/Sidebar'
 function CoursesPage() {
 
   return (
-    <div className='bg-[#F3EBE5]  pl-5 flex flex-col md:flex-row '>
+    <div className='bg-[#F3EBE5] h-screen  pl-5 flex flex-col md:flex-row '>
 
       <Sidebar />
       
