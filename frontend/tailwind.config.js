@@ -45,5 +45,27 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss/plugin")(function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-custom": {
+          "scrollbar-width": "thin", // Firefox
+          "scrollbar-color": "white #F3EBE5", // Firefox
+        },
+        ".scrollbar-custom::-webkit-scrollbar": {
+          width: "8px", // Chrome, Edge
+          height: "8px",
+        },
+        ".scrollbar-custom::-webkit-scrollbar-thumb": {
+          backgroundColor: "#F3EBE5",
+          borderRadius: "4px", // Add border radius to the thumb
+        },
+        ".scrollbar-custom::-webkit-scrollbar-track": {
+          backgroundColor: "#F3EBE5",
+          borderRadius: "4px", // Add border radius to the track
+        },
+      });
+    }),
+  ],
+  
 };

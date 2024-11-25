@@ -35,7 +35,7 @@ const DashboardMain = ({ isAdmin }) => {
       {/* Display Filtered Courses */}
       <div className="flex flex-col  w-full lg:pt-5 lg:pl-5  overflow-hidden h-screen bg-[#F3EBE5] ">
 
-        <div className="w-full overflow-y-auto mt-0">
+        <div className="w-full overflow-y-auto scrollbar-custom mt-0">
           <DashboardCourses isAdmin={isAdmin} />
         </div>
       </div>
