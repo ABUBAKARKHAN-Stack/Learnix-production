@@ -1,6 +1,7 @@
 import courseModel from "../models/courses.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
 import { uploadOnCloudinary, deleteFromCloudinary, thumbnailImageForCourse } from "../config/cloudinary.config.js";
+import stripe from "../config/stripe.config.js";
 import mongoose from "mongoose";
 
 
@@ -137,9 +138,11 @@ const deleteCourse = async (req, res) => {
         }
 
         await course.deleteOne()
-        return res
-            .status(200)
-            .json(new ApiResponse(200, null, "Course deleted successfully"))
+        setTimeout(() => {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, null, "Course deleted successfully"))
+        }, 1000);
     } catch (error) {
         return res
             .status(500)
@@ -211,33 +214,60 @@ const getAllCourses = async (req, res) => {
     }
 }
 
-// Purchase Course
-const purchaseCourse = async (req, res) => {
+// Purchase course
+const purchaseCourseWithPayment = async (req, res) => {
     const { courseId } = req.params;
-    const userID = req.user._id;
+    const { amount } = req.body; // Payment amount
+    const userID = req.user._id; // Assuming user ID is coming from authenticated middleware
 
     try {
+        // Validate user ID
         if (!mongoose.Types.ObjectId.isValid(userID)) {
             return res.status(400).json(new ApiError(400, "Invalid user ID"));
         }
 
-        const course = await courseModel.findById(courseId).populate("");
-
+        // Validate course ID and fetch course details
+        const course = await courseModel.findById(courseId);
         if (!course) {
             return res.status(404).json(new ApiError(404, "Course not found"));
         }
 
-        course.isPurchased = true;
+        // Validate amount
+        if (!amount) {
+            return res.status(400).json(new ApiError(400, "Amount is required"));
+        }
+
+        // Create a Stripe Payment Intent
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: amount * 100, // Amount in cents
+            currency: "usd",
+            payment_method_types: ["card"],
+        });
+
+        // Check if the user is already enrolled
+        if (course.enrollments.includes(userID)) {
+            return res.status(400).json(new ApiError(400, "User already enrolled in the course"));
+        }
+
+        // Add the user to the course enrollments after payment intent creation
         course.enrollments.push(userID);
         await course.save();
 
+        // Return response with clientSecret and course details
         return res
             .status(200)
-            .json(new ApiResponse(200, course, "Course purchased successfully"));
+            .json(new ApiResponse(200, {
+                clientSecret: paymentIntent.client_secret,
+                course,
+            }, "Payment Intent created and course purchased successfully"));
     } catch (error) {
-
+        console.error("Error in purchaseCourseWithPayment:", error);
+        return res.status(500).json(new ApiError(500, error.message));
     }
-}
+};
+
+
+
 
 // Get Purchased Courses
 const getPurchasedCourses = async (req, res) => {
@@ -313,6 +343,6 @@ export {
     getCourseWithLectures,
     getSingleCourse,
     getPurchasedCourses,
-    purchaseCourse,
-    getAdminCourses
+    purchaseCourseWithPayment,
+    getAdminCourses,
 } 

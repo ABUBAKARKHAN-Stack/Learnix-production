@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCourse, updateCourse, deleteCourse, getAllCourses, getCourseWithLectures, getSingleCourse, getPurchasedCourses ,getAdminCourses , purchaseCourse } from "../controller/course.controller.js";
+import { createCourse, updateCourse, deleteCourse, getAllCourses, getCourseWithLectures, getSingleCourse, getPurchasedCourses ,getAdminCourses , purchaseCourseWithPayment  } from "../controller/course.controller.js";
 import { createQuiz, addQuestionToQuiz, getFullQuiz } from '../controller/quiz.controller.js'
 import authMiddleware from "../middlewares/auth.middleware.js";
 import isAdmin from "../middlewares/isAdmin.middleware.js";
@@ -27,13 +27,15 @@ router.get("/", authMiddleware, getAllCourses)
 router.get("/course-details/:courseId", authMiddleware, getSingleCourse)
 
 // Purchase course route
-router.post("/purchase/:courseId", authMiddleware, purchaseCourse)
+router.post("/purchase/:courseId", authMiddleware, purchaseCourseWithPayment)
 
 // Get Purchased Courses
 router.get("/purchased-courses", authMiddleware, getPurchasedCourses);
 
 // Get Admin Courses
 router.get("/admin-courses", authMiddleware, isAdmin, getAdminCourses);
+
+
 
 // Get Single course with all Lectures
 router.get("/:courseId", authMiddleware, getCourseWithLectures);

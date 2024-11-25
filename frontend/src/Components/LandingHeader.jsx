@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom';
 
 function LandingHeader() {
   return (
-    <div className="bg-gradient-to-b from-[#F9F6F3] to-[#F3EBE5] min-h-screen pt-5">
+    <div className="bg-gradient-to-b from-[#F9F6F3] to-[#F3EBE5]  pt-5">
       {/* Navigation */}
       <nav className="flex items-center h-20 justify-between px-8 bg-white shadow-md rounded-full mx-4 ">
         <img src={Logo} className="w-[90px] sm:w-[110px] h-auto" alt="Logo" />
-        <div className="flex gap-4">
+        <div className="flex gap-2 ss:gap-4">
           <Link to="/signin">
-            <button className="bg-black text-white text-sm sm:text-base px-6 py-2 rounded-full shadow-lg hover:bg-gray-800 transition">
+            <button className="bg-black  text-xs  text-white ss:text-sm sm:text-base px-4 py-2 ss:px-6  rounded-full shadow-lg hover:bg-gray-800 transition">
               Sign In
             </button>
           </Link>
           <Link to="/signup">
-            <button className="bg-black text-white text-sm sm:text-base px-6 py-2 rounded-full shadow-lg hover:bg-gray-800 transition">
+            <button className="bg-black text-white text-xs sm:text-sm ss:px-6 px-4 py-2 rounded-full shadow-lg hover:bg-gray-800 transition">
               Sign Up
             </button>
           </Link>

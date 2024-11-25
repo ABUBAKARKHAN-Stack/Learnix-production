@@ -14,6 +14,7 @@ function AdminCourseDetails({ id }) {
     const [course, setCourse] = useState(null);
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [deleteCourseLoading, setDeleteCourseLoading] = useState(false);
     const [publishLoading, setPublishLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(null); // For video delete loading
 
@@ -69,11 +70,16 @@ function AdminCourseDetails({ id }) {
     const handleDeleteCourse = async () => {
         if (window.confirm("Are you sure you want to delete this course?")) {
             try {
+                setDeleteCourseLoading(true);
                 const res = await deleteCourse(id); // API call to delete the course
-                
+                showSuccessToast(res.data.message);
+                navigate("/dashboard");
+
             } catch (error) {
                 console.error("Error deleting course:", error);
-                alert("Failed to delete the course. Please try again.");
+                showErrorToast("Failed to delete the course. Please try again.");
+            } finally {
+                setDeleteCourseLoading(false);
             }
         }
     };
@@ -145,7 +151,7 @@ function AdminCourseDetails({ id }) {
                     onClick={handleDeleteCourse}
                     className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md"
                 >
-                    Delete Course
+                    { deleteCourseLoading ? "Deleting..." : "Delete Course"}
                 </button>
             </div>
 
@@ -187,8 +193,8 @@ function AdminCourseDetails({ id }) {
                                         onClick={() => handleDeleteVideo(video._id)}
                                         disabled={deleteLoading === video._id}
                                         className={`px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-transform duration-200 ${deleteLoading === video._id
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
+                                            ? "opacity-50 cursor-not-allowed"
+                                            : ""
                                             }`}
                                     >
                                         {deleteLoading === video._id ? "Deleting..." : "Delete"}

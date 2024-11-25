@@ -38,10 +38,6 @@ const DashboardCourses = ({ isAdmin }) => {
 
 
 
-  const handleEditClick = (courseId) => {
-    navigate(`/admin/course/edit/${courseId}`);
-  };
-
   // Navigate to admin course details page
   const handleAdminDetailsClick = (courseId) => {
     navigate(`/admin/course-details/${courseId}`);

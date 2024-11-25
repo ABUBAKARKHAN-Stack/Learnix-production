@@ -89,8 +89,10 @@ const getCourseById = async (id) => {
     })
 }
 
-const purchaseCourse = async (id) => {
-    return await api.post(`courses/purchase/${id}`, {}, {
+const purchaseCourse = async (id , amount) => {
+    return await api.post(`courses/purchase/${id}`, {
+        amount
+    }, {
         withCredentials: true
     })
 }
@@ -143,6 +145,7 @@ const getAllVideosOfACourse = async (courseId) => {
 
 
 
+
 export {
     signUpUser,
     signInUser,
@@ -154,7 +157,7 @@ export {
     updateAccountSettings,
     createCourse,
     updateCourse,
-    deleteCourse, 
+    deleteCourse,
     getAllCourses,
     getCourseById,
     getPurchasedCourses,
@@ -162,5 +165,5 @@ export {
     getAdminCourses,
     purchaseCourse,
     addVideo,
-    getAllVideosOfACourse
+    getAllVideosOfACourse,
 }

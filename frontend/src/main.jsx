@@ -21,6 +21,8 @@ import EditCoursePage from "./Pages/EditCoursePage";
 import AdminCourseDetailsPage from "./Pages/AdminCourseDetailsPage";
 import UploadVideosPage from "./Pages/UploadVideosPage";
 import Chatbot from "./Components/Chatbot";
+import CheckoutPage from "./Pages/CheckoutPage";
+
 
 const router = createBrowserRouter([
   {
@@ -78,7 +80,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Dashboard />
       </Protected>
     ),
@@ -86,7 +88,7 @@ const router = createBrowserRouter([
   {
     path: "/create-course",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <CreateCoursePage />
         <ToastContainer />
       </Protected>
@@ -95,7 +97,7 @@ const router = createBrowserRouter([
   {
     path: "/admin/course-details/:courseId",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <AdminCourseDetailsPage />
         <ToastContainer />
       </Protected>
@@ -104,7 +106,7 @@ const router = createBrowserRouter([
   {
     path: "/admin/course/:courseId/add-video",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <UploadVideosPage />
         <ToastContainer />
       </Protected>
@@ -113,7 +115,7 @@ const router = createBrowserRouter([
   {
     path: "/admin/course/:courseId/edit",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <EditCoursePage />
         <ToastContainer />
       </Protected>
@@ -122,7 +124,7 @@ const router = createBrowserRouter([
   {
     path: "/your-courses/course/:id",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <DashboardCoursePage />
       </Protected>
     ),
@@ -130,7 +132,7 @@ const router = createBrowserRouter([
   {
     path: "/courses",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <CoursesPage />
       </Protected>
     ),
@@ -138,7 +140,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/course-details/:id",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <CourseDetailsPage />
       </Protected>
     ),
@@ -146,18 +148,27 @@ const router = createBrowserRouter([
   {
     path: "/setting",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Settings />
         <ToastContainer />
       </Protected>
     ),
   },
-  
+
   {
     path: "/chatbot",
     element: (
-      <Protected authenticationRequired={false}>
+      <Protected authenticationRequired={true}>
         <Chatbot />
+      </Protected>
+    ),
+  },
+  {
+    path: "/checkout/:courseId",
+    element: (
+      <Protected authenticationRequired={true}>
+          <CheckoutPage />
+       <ToastContainer />
       </Protected>
     ),
   },

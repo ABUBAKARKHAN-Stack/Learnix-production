@@ -35,10 +35,6 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    isPurchased: {
-        type: Boolean,
-        default: false
-    }
 }, { timestamps: true })
 
  

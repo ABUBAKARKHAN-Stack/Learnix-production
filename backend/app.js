@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
 import { connectDB } from "./config/index.js";
+import helmet from "helmet";
 
 
 const app = express();
@@ -14,7 +15,31 @@ app.use(cors({
 app.use(cookieParser());
 app.use(json({ limit: '16kb' }));
 app.use(urlencoded({ extended: true }));
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "default-src": ["'self'"],
+            "script-src": [
+                "'self'",
+                "'unsafe-inline'",
+                "https://js.stripe.com",
+                "https://*.stripe.com",
+                "https://*.google.com",
+            ],
+            "frame-src": ["https://js.stripe.com", "https://*.stripe.com"],
+            "connect-src": [
+                "'self'",
+                "https://api.stripe.com",
+                "https://*.stripe.com",
+                "https://*.google.com",
+            ],
+            "style-src": ["'self'", "'unsafe-inline'"],
+        },
+    })
+);
+
 app.use(static_("public"))
+
 
 
 // User Routes

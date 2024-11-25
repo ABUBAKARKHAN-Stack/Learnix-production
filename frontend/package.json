@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
+    "@stripe/react-stripe-js": "^3.0.0",
+    "@stripe/stripe-js": "^5.2.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
     "js-cookie": "^3.0.5",
