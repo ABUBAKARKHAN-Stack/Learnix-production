@@ -150,12 +150,37 @@ const deleteCourse = async (req, res) => {
     }
 }
 
+// Publish course
+const publishCourse = async (req, res) => {
+    const { courseId } = req.params
+    try {
+        const course = await courseModel.findOne({ _id: courseId, user: req.user._id })
+
+        if (!course) {
+            return res
+                .status(403)
+                .json(new ApiError(403, "You are not authorized to publish this course or course does not exist"))
+        }
+
+        course.isPublish = true
+        await course.save()
+        setTimeout(() => {
+            return res
+                .status(200)
+                .json(new ApiResponse(200, null, "Course published successfully"))
+        }, 1000);
+    } catch (error) {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message))
+    }
+}
 
 // Get Single course with all Lectures
 const getCourseWithLectures = async (req, res) => {
     const { courseId } = req.params
     try {
-        const course = await courseModel.findById(courseId).populate("videos")
+        const course = await courseModel.findById(courseId).populate("videos quiz")
 
         if (!course) {
             return res
@@ -179,7 +204,7 @@ const getCourseWithLectures = async (req, res) => {
 const getSingleCourse = async (req, res) => {
     const { courseId } = req.params
     try {
-        const course = await courseModel.findById(courseId).select("name description price image enrollments courseDuration")
+        const course = await courseModel.findById(courseId).select("name description price image enrollments courseDuration quiz isPublish").populate("quiz")
 
         if (!course) {
             return res
@@ -187,9 +212,11 @@ const getSingleCourse = async (req, res) => {
                 .json(new ApiError(404, "Course not found"))
         }
 
+
         return res
             .status(200)
             .json(new ApiResponse(200, course, "Course fetched successfully"))
+
     } catch (error) {
         return res
             .status(500)
@@ -198,11 +225,13 @@ const getSingleCourse = async (req, res) => {
 }
 
 
-// Get all courses 
+// Get all published courses 
 const getAllCourses = async (req, res) => {
     try {
-        const courses = await courseModel.find({})
-            .select("name description price image enrollments user")
+        const courses = await courseModel.find({
+            isPublish: true
+        })
+            .select("name description price image enrollments user isPublish")
             .lean()
         return res
             .status(200)
@@ -265,8 +294,6 @@ const purchaseCourseWithPayment = async (req, res) => {
         return res.status(500).json(new ApiError(500, error.message));
     }
 };
-
-
 
 
 // Get Purchased Courses
@@ -339,6 +366,7 @@ export {
     createCourse,
     updateCourse,
     deleteCourse,
+    publishCourse,
     getAllCourses,
     getCourseWithLectures,
     getSingleCourse,

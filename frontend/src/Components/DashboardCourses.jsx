@@ -48,13 +48,6 @@ const DashboardCourses = ({ isAdmin }) => {
     navigate("/courses");
   };
 
-  // Function to convert duration in seconds to hours and minutes
-  const convertDuration = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    return `${hours}h ${minutes}m`;
-  };
-
 
 
   if (loading) {
@@ -88,7 +81,7 @@ const DashboardCourses = ({ isAdmin }) => {
                 {courses.map((course) => (
                   <div
                     key={course._id}
-                    className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 xl:hover:scale-100 transition-all duration-300 w-[300px] md:w-[270px] md:h-[400px] xl:flex xl:h-auto xl:w-full lg:w-[250px] h-[400px] mx-auto"
+                    className="bg-white shadow-lg rounded-lg overflow-hidden w-[300px] md:w-[270px] md:h-[400px] xl:flex xl:h-auto xl:w-full lg:w-[250px] h-[400px] mx-auto"
                   >
                     {/* Course Image */}
                     <div>
@@ -104,22 +97,11 @@ const DashboardCourses = ({ isAdmin }) => {
                         <p className="text-gray-600 text-sm line-clamp-3 w-[95%]">
                           {course.description}
                         </p>
-                        {/* Additional Info */}
-                        <div className="mt-3 flex items-center space-x-4">
-                          {/* Rating */}
-                          <div className="flex items-center text-yellow-500 text-base">
-                            <span className="mr-1">{course.rating || "4.5"}</span>
-                            <span>⭐</span>
-                          </div>
-                          {/* Student Count */}
-                          <div className="text-sm text-gray-600">
-                            {course.enrollments?.length || 0} students
-                          </div>
-                          {/* Course Duration */}
-                          <div className="text-sm text-gray-600">
-                            {convertDuration(course.courseDuration)}
-                          </div>
-                        </div>
+
+                        <span className={`text-white text-sm ${course.isPublish ? "opacity-100" : "opacity-40"} w-fit mt-4 block bg-black px-3 py-1.5 rounded-full`}>
+                          {course.isPublish ? "Published" : "Unpublished"}
+                        </span>
+
                       </div>
 
                       <button
@@ -129,7 +111,7 @@ const DashboardCourses = ({ isAdmin }) => {
                         View Details
                       </button>
 
-                  
+
 
                     </div>
                   </div>
@@ -143,7 +125,7 @@ const DashboardCourses = ({ isAdmin }) => {
         <>
           {/* Student View */}
           {courses.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-[400px]">
+            <div className="flex w-[60vw] flex-col items-center justify-center h-[400px]">
               <FaExclamationCircle className="text-red-500 text-6xl mb-4" />
               <h1 className="text-2xl text-center font-semibold text-gray-700">
                 You have not purchased any courses yet.
@@ -156,11 +138,11 @@ const DashboardCourses = ({ isAdmin }) => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ml-8 gap-x-6 gap-y-8">
               {courses.map((course) => (
                 <div
                   key={course._id}
-                  className="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-[1.025] transition-all duration-300"
+                  className="bg-white shadow-md rounded-lg overflow-hidden "
                 >
                   <img
                     src={course.image || "https://via.placeholder.com/150"}
@@ -173,7 +155,7 @@ const DashboardCourses = ({ isAdmin }) => {
                     <h3 className="text-xl font-semibold text-gray-900 truncate">
                       {course.name}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+                    <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                       {course.description}
                     </p>
                     {/* View Details Button */}
