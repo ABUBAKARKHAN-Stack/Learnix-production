@@ -9,6 +9,7 @@ import {
   HiOutlineX,
   HiOutlineViewGrid
 } from "react-icons/hi";
+import { HiOutlineChatBubbleOvalLeft } from 'react-icons/hi2';
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/imgs/mobile-logo.png";
 import LogoText from "../assets/imgs/LogoText.png";
@@ -58,6 +59,10 @@ const Sidebar = () => {
 
         {/* Bottom Navigation Section */}
         <div className="flex flex-col gap-8 items-center">
+          <Link to='/chatbot'>
+          <HiOutlineChatBubbleOvalLeft className="text-3xl text-black cursor-pointer hover:text-gray-600" />
+          </Link>
+       
           <Link to="/setting" title="Settings">
             <HiOutlineCog className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
@@ -96,6 +101,12 @@ const Sidebar = () => {
             onClick={toggleMobileMenu}>
             <HiOutlineClipboardCheck className="text-3xl text-black mr-4" />
             <span className="text-lg font-medium text-black">Quizzes</span>
+          </Link>
+          <Link to='/chatbot'
+            className="flex items-center py-4"
+            onClick={toggleMobileMenu}>
+          <HiOutlineChatBubbleOvalLeft className="text-3xl text-black mr-4" />
+          <span className="text-lg font-medium text-black">Chat bot</span>
           </Link>
           <Link
             to="/setting"
