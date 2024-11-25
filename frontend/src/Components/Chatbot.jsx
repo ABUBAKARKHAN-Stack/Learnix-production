@@ -266,7 +266,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 p-6 space-y-6">
+    <div className="min-h-screen bg-[#F3EBE5] p-6 space-y-6">
       <h1 className="text-3xl font-bold text-center">Learnix Chat & Info</h1>
 
       {/* Chat Section */}
@@ -281,8 +281,8 @@ const App = () => {
               <div
                 className={`max-w-[70%] p-3 rounded-lg ${
                   message.role === "user"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-800"
+                    ? "bg-black text-white"
+                    : "bg-[#F3EBE5] text-gray-800"
                 }`}>
                 {message.parts[0].text}
               </div>
@@ -300,24 +300,13 @@ const App = () => {
           />
           <button
             onClick={handleSendMessage}
-            className="p-3 bg-blue-500 text-white rounded-full disabled:opacity-50"
+            className="p-3 bg-black text-white rounded-full disabled:opacity-50"
             disabled={loading}>
             {loading ? "..." : "➤"}
           </button>
         </div>
       </div>
 
-      {/* Gemini Info Section */}
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Learnix Info</h2>
-        <ul className="space-y-1">
-          {geminiInfo.map((info, index) => (
-            <li key={index}>
-              <strong>{info.input}:</strong> {info.response}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 };

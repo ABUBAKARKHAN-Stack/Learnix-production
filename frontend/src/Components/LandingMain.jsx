@@ -3,6 +3,7 @@ import img from '../assets/imgs/Team.jpg';
 import abubakar from '../assets/imgs/abubakar.webp'
 import mansoor from '../assets/imgs/mansoor.webp'
 import awais from '../assets/imgs/awais.webp'
+import ubaid from '../assets/imgs/ubaid.webp'
 import Card from './Card';
 
 function LandingMain() {
@@ -12,8 +13,8 @@ function LandingMain() {
       role: 'Frontend Developer',
       img: awais,
       social: {
-        github: 'https://github.com/',
-        linkedin: 'https://www.linkedin.com/',
+        github: 'https://github.com/iawais-dev',
+        linkedin: 'https://www.linkedin.com/in/awais-tahir-6a2898333?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
         instagram: 'https://www.instagram.com/'
       }
     },
@@ -22,8 +23,8 @@ function LandingMain() {
       role: 'Frontend Developer',
       img: mansoor,
       social: {
-        github: 'https://github.com/',
-        linkedin: 'https://www.linkedin.com/',
+        github: 'https://github.com/iammansoor007',
+        linkedin: 'https://www.linkedin.com/in/themansoorshah?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
         instagram: 'https://www.instagram.com/'
       }
     },
@@ -32,7 +33,7 @@ function LandingMain() {
       role: 'Backend Developer',
       img: abubakar,
       social: {
-        github: 'https://github.com/',
+        github: 'https://github.com/ABUBAKARKHAN-Stack',
         linkedin: 'https://www.linkedin.com/',
         instagram: 'https://www.instagram.com/'
       }
@@ -40,17 +41,17 @@ function LandingMain() {
     {
       name: 'Ubaidullah',
       role: 'Backend Developer',
-      img: '../assets/imgs/Ubaidullah.jpg',
+      img: ubaid ,
       social: {
-        github: 'https://github.com/',
-        linkedin: 'https://www.linkedin.com/',
+        github: 'https://github.com/sardarubaidullah',
+        linkedin: 'https://pk.linkedin.com/in/sardar-ubaidullah-karlal-986358292',
         instagram: 'https://www.instagram.com/'
       }
     },
   ];
 
   return (
-    <div className="bg-gradient-to-b from-[#F9F6F3] to-[#F3EBE5] pt-12">
+    <div className="bg-[#F3EBE5] pt-12">
       {/* What Sets Us Apart Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:gap-8 lg:gap-20 px-6 sm:px-12">
         {/* Image */}
