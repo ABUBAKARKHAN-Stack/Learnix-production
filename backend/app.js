@@ -40,7 +40,12 @@ app.use(
 
 app.use(static_("public"))
 
-
+app.get("/", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "API is working"
+    })
+})
 
 // User Routes
 import userRoutes from './routes/user.routes.js'
