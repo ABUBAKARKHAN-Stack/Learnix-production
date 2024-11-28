@@ -188,15 +188,15 @@ function AdminCourseDetails({ id }) {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen bg-[#F3EBE5]">
-                <p className="text-xl text-gray-500 animate-pulse">Loading course details...</p>
+            <div className="flex justify-center w-[80vw] items-center min-h-screen bg-[#F3EBE5]">
+                <p className="text-2xl text-gray-500 font-medium animate-pulse">Loading course details...</p>
             </div>
         );
     }
 
     if (!course) {
         return (
-            <div className="flex justify-center items-center min-h-screen bg-[#F3EBE5]">
+            <div className="flex justify-center w-[80vw] items-center min-h-screen bg-[#F3EBE5]">
                 <p className="text-xl text-red-500">Course not found.</p>
             </div>
         );
@@ -284,12 +284,7 @@ function AdminCourseDetails({ id }) {
                                 <p className="text-sm text-gray-600">{video.description}</p>
 
                                 <div className="mt-4 flex justify-between">
-                                    <button
-                                        onClick={() => navigate(`/admin/course/${id}/edit-video/${video._id}`)}
-                                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-transform duration-200"
-                                    >
-                                        Edit
-                                    </button>
+
 
                                     <button
                                         onClick={() => handleDeleteVideo(video._id)}

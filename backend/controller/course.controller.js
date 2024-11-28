@@ -41,8 +41,8 @@ const createCourse = async (req, res) => {
         })
 
 
-        setTimeout(() => {
-            return res
+        return  setTimeout(() => {
+             res
                 .status(201)
                 .json(new ApiResponse(201, course, "Course created successfully"))
         }, 1000);

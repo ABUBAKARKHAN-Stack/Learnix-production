@@ -51,7 +51,7 @@ const DashboardCourses = ({ isAdmin }) => {
 
   if (loading) {
     return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-[#F3EBE5] px-4">
+      <div className="h-screen flex w-[70vw] flex-col items-center justify-center bg-[#F3EBE5] px-4">
         <div className="text-gray-700 text-7xl mb-4">
           <GiPartyPopper />
         </div>
@@ -70,7 +70,7 @@ const DashboardCourses = ({ isAdmin }) => {
           {/* Admin View */}
           <div>
             {courses.length === 0 ? (
-              <div className="flex mt-10 flex-col items-center justify-center h-[400px]">
+              <div className="flex mt-10 flex-col items-center w-[60vw] justify-center h-[400px]">
                 <h1 className="text-2xl text-center font-semibold text-gray-700">
                   You have not created any courses yet.
                 </h1>

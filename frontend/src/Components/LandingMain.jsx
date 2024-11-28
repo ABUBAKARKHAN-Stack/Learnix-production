@@ -31,7 +31,7 @@ function LandingMain() {
     },
     {
       name: 'Abubakar',
-      role: 'Backend Developer',
+      role: 'Full Stack Developer',
       img: abubakar,
       social: {
         github: 'https://github.com/ABUBAKARKHAN-Stack',
@@ -52,7 +52,7 @@ function LandingMain() {
   ];
 
   return (
-    <div className="bg-[#F3EBE5] pt-12">
+    <div className="pt-12">
       {/* What Sets Us Apart Section */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 px-6 sm:px-12">
         {/* Image */}
@@ -64,13 +64,13 @@ function LandingMain() {
 
         {/* Text Content */}
         <div className="mt-8 lg:mt-0">
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-semibold text-gray-800">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-semibold text-gray-800 dark:text-gray-50">
             What Sets Us Apart
           </h1>
-          <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-600 max-w-lg">
+          <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-50 max-w-lg">
             Our e-learning platform is designed to offer a seamless and personalized learning journey. With expert instructors, interactive content, and flexible schedules, we make it easy for you to gain new skills and advance your career.
           </p>
-          <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-600 max-w-lg">
+          <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-50 max-w-lg">
             From industry-relevant courses to hands-on projects, we equip you with the skills and confidence to excel in a competitive world. Start your journey with us and turn your aspirations into achievements.
           </p>
         </div>
@@ -87,22 +87,19 @@ function LandingMain() {
 
       {/* Our Team Section */}
       <div className="mt-12 px-6 sm:px-12">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800 dark:text-gray-50">
           Our Team
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
           {teamMembers.map((member, index) => (
-            <div
+            <Card
               key={index}
-              className="transform transition-transform duration-300 hover:scale-105 shadow-lg rounded-lg hover:shadow-2xl"
-            >
-              <Card
-                name={member.name}
-                role={member.role}
-                img={member.img}
-                social={member.social}
-              />
-            </div>
+              name={member.name}
+              role={member.role}
+              img={member.img}
+              social={member.social}
+            />
+
           ))}
         </div>
       </div>

@@ -79,7 +79,7 @@ function CourseDetail({ id }) {
                 {/* Course Information */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <p className="text-lg text-gray-800">
-                        <span className="font-medium">Price:</span> Rs {course.price}
+                        <span className="font-medium">Price:</span> ${course.price}
                     </p>
                     <p className="text-lg text-gray-800">
                         <span className="font-medium">Rating:</span> {course.rating || 4.5} ⭐

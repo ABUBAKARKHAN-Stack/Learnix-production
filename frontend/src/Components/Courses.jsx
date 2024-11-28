@@ -98,8 +98,8 @@ function Courses() {
                     className="w-full h-40 object-cover"
                   />
                   <div className="absolute flex items-center gap-x-0.5 top-2 left-2 bg-gradient-to-r from-blue-500 to-purple-600  text-white text-xs font-light font-mono px-2 py-1 rounded-md shadow-md">
-                    <FaRupeeSign size={11} className="mb-0.5" />
-                    <span>{course.price}</span>
+                  
+                    <span>${course.price}</span>
                   </div>
                 </div>
 

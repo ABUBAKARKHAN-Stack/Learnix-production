@@ -1,8 +1,9 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import runChat from "../Config/gemini";
 
 // Create the context object
 export const Context = createContext();
+
 
 // Structured Predefined Data
 const predefinedData = {
@@ -89,9 +90,15 @@ const ContextProvider = (props) => {
   const [showresult, setshowresult] = useState(false);
   const [loading, setloading] = useState(false);
   const [resultdata, setresultdata] = useState("");
+  const timeoutRef = useRef()
+
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current)
+  }, [])
 
   const delaypara = async (index, nextword) => {
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setresultdata((prev) => prev + nextword);
     }, 20 * index);
   };

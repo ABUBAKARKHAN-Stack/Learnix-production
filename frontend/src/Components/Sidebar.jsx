@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/imgs/mobile-logo.png";
 import LogoText from "../assets/imgs/LogoText.png";
 import { logoutUser, getLoggedInUser } from "../API/mainFetching";
+import { FaPlus } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -58,6 +59,9 @@ const Sidebar = () => {
           <Link to="/dashboard" title="Dashboard">
             <HiOutlineViewGrid className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>
+         {admin && <Link to="/create-course" title="Create Course">
+            <FaPlus className="text-3xl text-black cursor-pointer hover:text-gray-600" />
+          </Link>}
           {!admin && <Link to="/courses" title="Courses">
             <HiOutlineBookOpen className="text-3xl text-black cursor-pointer hover:text-gray-600" />
           </Link>}

@@ -54,7 +54,7 @@ const DashboardProfile = ({ user }) => {
         chartBorderColor = "rgba(54, 162, 235, 1)";
       } else {
         // Student Chart: Weekly learning hours
-        chartLabel = "Learning Hours";
+        chartLabel = "Learning mins";
         chartData = [2, 4, 3, 5, 6, 4, 7]; // Example data
         chartBackgroundColor = "rgba(243, 235, 229, 0.5)";
         chartBorderColor = "rgba(0, 0, 0, 0.8)";

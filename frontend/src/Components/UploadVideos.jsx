@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { addVideo } from "../API/mainFetching";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { showErrorToast, showSuccessToast } from "../utils/ToastNotification";
+import { FiArrowLeft } from "react-icons/fi";
 
 const UploadVideoForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const navigate = useNavigate()
     const { courseId } = useParams();
 
     const onSubmit = async (data) => {
@@ -25,8 +28,13 @@ const UploadVideoForm = () => {
             });
 
             console.log(res.data);
+            showSuccessToast(res.data.message)
+            setTimeout(() => {
+                navigate(-1)
+            }, 2500);
         } catch (error) {
             console.error("Error uploading video:", error);
+            showErrorToast("Error while uploading video")
         } finally {
             setLoading(false);
         }
@@ -34,6 +42,15 @@ const UploadVideoForm = () => {
 
     return (
         <div className="min-h-screen bg-[#F3EBE5] flex items-center justify-center">
+            {/* Back button */}
+
+            <button
+                className="absolute top-10 left-10 text-gray-800 hover:text-gray-950"
+                onClick={() => navigate(-1)}
+            >
+                <FiArrowLeft className="w-7 h-7" />
+            </button>
+
             <div className="w-full max-w-[700px] bg-white shadow-lg rounded-lg overflow-hidden">
                 {/* Header */}
                 <div className="bg-gray-900 text-white px-6 py-4 text-center">
@@ -43,11 +60,19 @@ const UploadVideoForm = () => {
                 {/* Progress Bar */}
                 {loading && (
                     <div className="px-6 py-2">
-                        <div className="relative w-full bg-gray-200 rounded-full">
-                            <div
-                                className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
-                                style={{ width: `${uploadProgress}%` }}
-                            ></div>
+                        <div className="relative w-full bg-gray-800 text-white rounded-full">
+                            {uploadProgress >= 100 ?
+                                <p className="animate-pulse text-center block mx-auto  p-2 text-xs">Processing Video Please wait...
+                                 This might take couple of mins
+                                </p>
+
+                                : (
+                                    <div
+                                        className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+                                        style={{ width: `${uploadProgress}%` }}
+                                    ></div>
+                                )
+                            }
                         </div>
                         <p className="text-center mt-2">{uploadProgress}% uploaded</p>
                     </div>
@@ -104,9 +129,8 @@ const UploadVideoForm = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full border-2 border-black bg-gray-950 text-white px-4 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-gray-950 transition-colors duration-200 ${
-                            loading ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className={`w-full border-2 border-black bg-gray-950 text-white px-4 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-gray-950 transition-colors duration-200 ${loading ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                     >
                         {loading ? "Uploading..." : "Upload Video"}
                     </button>

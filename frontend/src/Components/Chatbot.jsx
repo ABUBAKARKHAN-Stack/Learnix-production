@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../Context/Context"; // Ensure the import path is correct
 import { assets } from "../assets/imgs/assets";
+import { FaRobot } from "react-icons/fa";
+
 
 // Function to convert **bold** text into <strong> tags
 const formatText = (text) => {
@@ -34,8 +36,10 @@ function Main() {
   return (
     <div className="flex flex-col min-h-screen relative">
       <div className="flex items-center justify-between text-xl p-5 pt-2 text-[#585858] sticky top-0 z-10 bg-white shadow-lg">
-        <p>Gemini</p>
-        <img src={assets.user_icon} alt="" className="w-[40px] rounded-full" />
+        <p className="text-xl font-semibold">Learnix BOT</p>
+        <div className="p-2 bg-gradient-to-r rounded-full from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500">
+          <FaRobot size={30} className="text-white" />
+        </div>
       </div>
 
       {/* Main content area that will scroll */}
@@ -124,11 +128,9 @@ function Main() {
         ) : (
           <div className="px-5 max-h-[70vh] overflow-y-scroll scrollbar-hidden">
             <div className="my-10 flex items-center gap-5">
-              <img
-                src={assets.user_icon}
-                alt=""
-                className="w-[40px] rounded-full"
-              />
+              <div className="p-2 bg-gradient-to-r rounded-full from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500">
+                <FaRobot size={30} className="text-white" />
+              </div>
               <p>{recentprompt}</p>
             </div>
             <div className="flex items-start gap-5">

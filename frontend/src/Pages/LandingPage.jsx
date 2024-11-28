@@ -3,9 +3,12 @@ import LandingFooter from "../Components/LandingFooter";
 import LandingHeader from "../Components/LandingHeader";
 import LandingMain from "../Components/LandingMain";
 import { LoadingAnimation } from "../Components/LoadingAnimation";
-
+import ThemeChangerButton from "../Components/ThemeChangerButton";
+import { ThemeContextProvider, useTheme } from "../Context/ThemeContext";
 function LandingPage() {
   const [loading, setLoading] = useState(true);
+  const [themeMode, setThemeMode] = useState('light')
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,6 +20,19 @@ function LandingPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const htmlTag = document.querySelector('html')
+    htmlTag.classList.remove('light', 'dark')
+    htmlTag.classList.add(themeMode)
+  }, [themeMode])
+
+  const lightTheme = () => {
+    setThemeMode('light')
+  }
+  const darkTheme = () => {
+    setThemeMode('dark')
+  }
+
   // Render the animation during the loading state
   if (loading) {
     return <LoadingAnimation />;
@@ -24,11 +40,15 @@ function LandingPage() {
 
   // Render the main content after the loading is complete
   return (
-    <div className="bg-[#FBF8F6] h-screen ">
-      <LandingHeader />
-      <LandingMain />
-      <LandingFooter />
-    </div>
+    <ThemeContextProvider value={{ defaultTheme: themeMode, lightTheme, darkTheme }} >
+      <div className="bg-[#FBF8F6] transition-colors  dark:bg-black h-fit ">
+        <LandingHeader />
+        <LandingMain />
+        <LandingFooter />
+      {/* <ThemeChangerButton /> */}
+      </div>
+    </ThemeContextProvider>
+
   );
 }
 
