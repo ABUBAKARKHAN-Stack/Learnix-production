@@ -27,7 +27,7 @@ export function SignUp() {
   const [teacher, setTeacher] = useState(false);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState(true);
-  const [password,SetPassword] = useState(false)
+  const [password, SetPassword] = useState(false)
   const navigate = useNavigate();
 
   // State to track password validity
@@ -35,7 +35,7 @@ export function SignUp() {
 
 
   //Toggle password hide show
-  const handlePass = ()=>{
+  const handlePass = () => {
     SetPassword(!password)
   }
 
@@ -201,18 +201,18 @@ export function SignUp() {
                 </div>
                 <div>
                   <label htmlFor="password" className='text-[14px]'>Password</label>
-             <div className='relative'> 
-                  <input
-                    type={password ? 'text' : 'password'}
-                    placeholder='••••••••'
-                    id="password"
-                    {...register('password', { required: 'Password is required' })}
-                    className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
-                  />
-                  {
-              password ? <FaEyeSlash className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} />
-             }
-             </div>
+                  <div className='relative'>
+                    <input
+                      type={password ? 'text' : 'password'}
+                      placeholder='••••••••'
+                      id="password"
+                      {...register('password', { required: 'Password is required' })}
+                      className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
+                    />
+                    {
+                      password ? <FaEyeSlash className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} />
+                    }
+                  </div>
                   {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
                 </div>
 
@@ -302,18 +302,18 @@ export function SignUp() {
                 <div>
                   <label htmlFor="password" className='text-[14px]'>Password</label>
                   <div className='relative'>
-                  <input
-                    type={password ? 'text' :'password'}
-                    placeholder='••••••••'
-                    id="password"
-                    {...register('password', { required: 'Password is required' })}
-                    className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
-                  />
-                      {
-              password ? <FaEyeSlash className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} />
-             }
+                    <input
+                      type={password ? 'text' : 'password'}
+                      placeholder='••••••••'
+                      id="password"
+                      {...register('password', { required: 'Password is required' })}
+                      className='outline-none pl-2 border text-xs py-2 w-full rounded-md'
+                    />
+                    {
+                      password ? <FaEyeSlash className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-2 right-3 cursor-pointer ' onClick={handlePass} />
+                    }
                   </div>
-                  
+
                   {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
                 </div>
 

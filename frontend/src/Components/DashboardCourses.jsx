@@ -68,8 +68,8 @@ const DashboardCourses = ({ isAdmin }) => {
       {isAdmin ? (
         <>
           {/* Admin View */}
-          <div>
-            {courses.length === 0 ? (
+  
+            {isAdmin && courses.length === 0 ? (
               <div className="flex mt-10 flex-col items-center w-[60vw] justify-center h-[400px]">
                 <h1 className="text-2xl text-center font-semibold text-gray-700">
                   You have not created any courses yet.
@@ -118,13 +118,13 @@ const DashboardCourses = ({ isAdmin }) => {
               </div>
 
             )}
-          </div>
+      
         </>
       ) : (
         <>
           {/* Student View */}
-          {courses.length === 0 ? (
-            <div className="flex w-[60vw] flex-col items-center justify-center h-[400px]">
+          { courses.length === 0 ? (
+            <div className='flex w-[60vw] flex-col items-center justify-center h-[400px]'>
               <FaExclamationCircle className="text-red-500 text-6xl mb-4" />
               <h1 className="text-2xl text-center font-semibold text-gray-700">
                 You have not purchased any courses yet.

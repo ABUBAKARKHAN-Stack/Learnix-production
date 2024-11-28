@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
     try {
-        const connectionInstance = await mongoose.connect(process.env.MONGO_DB_URI)
+        const connectionInstance = await mongoose.connect(`${process.env.MONGO_DB_URI}/learnix`)
         const { name, host, port } = connectionInstance.connection
         console.log(`Connected to MongoDB at mongodb://${host}:${port}/${name}`);
     } catch (error) {

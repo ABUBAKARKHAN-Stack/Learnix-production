@@ -108,7 +108,7 @@ export function SignIn() {
                 className='outline-none pl-2 relative border text-xs focus:ring-1 py-2 w-full rounded-md'
               />
              {
-              password ? <FaEyeSlash className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-3 right-5 cursor-pointer ' onClick={handlePass} />
+              password ? <FaEyeSlash className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} />
              }</div>
               
               {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
