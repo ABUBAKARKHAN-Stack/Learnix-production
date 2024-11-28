@@ -60,7 +60,7 @@ import videoRoutes from './routes/video.routes.js'
 app.use("/videos", videoRoutes)
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
 connectDB().then(
     app.listen(PORT, () => {
