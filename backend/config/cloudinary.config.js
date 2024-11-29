@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { ApiError } from '../utils/index.js'
-import fs from 'fs'
+import streamifier from 'streamifier';
 
 // Configuration
 cloudinary.config({
@@ -10,33 +10,31 @@ cloudinary.config({
 });
 
 // Upload file to Cloudinary from memory buffer
-const uploadOnCloudinary = async (file) => {
-    if (!file) {
-        return res.status(400).json(new ApiError(400, 'File is required'));
-    }
+const uploadOnCloudinary = async (fileBuffer) => {
     try {
         const response = await cloudinary.uploader.upload_stream(
             {
-                resource_type: "auto", // This will allow it to upload images, videos, etc.
+                resource_type: 'auto',  // Automatically detect the file type
+                public_id: `avatars/${Date.now()}`,  // Unique public_id
             },
             (error, result) => {
                 if (error) {
-                    console.error('Cloudinary upload error:', error);
-                    throw error;
+                    throw new Error('Error uploading to Cloudinary: ' + error.message);
                 }
-                console.log(`File uploaded to Cloudinary: ${result.secure_url}`);
-                return result;  // You can return the Cloudinary response here
+                return result;
             }
         );
 
-        // Pipe the file buffer to Cloudinary
-        file.stream.pipe(response);
-        
+
+        streamifier.createReadStream(fileBuffer).pipe(response);
+
+        return result;
     } catch (error) {
-        console.error(error);
-        return res.status(500).json(new ApiError(500, 'Error uploading to Cloudinary'));
+        console.log('Cloudinary upload failed', error.message);
+        throw new ApiError(500, error.message);
     }
-}
+};
+
 
 const deleteFromCloudinary = async (publicId) => {
     try {
@@ -50,10 +48,10 @@ const deleteFromCloudinary = async (publicId) => {
 const thumbnailImageForCourse = (publicId) => {
     try {
         const options = {
-            width: 400, 
-            height: 200, 
+            width: 400,
+            height: 200,
             crop: "fill",
-            gravity: "auto", 
+            gravity: "auto",
             responsive: true, // Enable responsive images
             dpr: "auto", // Automatically adjust for the device's pixel density   
         };

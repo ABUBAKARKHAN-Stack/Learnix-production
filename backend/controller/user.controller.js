@@ -292,48 +292,46 @@ const logout = async (req, res) => {
 
 // Upload user profile picture
 const uploadAvatar = async (req, res) => {
-    const filePath = req?.file?.path;
-    const userID = req.user._id
-    if (!filePath) {
-        return res
-            .status(400)
-            .json(new ApiError(400, "File is required"))
+    const fileBuffer = req?.file?.buffer;  // Get the file from memory
+    const userID = req.user._id;
+
+    if (!fileBuffer) {
+        return res.status(400).json(new ApiError(400, "File is required"));
     }
+
     let file;
     try {
-        file = await uploadOnCloudinary(filePath)
+        // Upload directly to Cloudinary from memory buffer
+        file = await uploadOnCloudinary(fileBuffer);
     } catch (error) {
-        deleteFromCloudinary(file?.public_id)
-        console.log(error.message)
+        console.log(error.message);
+        return res.status(500).json(new ApiError(500, error.message, "Error uploading to Cloudinary"));
     }
 
     try {
+        // Update user's avatar with the Cloudinary URL
         const user = await userModel.findByIdAndUpdate(userID, {
             $set: {
                 avatar: file.secure_url
             }
         }, {
             new: true
-        })
+        });
 
         if (!user) {
-            return res
-                .status(404)
-                .json(new ApiError(404, "User not found"))
+            return res.status(404).json(new ApiError(404, "User not found"));
         }
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, user, "Avatar uploaded successfully"))
+        return res.status(200).json(new ApiResponse(200, user, "Avatar uploaded successfully"));
     } catch (error) {
+        // If uploading the avatar failed, remove the file from Cloudinary
         if (file && file.public_id) {
-            deleteFromCloudinary(file.public_id)
+            await deleteFromCloudinary(file.public_id);
         }
-        return res
-            .status(500)
-            .json(new ApiError(500, error.message, "Something went wrong while uploading avatar"))
+        return res.status(500).json(new ApiError(500, error.message, "Something went wrong while updating user"));
     }
 }
+
 
 // Get Logged in user
 const getLoggedInUser = async (req, res) => {
