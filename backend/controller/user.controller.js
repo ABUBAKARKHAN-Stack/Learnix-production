@@ -366,7 +366,7 @@ const updateUser = async (req, res) => {
 
 
 
-    if (!username && !email && !password && !update_avatar) {
+    if (!username && !email && !password && !fileBuffer) {
         return res
             .status(400)
             .json(new ApiError(400, "Fill at least one field"))
