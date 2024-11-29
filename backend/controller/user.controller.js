@@ -395,10 +395,6 @@ const updateUser = async (req, res) => {
         }, 1000);
     } catch (error) {
 
-        if (file && file.public_id) {
-            await deleteFromCloudinary(file.public_id)
-        }
-
         return res
             .status(500)
             .json(new ApiError(500, error.message, "Something went wrong while updating user"))
