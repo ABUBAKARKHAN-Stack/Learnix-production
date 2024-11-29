@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe("pk_test_51QP4Nz2MzALTpk3GrHftNIDFlOXLUtqDSuFZEWmCqxH6ptYcxJUJiH2ERX93rTXliLL8LMoGM8RgiRuRjjkDcuo000tU6gXO8H")
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 function CheckoutPage() {
     const { courseId } = useParams();
