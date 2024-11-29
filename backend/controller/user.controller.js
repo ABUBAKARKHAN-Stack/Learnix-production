@@ -348,82 +348,80 @@ const getLoggedInUser = async (req, res) => {
 
 // Update user profile
 const updateUser = async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password } = req.body;
     const fileBuffer = req?.file?.buffer;  // Get the file from memory
-    const userID = req.user._id
+    const userID = req.user._id;
 
+    // Check if userID exists
     if (!userID) {
         return res
             .status(400)
-            .json(new ApiError(400, "User ID is required"))
+            .json(new ApiError(400, "User ID is required"));
     }
 
-    if (!fileBuffer) {
-        return res
-            .status(400)
-            .json(new ApiError(400, "File is required"))
-    }
-
-
-
+    // Ensure at least one field is provided (username, email, password, or avatar)
     if (!username && !email && !password && !fileBuffer) {
         return res
             .status(400)
-            .json(new ApiError(400, "Fill at least one field"))
+            .json(new ApiError(400, "Fill at least one field"));
     }
 
-    const user = await userModel.findById(userID)
+    // Fetch user by userID
+    const user = await userModel.findById(userID);
 
     if (!user) {
         return res
             .status(404)
-            .json(new ApiError(404, "User not found"))
+            .json(new ApiError(404, "User not found"));
     }
 
     let file;
+    // If a new avatar is being uploaded
     if (fileBuffer) {
         try {
-            file = await uploadOnCloudinary(fileBuffer)
+            // Upload the file to Cloudinary
+            file = await uploadOnCloudinary(fileBuffer);
         } catch (error) {
-            deleteFromCloudinary(file?.public_id)
-            console.log(error.message)
+            // If upload fails, do not update the avatar
+            console.log(error.message);
+            return res.status(500).json(new ApiError(500, "Error uploading avatar"));
         }
     }
 
+    // Prepare the update data
+    const updateData = {
+        ...(username && { username }),  // Only update username if provided
+        ...(email && { email }),        // Only update email if provided
+        ...(password && { password }),  // Only update password if provided
+        ...(file && { avatar: file.secure_url }),  // Only update avatar if uploaded
+    };
 
-
+    // Update the user with the new data
     try {
         const updatedUser = await userModel.findByIdAndUpdate(userID, {
-            $set: {
-                username: username || user.username,
-                email: email || user.email,
-                password: password ? await bcrypt.hash(password, 10) : user.password,
-                avatar: file?.secure_url || user.avatar
-            }
+            $set: updateData
         }, {
-            new: true
-        })
+            new: true // Return the updated user
+        });
 
-        setTimeout(() => {
+        if (!updatedUser) {
             return res
-                .status(200)
-                .json(new ApiResponse(200, updatedUser, "User updated successfully"))
-        }, 1000);
-    } catch (error) {
-
-        if (file && file.public_id) {
-            await deleteFromCloudinary(file.public_id)
+                .status(500)
+                .json(new ApiError(500, "Something went wrong while updating the user"));
         }
 
+        // Send back the updated user info in the response
+        return res
+            .status(200)
+            .json(new ApiResponse(200, updatedUser, "User profile updated successfully"));
+    } catch (error) {
+        console.log(error.message);
         return res
             .status(500)
-            .json(new ApiError(500, error.message, "Something went wrong while updating user"))
+            .json(new ApiError(500, error.message, "Error updating user"));
     }
+};
 
-
-
-
-}
 
 // Get user progress
 const getProgress = async (req, res) => {
