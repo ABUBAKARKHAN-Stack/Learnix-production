@@ -16,7 +16,7 @@ const uploadOnCloudinary = async (fileBuffer) => {
             const uploadStream = cloudinary.uploader.upload_stream(
                 {
                     resource_type: 'auto',  // Automatically detect the file type (image, video, etc.)
-                    public_id: `avatars/${Date.now()}`,  // Unique public_id based on timestamp
+                    public_id: `image-${Date.now()}`,  // Unique public_id based on timestamp
                 },
                 (error, result) => {
                     if (error) {

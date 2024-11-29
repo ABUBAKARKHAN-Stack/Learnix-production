@@ -377,6 +377,9 @@ const updateUser = async (req, res) => {
     if (fileBuffer) {
         try {
             file = await uploadOnCloudinary(fileBuffer)
+            if (user.avatar) {
+                await deleteFromCloudinary(user.avatar.split("/").pop().split("?")[0])
+            }
         } catch (error) {
             deleteFromCloudinary(file?.public_id)
             console.log(error.message)
