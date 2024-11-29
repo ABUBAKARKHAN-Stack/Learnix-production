@@ -36,7 +36,7 @@ app.use(
             "style-src": ["'self'", "'unsafe-inline'"],
         },
     })
-);
+);    
 
 app.use(static_("public"))
 
@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
         message: "API is working"
     })
 })
-
+  
 // User Routes
 import userRoutes from './routes/user.routes.js'
 app.use("/users", userRoutes)
