@@ -88,7 +88,7 @@ const updateCourse = async (req, res) => {
 
                 // Delete the old image from Cloudinary if it exists
                 if (course.image) {
-                    const oldImageId = course.image.split("/").pop().split(".")[0];
+                    const oldImageId = course.image.split("/").pop().split("?")[0];
                     await deleteFromCloudinary(oldImageId);
                 }
             } catch (cloudinaryError) {
