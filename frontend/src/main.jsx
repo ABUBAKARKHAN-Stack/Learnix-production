@@ -9,7 +9,7 @@ import Dashboard from "./Pages/Dashboard";
 import EmailVerificationPage from "./Pages/EmailVerificationPage";
 import Protected from "./Components/AuthLayout/Protected";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
-import ResetPasswordPage from "./Pages/REsetPasswordPage";
+import ResetPasswordPage from "./Pages/ResetPasswordPage"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardCoursePage from "./Components/DashboardCoursePage";
