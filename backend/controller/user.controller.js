@@ -290,7 +290,6 @@ const logout = async (req, res) => {
         .json(new ApiResponse(200, null, "User logged out successfully"))
 }
 
-// Upload user profile picture
 const uploadAvatar = async (req, res) => {
     const fileBuffer = req?.file?.buffer;  // Get the file from memory
     const userID = req.user._id;
@@ -305,18 +304,16 @@ const uploadAvatar = async (req, res) => {
         file = await uploadOnCloudinary(fileBuffer);
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json(new ApiError(500, error, "Error uploading to Cloudinary"));
+        return res.status(500).json(new ApiError(500, error.message, "Error uploading to Cloudinary"));
     }
 
     try {
         // Update user's avatar with the Cloudinary URL
         const user = await userModel.findByIdAndUpdate(userID, {
             $set: {
-                avatar: file.secure_url
+                avatar: file.secure_url  // Store the secure URL returned by Cloudinary
             }
-        }, {
-            new: true
-        });
+        }, { new: true });
 
         if (!user) {
             return res.status(404).json(new ApiError(404, "User not found"));
@@ -324,13 +321,14 @@ const uploadAvatar = async (req, res) => {
 
         return res.status(200).json(new ApiResponse(200, user, "Avatar uploaded successfully"));
     } catch (error) {
-        // If uploading the avatar failed, remove the file from Cloudinary
+        // Optionally delete the file from Cloudinary if user update fails
         if (file && file.public_id) {
-            await deleteFromCloudinary(file.public_id);
+            deleteFromCloudinary(file.public_id);
         }
-        return res.status(500).json(new ApiError(500, error, "Something went wrong while updating user"));
+        return res.status(500).json(new ApiError(500, error.message, "Something went wrong while uploading avatar"));
     }
-}
+};
+
 
 
 // Get Logged in user

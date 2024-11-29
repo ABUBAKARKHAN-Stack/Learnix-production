@@ -12,28 +12,31 @@ cloudinary.config({
 // Upload file to Cloudinary from memory buffer
 const uploadOnCloudinary = async (fileBuffer) => {
     try {
-        const response = await cloudinary.uploader.upload_stream(
-            {
-                resource_type: 'auto',  // Automatically detect the file type
-                public_id: `avatars/${Date.now()}`,  // Unique public_id
-            },
-            (error, result) => {
-                if (error) {
-                    throw new Error('Error uploading to Cloudinary: ' + error);
+        // Return a promise that resolves after the file is uploaded
+        return new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                {
+                    resource_type: 'auto',  // Automatically detect the file type (image, video, etc.)
+                    public_id: `avatars/${Date.now()}`,  // Unique public_id based on timestamp
+                },
+                (error, result) => {
+                    if (error) {
+                        reject(new Error('Cloudinary upload failed: ' + error.message));
+                    } else {
+                        resolve(result);  // Resolve with the Cloudinary upload result
+                    }
                 }
-                return result;
-            }
-        );
+            );
 
-
-        streamifier.createReadStream(fileBuffer).pipe(response);
-
-        return result;
+            // Convert the file buffer to a readable stream and pipe it to Cloudinary
+            streamifier.createReadStream(fileBuffer).pipe(uploadStream);
+        });
     } catch (error) {
         console.log('Cloudinary upload failed', error.message);
-        throw new ApiError(500, error.message);
+        throw new Error('Cloudinary upload failed: ' + error.message);
     }
 };
+
 
 
 const deleteFromCloudinary = async (publicId) => {
