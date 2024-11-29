@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../Components/Sidebar";
-import DashboardMain from "../Components/DashboardMain";
+import DashboardMain from "../Components/Dashboardmain";
 import DashboardProfile from "../Components/DashboardProfile";
 import { getLoggedInUser } from "../API/mainFetching";
 
