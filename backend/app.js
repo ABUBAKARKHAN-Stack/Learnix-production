@@ -37,7 +37,7 @@ app.use(
         },
     })
 );    
-
+ 
 app.use(static_("public"))
 
 app.get("/", (req, res) => {
