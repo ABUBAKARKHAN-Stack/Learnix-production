@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { ApiError } from '../utils/index.js'
 import streamifier from 'streamifier';
 
 // Configuration

@@ -349,7 +349,7 @@ const getLoggedInUser = async (req, res) => {
 // Update user profile
 const updateUser = async (req, res) => {
     const { username, email, password } = req.body
-    const update_avatar = req?.file?.path
+    const fileBuffer = req?.file?.buffer;  // Get the file from memory
     const userID = req.user._id
 
     if (!userID) {
@@ -357,6 +357,14 @@ const updateUser = async (req, res) => {
             .status(400)
             .json(new ApiError(400, "User ID is required"))
     }
+
+    if (!fileBuffer) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "File is required"))
+    }
+
+
 
     if (!username && !email && !password && !update_avatar) {
         return res
@@ -373,9 +381,9 @@ const updateUser = async (req, res) => {
     }
 
     let file;
-    if (update_avatar) {
+    if (fileBuffer) {
         try {
-            file = await uploadOnCloudinary(update_avatar)
+            file = await uploadOnCloudinary(fileBuffer)
         } catch (error) {
             deleteFromCloudinary(file?.public_id)
             console.log(error.message)
