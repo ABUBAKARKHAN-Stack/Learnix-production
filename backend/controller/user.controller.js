@@ -373,8 +373,15 @@ const updateUser = async (req, res) => {
             .json(new ApiError(404, "User not found"))
     }
 
-    let file = await uploadOnCloudinary(fileBuffer)
-
+    let file;
+    if (fileBuffer) {
+        try {
+            file = await uploadOnCloudinary(fileBuffer)
+        } catch (error) {
+            deleteFromCloudinary(file?.public_id)
+            console.log(error.message)
+        }
+    }
 
     try {
         const updatedUser = await userModel.findByIdAndUpdate(userID, {
@@ -394,6 +401,10 @@ const updateUser = async (req, res) => {
                 .json(new ApiResponse(200, updatedUser, "User updated successfully"))
         }, 1000);
     } catch (error) {
+
+        if (file && file.public_id) {
+            await deleteFromCloudinary(file.public_id)
+        }
 
         return res
             .status(500)
