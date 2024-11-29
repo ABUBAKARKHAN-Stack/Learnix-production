@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 const createCourse = async (req, res) => {
     const { name, description, price } = req.body
     const userID = req.user._id
-    const courseThumbnail = req?.file?.path
+    const courseThumbnail = req?.file?.buffer
 
     let courseImage;
 
@@ -60,7 +60,7 @@ const updateCourse = async (req, res) => {
     const { name, description, price } = req.body;
     const { courseId } = req.params;
     const userID = req.user._id;
-    const filePath = req?.file?.path;
+    const fileBuffer = req?.file?.buffer;
 
     if (!courseId) {
         return res.status(400).json(new ApiError(400, "Course ID is required"));
@@ -82,9 +82,9 @@ const updateCourse = async (req, res) => {
 
         // Handle Cloudinary upload and deletion
         let uploadedImage = null;
-        if (filePath) {
+        if (fileBuffer) {
             try {
-                uploadedImage = await uploadOnCloudinary(filePath);
+                uploadedImage = await uploadOnCloudinary(fileBuffer);
 
                 // Delete the old image from Cloudinary if it exists
                 if (course.image) {
