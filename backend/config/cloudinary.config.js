@@ -9,21 +9,32 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const uploadOnCloudinary = async (fileLocalPath) => {
-    if (!fileLocalPath) {
-        return res
-            .status(400)
-            .json(new ApiError(400, 'File is required'));
+// Upload file to Cloudinary from memory buffer
+const uploadOnCloudinary = async (file) => {
+    if (!file) {
+        return res.status(400).json(new ApiError(400, 'File is required'));
     }
     try {
-        const response = await cloudinary.uploader.upload(fileLocalPath)
-        console.log(`File uploaded on cloudinary LINK ${response.secure_url} `);
-        fs.unlinkSync(fileLocalPath)
-        return response
+        const response = await cloudinary.uploader.upload_stream(
+            {
+                resource_type: "auto", // This will allow it to upload images, videos, etc.
+            },
+            (error, result) => {
+                if (error) {
+                    console.error('Cloudinary upload error:', error);
+                    throw error;
+                }
+                console.log(`File uploaded to Cloudinary: ${result.secure_url}`);
+                return result;  // You can return the Cloudinary response here
+            }
+        );
 
+        // Pipe the file buffer to Cloudinary
+        file.stream.pipe(response);
+        
     } catch (error) {
-        fs.unlinkSync(fileLocalPath)
-        console.log(error)
+        console.error(error);
+        return res.status(500).json(new ApiError(500, 'Error uploading to Cloudinary'));
     }
 }
 
