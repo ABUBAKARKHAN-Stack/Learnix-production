@@ -378,7 +378,7 @@ const updateUser = async (req, res) => {
         try {
             file = await uploadOnCloudinary(fileBuffer)
             if (user.avatar) {
-                await deleteFromCloudinary(user.avatar.split("/").pop().split("?")[0])
+                await deleteFromCloudinary(user.avatar.split("/").pop().split(".")[0])
             }
         } catch (error) {
             deleteFromCloudinary(file?.public_id)
@@ -401,7 +401,7 @@ const updateUser = async (req, res) => {
         setTimeout(() => {
             return res
                 .status(200)
-                .json(new ApiResponse(200, updatedUser, "User updated successfully"))
+                .json(new ApiResponse(200,  {updatedUser , publicId: file.secure_url.split("/").pop().split(".")[0]}, "User updated successfully"))
         }, 1000);
     } catch (error) {
 
