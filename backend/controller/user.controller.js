@@ -305,7 +305,7 @@ const uploadAvatar = async (req, res) => {
         file = await uploadOnCloudinary(fileBuffer);
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json(new ApiError(500, error.message, "Error uploading to Cloudinary"));
+        return res.status(500).json(new ApiError(500, error, "Error uploading to Cloudinary"));
     }
 
     try {
@@ -328,7 +328,7 @@ const uploadAvatar = async (req, res) => {
         if (file && file.public_id) {
             await deleteFromCloudinary(file.public_id);
         }
-        return res.status(500).json(new ApiError(500, error.message, "Something went wrong while updating user"));
+        return res.status(500).json(new ApiError(500, error, "Something went wrong while updating user"));
     }
 }
 
