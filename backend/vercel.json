@@ -1,20 +1,15 @@
 {
-  "installCommand" : "npm install",
   "version": 2,
   "builds": [
     {
       "src": "app.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "src/**/*",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
+    { "src": "/users/(.*)", "dest": "app.js" },
+    { "src": "/courses/(.*)", "dest": "app.js" },
+    { "src": "/videos/(.*)", "dest": "app.js" },
+    { "src": "/(.*)", "dest": "app.js" }
   ]
 }
