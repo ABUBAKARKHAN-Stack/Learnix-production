@@ -8,7 +8,7 @@ import uploadVideoToVimeo from "../config/vimeo.config.js";
 const createVideo = async (req, res) => {
     const { title, description } = req.body;
     const { courseId } = req.params;
-    const videoPath = req?.file?.buffer;
+    const videoPath = req?.file?.path;
 
     if (!title || !description) {
         return res
