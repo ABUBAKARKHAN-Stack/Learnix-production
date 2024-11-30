@@ -30,7 +30,7 @@ const createVideo = async (req, res) => {
 
     try {
         // Upload video to Vimeo
-        const response = await uploadVideoToVimeo(videoPath, title, description);
+        const response = await uploadVideoToVimeo(fileBuffer, title, description);
 
         // Create new video in the database
         const video = await videoModel.create({
