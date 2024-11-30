@@ -2,32 +2,68 @@ import videoModel from "../models/videos.model.js";
 import courseModel from "../models/courses.model.js";
 import userModel from "../models/user.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
-import { uploadVideoToVimeo, waitForProcessing } from "../config/vimeo.config.js";
+import uploadVideoToVimeo from "../config/vimeo.config.js";
 
+// Create a new video
 const createVideo = async (req, res) => {
     const { title, description } = req.body;
-    const videoBuffer = req.file.buffer;  // Assuming the video is sent as buffer in the request
+    const { courseId } = req.params;
+    const videoPath = req?.file?.path;
 
-    if (!title || !description || !videoBuffer) {
-        return res.status(400).json({ error: "Missing required fields or video file" });
+    if (!title || !description) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "Fill all fields"));
+    }
+
+    if (!videoPath) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "File is required"));
+    }
+
+    if (!courseId) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "Course ID is required"));
     }
 
     try {
-        // Upload the video to Vimeo
-        const videoUri = await uploadVideoToVimeo(videoBuffer, title, description);
+        // Upload video to Vimeo
+        const response = await uploadVideoToVimeo(videoPath, title, description);
 
-        // Wait for the video to be processed by Vimeo
-        const processedVideo = await waitForProcessing(videoUri.split("/")[2]); // Get video ID from URI
-
-        // Respond with the video URL and other details
-        res.json({
-            message: "Video uploaded successfully",
-            videoUrl: processedVideo.link, // Processed video URL
-            videoId: processedVideo.uri.split("/")[2], // Video ID
+        // Create new video in the database
+        const video = await videoModel.create({
+            title,
+            description,
+            videoUrl: response.embedUrl,
+            duration: response.duration,
+            course: courseId,
         });
+
+        // Update the course by adding the new video and recalculating the course duration
+        const course = await courseModel.findById(courseId);
+
+        if (!course) {
+            return res
+                .status(404)
+                .json(new ApiError(404, "Course not found"));
+        }
+
+        // Update course with the new video and recalculate duration
+        course.videos.push(video._id);
+        const updatedDuration = course.courseDuration + response.duration;
+        course.courseDuration = updatedDuration;
+
+        await course.save();
+
+        return res
+            .status(201)
+            .json(new ApiResponse(201, { video, updatedCourse: course }, "Video created and course updated successfully"));
     } catch (error) {
-        console.error("Error uploading video:", error);
-        res.status(500).json({ error: "Error uploading video", details: error });
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message));
     }
 };
 

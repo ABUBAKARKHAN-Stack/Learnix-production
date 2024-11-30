@@ -7,7 +7,7 @@ const router = Router()
 
 
 // Create new video route       
-router.post("/create", authMiddleware, upload.single("video"), createVideo)
+router.post("/create/:courseId", authMiddleware, upload.single("video"), createVideo)
 
 // Update video route
 router.put("/update/:videoId", authMiddleware, upload.single("video"), updateVideo)
