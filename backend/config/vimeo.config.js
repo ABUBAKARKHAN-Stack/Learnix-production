@@ -1,5 +1,5 @@
 import { Vimeo } from "@vimeo/vimeo";
-import fs from "fs";
+import streamifier from "streamifier";
 
 
 
@@ -10,7 +10,39 @@ const client = new Vimeo(
 )
 
 
-// Function to wait until the video has finished processing on Vimeo
+// Function to upload video to Vimeo
+const uploadVideoToVimeo = async (videoBuffer, title, description) => {
+    return new Promise((resolve, reject) => {
+        const videoStream = streamifier.createReadStream(videoBuffer);
+
+        // Vimeo upload options
+        const options = {
+            name: title,
+            description: description,
+        };
+
+        // Upload the video to Vimeo
+        client.request(
+            {
+                method: "POST",
+                path: "/me/videos",
+                params: options,
+                file: videoStream, // The video stream
+            },
+            (error, body) => {
+                if (error) {
+                    console.error("Error uploading video:", error);
+                    reject(error);
+                } else {
+                    console.log("Video uploaded successfully:", body);
+                    resolve(body); // This contains video details including videoId
+                }
+            }
+        );
+    });
+};
+
+// Function to wait for the video to finish processing
 const waitForProcessing = async (videoId) => {
     return new Promise((resolve, reject) => {
         const interval = setInterval(async () => {
@@ -27,77 +59,23 @@ const waitForProcessing = async (videoId) => {
                             reject(error);
                         } else if (body.status === "available") {
                             // Video is processed and available
+                            console.log("Video processing complete.");
                             clearInterval(interval);
-                            resolve(body); // Resolve with the full metadata
+                            resolve(body); // Video details after processing
                         } else {
                             console.log("Video still processing...");
                         }
                     }
                 );
-            } catch (err) {
+            } catch (error) {
                 clearInterval(interval);
-                console.error("Error waiting for processing:", err);
-                reject(err);
+                console.error("Error during status check:", error);
+                reject(error);
             }
-        }, 10000); // Check every 5 seconds
+        }, 5000); // Check every 5 seconds
     });
 };
 
-// Function to upload video to Vimeo
-const uploadVideoToVimeo = async (videoPath, title, description) => {
-    try {
-        return new Promise((resolve, reject) => {
-            client.upload(
-                videoPath,
-                {
-                    name: title,
-                    description: description,
-                    privacy: { view: "unlisted" }, // Set privacy to "unlisted"
-                },
-                async (uri) => {
-                    // Delete the local file after successful upload
-                    fs.unlinkSync(videoPath);
-
-                    try {
-                        // Extract video ID from the URI
-                        const videoId = uri.split("/videos/")[1];
-
-                        // Wait for the video to finish processing
-                        console.log("Waiting for video processing...");
-                        const processedMetadata = await waitForProcessing(videoId);
-
-                        // Extract the embed URL and duration
-                        const embedUrl = processedMetadata.embed.html.match(/src="([^"]+)"/)[1];
-                        const duration = processedMetadata.duration; // Duration in seconds
-
-                        console.log("Video upload completed!");
-                        console.log("Embed URL:", embedUrl);
-                        console.log("Video Duration:", duration, "seconds");
-
-                        // Resolve the result
-                        resolve({ embedUrl, duration });
-                    } catch (error) {
-                        console.error("Error fetching metadata after processing:", error);
-                        reject(error);
-                    }
-                },
-                (bytesUploaded, bytesTotal) => {
-                    // Progress callback
-                    const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
-                    
-                    console.log(`Upload progress: ${percentage}%`);
-                },
-                (error) => {
-                    console.error("Upload failed:", error);
-                    reject(error);
-                }
-            );
-        });
-    } catch (error) {
-        console.error("Unexpected error during video upload:", error.message);
-        throw new Error("Failed to upload video to Vimeo.");
-    }
-};
 
 
 

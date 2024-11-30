@@ -8,7 +8,7 @@ import uploadVideoToVimeo from "../config/vimeo.config.js";
 const createVideo = async (req, res) => {
     const { title, description } = req.body;
     const { courseId } = req.params;
-    const videoPath = req?.file?.path;
+    const videoBuffer = req?.file?.buffer;
 
     if (!title || !description) {
         return res
@@ -16,7 +16,7 @@ const createVideo = async (req, res) => {
             .json(new ApiError(400, "Fill all fields"));
     }
 
-    if (!videoPath) {
+    if (!videoBuffer) {
         return res
             .status(400)
             .json(new ApiError(400, "File is required"));
@@ -30,7 +30,7 @@ const createVideo = async (req, res) => {
 
     try {
         // Upload video to Vimeo
-        const response = await uploadVideoToVimeo(videoPath, title, description);
+        const response = await uploadVideoToVimeo(videoBuffer, title, description);
 
         // Create new video in the database
         const video = await videoModel.create({
