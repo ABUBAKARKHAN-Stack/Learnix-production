@@ -1,4 +1,5 @@
 import { Vimeo } from "@vimeo/vimeo";
+import streamifier from "streamifier";  // Add this for stream conversion
 
 // Vimeo Client Setup (ensure your keys are in place)
 const client = new Vimeo(
@@ -10,10 +11,12 @@ const client = new Vimeo(
 // Function to upload video to Vimeo
 const uploadVideoToVimeo = async (fileBuffer, fileName, title, description) => {
     try {
-        // Upload the file using Vimeo's API
+        // Convert the file buffer to a stream
+        const videoStream = streamifier.createReadStream(fileBuffer);
+
         return new Promise((resolve, reject) => {
             client.upload(
-                fileBuffer,  // Directly use the file buffer without writing to disk
+                videoStream,  // Use the stream instead of file path or buffer
                 {
                     name: title,
                     description: description,
@@ -81,4 +84,3 @@ const waitForProcessing = async (videoId) => {
 };
 
 export default uploadVideoToVimeo;
- 
