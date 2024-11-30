@@ -2,7 +2,7 @@ import videoModel from "../models/videos.model.js";
 import courseModel from "../models/courses.model.js";
 import userModel from "../models/user.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
-import uploadVideoToVimeo from "../config/vimeo.config.js";
+import { deleteFromCloudinary, uploadVideoToCloudinary } from '../config/cloudinary.config.js'
 
 // Create a new video
 const createVideo = async (req, res) => {
@@ -10,11 +10,7 @@ const createVideo = async (req, res) => {
     const { courseId } = req.params;
     const fileBuffer = req.file?.buffer;
 
-    if (!title || !description) {
-        return res
-            .status(400)
-            .json(new ApiError(400, "Fill all fields"));
-    }
+
 
     if (!fileBuffer) {
         console.error("No video file buffer provided");
@@ -30,16 +26,14 @@ const createVideo = async (req, res) => {
     }
 
     try {
-        console.log("Uploading video to Vimeo...");
-        const response = await uploadVideoToVimeo(fileBuffer,  title, description);
-        console.log("Video uploaded to Vimeo:", response);
+        const response = await uploadVideoToCloudinary(fileBuffer);
+   
 
-        console.log("Video uploaded. Creating database entry...");
         const video = await videoModel.create({
             title,
             description,
-            videoUrl: response.embedUrl,
-            duration: response.duration,
+            videoUrl: response.secure_url,
+            duration: response.duration.toFixed(2),
             course: courseId,
         });
 
@@ -60,7 +54,9 @@ const createVideo = async (req, res) => {
             .status(201)
             .json(new ApiResponse(201, { video, updatedCourse: course }, "Video created and course updated successfully"));
     } catch (error) {
-        console.error("Error during video upload or database update:", error);
+        if (fileBuffer) {
+             await deleteFromCloudinary(response.public_id);
+        }
         return res
             .status(500)
             .json(new ApiError(500, error.message || "Internal Server Error"));
@@ -128,6 +124,8 @@ const deleteVideo = async (req, res) => {
         await course.save();
 
         await video.deleteOne();
+
+        await deleteFromCloudinary(video.videoUrl.split("/").pop().split(".")[0]);
 
         return res
             .status(200)

@@ -64,6 +64,38 @@ const thumbnailImageForCourse = (publicId) => {
     }
 };
 
+const uploadVideoToCloudinary = async (fileBuffer) => {
+    try {
+        return new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                {
+                    resource_type: 'video',  // Set the resource type to 'video'
+                    public_id: `video-${Date.now()}`,
+                    transformation: { quality: 50 }
+                },
+                (error, result) => {
+                    if (error) {
+                        reject(new Error('Cloudinary upload failed: ' + error.message));
+                    } else {
+                        resolve(result);  // Resolve with the Cloudinary upload result
+                    }
+                }
+            );
+
+            // Convert the file buffer to a readable stream and pipe it to Cloudinary
+            streamifier.createReadStream(fileBuffer).pipe(uploadStream);
+        })
+    } catch (error) {
+        console.log('Cloudinary upload failed', error.message);
+        throw new Error('Cloudinary upload failed: ' + error.message);
+    }
+}
 
 
-export { uploadOnCloudinary, deleteFromCloudinary, thumbnailImageForCourse } 
+
+export {
+    uploadOnCloudinary,
+    deleteFromCloudinary,
+    thumbnailImageForCourse,
+    uploadVideoToCloudinary
+}; 
