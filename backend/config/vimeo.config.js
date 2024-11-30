@@ -1,8 +1,4 @@
 import { Vimeo } from "@vimeo/vimeo";
-import { promisify } from "util";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 
 // Vimeo Client Setup (ensure your keys are in place)
 const client = new Vimeo(
@@ -11,30 +7,13 @@ const client = new Vimeo(
     "577f43fff3e9f22aeb2d4db635392978" // Your Access Token
 );
 
-// Resolve __dirname for ES modules
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Promisified fs methods
-const writeFileAsync = promisify(fs.writeFile);
-const unlinkAsync = promisify(fs.unlink);
-
 // Function to upload video to Vimeo
 const uploadVideoToVimeo = async (fileBuffer, fileName, title, description) => {
     try {
-        const tempDir = path.join(__dirname, 'uploads');
-        const tempFilePath = path.join(tempDir, fileName);
-
-        // Ensure the uploads directory exists
-        if (!fs.existsSync(tempDir)) {
-            fs.mkdirSync(tempDir, { recursive: true });
-        }
-
-        // Write the buffer to the temporary file
-        await writeFileAsync(tempFilePath, fileBuffer);
-
+        // Upload the file using Vimeo's API
         return new Promise((resolve, reject) => {
             client.upload(
-                tempFilePath,
+                fileBuffer,  // Directly use the file buffer without writing to disk
                 {
                     name: title,
                     description: description,
@@ -42,14 +21,15 @@ const uploadVideoToVimeo = async (fileBuffer, fileName, title, description) => {
                 },
                 async (uri) => {
                     try {
+                        // Extract video ID from URI
                         const videoId = uri.split("/videos/")[1];
+
+                        // Wait for video processing to complete
                         const processedMetadata = await waitForProcessing(videoId);
 
+                        // Extract the embed URL and duration
                         const embedUrl = processedMetadata.embed.html.match(/src="([^"]+)"/)[1];
                         const duration = processedMetadata.duration;
-
-                        // Delete the temporary file after upload
-                        await unlinkAsync(tempFilePath);
 
                         resolve({ embedUrl, duration });
                     } catch (error) {
@@ -66,7 +46,7 @@ const uploadVideoToVimeo = async (fileBuffer, fileName, title, description) => {
             );
         });
     } catch (error) {
-        throw new Error("Failed to upload video to Vimeo. Error: " + error.message);
+        throw new Error("Failed to upload video to Vimeo.");
     }
 };
 
