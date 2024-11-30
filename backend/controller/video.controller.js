@@ -105,14 +105,17 @@ const deleteVideo = async (req, res) => {
 
     try {
         const video = await videoModel.findById(videoId);
-        const public_id = video.videoUrl.split("/").pop().split(".")[0]
-        const response = await deleteVideoFromCloudinary(public_id);
-        console.log(response);
+
 
         if (!video) {
             return res
                 .status(404)
                 .json(new ApiError(404, "Video not found"));
+        }
+
+        if (video.videoUrl) {
+            const public_id = video.videoUrl.split("/").pop().split(".")[0]
+            await deleteVideoFromCloudinary(public_id);
         }
 
         const course = await courseModel.findById(video.course);
@@ -127,8 +130,6 @@ const deleteVideo = async (req, res) => {
         await course.save();
 
         await video.deleteOne();
-
-
 
         return res
             .status(200)
