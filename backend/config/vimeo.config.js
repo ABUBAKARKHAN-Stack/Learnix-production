@@ -66,7 +66,7 @@ const uploadVideoToVimeo = async (fileBuffer, fileName, title, description) => {
             );
         });
     } catch (error) {
-        throw new Error("Failed to upload video to Vimeo.");
+        throw new Error("Failed to upload video to Vimeo. Error: " + error.message);
     }
 };
 
