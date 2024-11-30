@@ -14,19 +14,20 @@ const createVideo = async (req, res) => {
 
     try {
         // Upload the video to Vimeo
-        const videoResponse = await uploadVideoToVimeo(videoBuffer, title, description);
-    
-   
-    
-        // Respond with video details
+        const videoUri = await uploadVideoToVimeo(videoBuffer, title, description);
+
+        // Wait for the video to be processed by Vimeo
+
+        // Respond with the video URL and other details
         res.json({
-          message: 'Video uploaded successfully',
-          video: videoResponse
+            videoUri,
+            title,
+            description
         });
-      } catch (error) {
-        console.error('Error uploading video:', );
-        res.status(500).json({ error: error.message , message: 'Failed to upload video' });
-      }
+    } catch (error) {
+        console.error("Error uploading video:", error);
+        res.status(500).json({ error: "Error uploading video", details: error });
+    }
 };
 
 // Update video
