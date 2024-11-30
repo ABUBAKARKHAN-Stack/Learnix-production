@@ -9,58 +9,62 @@ const client = new Vimeo(
 )
 
 
-// Function to upload video to Vimeo
-const uploadVideoToVimeo = (videoBuffer, title, description) => {
+// Function to upload the video to Vimeo
+const uploadVideoToVimeo = async (videoBuffer, title, description) => {
     return new Promise((resolve, reject) => {
-        // Convert the buffer to a readable stream
-        const videoStream = streamifier.createReadStream(videoBuffer);
-
-        const options = {
-            name: title,
-            description: description,
-        };
-
-        // Upload video to Vimeo
-        client.request(
+      const videoStream = streamifier.createReadStream(videoBuffer); // Convert buffer to stream
+  
+      const options = {
+        name: title,
+        description: description,
+      };
+  
+      // Upload the video to Vimeo
+      client.request(
+        {
+          method: 'POST',
+          path: '/videos',
+          params: options,
+          file: videoStream, // Pass the video stream
+        },
+        (error, body) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(body); // Body contains video upload details
+          }
+        }
+      );
+    });
+  };
+  
+  // Function to wait until the video is processed on Vimeo
+  const waitForProcessing = async (videoId) => {
+    return new Promise((resolve, reject) => {
+      const interval = setInterval(async () => {
+        try {
+          client.request(
             {
-                method: "POST",
-                path: "/videos",
-                params: options,
-                file: videoStream,  // Stream the file directly to Vimeo
+              method: 'GET',
+              path: `/videos/${videoId}`,
             },
             (error, body) => {
-                if (error) {
-                    reject(new Error('Error uploading video to Vimeo: ' + error));
-                } else {
-                    resolve(body);  // Return the response from Vimeo
-                }
+              if (error) {
+                clearInterval(interval);
+                reject(error);
+              } else if (body.status === 'available') {
+                clearInterval(interval);
+                resolve(body); // Return the processed video details
+              }
             }
-        );
+          );
+        } catch (error) {
+          clearInterval(interval);
+          reject(error);
+        }
+      }, 5000); // Check every 5 seconds for processing status
     });
-};
-// Function to check video processing status
-const waitForProcessing = async (videoId) => {
-    return new Promise((resolve, reject) => {
-        const interval = setInterval(() => {
-            client.request(
-                {
-                    method: "GET",
-                    path: `/videos/${videoId}`,
-                },
-                (error, body) => {
-                    if (error) {
-                        clearInterval(interval);
-                        reject(new Error("Error checking processing status: " + error));
-                    } else if (body.status === "available") {
-                        clearInterval(interval);
-                        resolve(body);
-                    }
-                }
-            );
-        }, 5000); // Check every 5 seconds
-    });
-};
-
+  };
 
 
 export { uploadVideoToVimeo, waitForProcessing }
