@@ -3,7 +3,7 @@ import { ApiError, ApiResponse } from '../utils/index.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import sendEmails from '../middlewares/nodemailer.middleware.js'
-import { uploadOnCloudinary, deleteFromCloudinary } from '../config/cloudinary.config.js'
+import { uploadOnCloudinary, deleteImageFromCloudinary } from '../config/cloudinary.config.js'
 
 
 
@@ -323,7 +323,7 @@ const uploadAvatar = async (req, res) => {
     } catch (error) {
         // Optionally delete the file from Cloudinary if user update fails
         if (file && file.public_id) {
-            deleteFromCloudinary(file.public_id);
+            deleteImageFromCloudinary(file.public_id);
         }
         return res.status(500).json(new ApiError(500, error.message, "Something went wrong while uploading avatar"));
     }
@@ -378,10 +378,10 @@ const updateUser = async (req, res) => {
         try {
             file = await uploadOnCloudinary(fileBuffer)
             if (user.avatar) {
-                await deleteFromCloudinary(user.avatar.split("/").pop().split(".")[0])
+                await deleteImageFromCloudinary(user.avatar.split("/").pop().split(".")[0])
             }
         } catch (error) {
-            deleteFromCloudinary(file?.public_id)
+            deleteImageFromCloudinary(file?.public_id)
             console.log(error.message)
         }
     }
@@ -406,7 +406,7 @@ const updateUser = async (req, res) => {
     } catch (error) {
 
         if (file && file.public_id) {
-            await deleteFromCloudinary(file.public_id)
+            await deleteImageFromCloudinary(file.public_id)
         }
 
         return res

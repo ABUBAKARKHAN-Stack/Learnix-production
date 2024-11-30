@@ -2,7 +2,7 @@ import videoModel from "../models/videos.model.js";
 import courseModel from "../models/courses.model.js";
 import userModel from "../models/user.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
-import { deleteFromCloudinary, uploadVideoToCloudinary } from '../config/cloudinary.config.js'
+import { deleteVideoFromCloudinary, uploadVideoToCloudinary } from '../config/cloudinary.config.js'
 
 // Create a new video
 const createVideo = async (req, res) => {
@@ -27,7 +27,7 @@ const createVideo = async (req, res) => {
 
     try {
         const response = await uploadVideoToCloudinary(fileBuffer);
-   
+
 
         const video = await videoModel.create({
             title,
@@ -55,7 +55,7 @@ const createVideo = async (req, res) => {
             .json(new ApiResponse(201, { video, updatedCourse: course }, "Video created and course updated successfully"));
     } catch (error) {
         if (fileBuffer) {
-             await deleteFromCloudinary(response.public_id);
+            await deleteVideoFromCloudinary(response.public_id);
         }
         return res
             .status(500)
@@ -105,6 +105,9 @@ const deleteVideo = async (req, res) => {
 
     try {
         const video = await videoModel.findById(videoId);
+        const public_id = video.videoUrl.split("/").pop().split(".")[0]
+        const response = await deleteVideoFromCloudinary(public_id);
+        console.log(response);
 
         if (!video) {
             return res
@@ -125,11 +128,11 @@ const deleteVideo = async (req, res) => {
 
         await video.deleteOne();
 
-        await deleteFromCloudinary(video.videoUrl.split("/").pop().split(".")[0]);
+
 
         return res
             .status(200)
-            .json(new ApiResponse(200, video, "Video deleted successfully"));
+            .json(new ApiResponse(200, null, "Video deleted successfully"));
     } catch (error) {
         return res
             .status(500)

@@ -1,6 +1,6 @@
 import courseModel from "../models/courses.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
-import { uploadOnCloudinary, deleteFromCloudinary, thumbnailImageForCourse } from "../config/cloudinary.config.js";
+import { uploadOnCloudinary, deleteImageFromCloudinary, thumbnailImageForCourse } from "../config/cloudinary.config.js";
 import stripe from "../config/stripe.config.js";
 import mongoose from "mongoose";
 
@@ -48,7 +48,7 @@ const createCourse = async (req, res) => {
         }, 1000);
     } catch (error) {
         if (courseImage?.public_id) {
-            deleteFromCloudinary(courseImage?.public_id)
+            deleteImageFromCloudinary(courseImage?.public_id)
         }
         return res
             .status(500)
@@ -89,7 +89,7 @@ const updateCourse = async (req, res) => {
                 // Delete the old image from Cloudinary if it exists
                 if (course.image) {
                     const oldImageId = course.image.split("/").pop().split("?")[0];
-                    await deleteFromCloudinary(oldImageId);
+                    await deleteImageFromCloudinary(oldImageId);
                 }
             } catch (cloudinaryError) {
                 return res

@@ -38,14 +38,18 @@ const uploadOnCloudinary = async (fileBuffer) => {
 
 
 
-const deleteFromCloudinary = async (publicId) => {
+const deleteImageFromCloudinary = async (publicId) => {
     try {
-        await cloudinary.uploader.destroy(publicId)
+        await cloudinary.uploader.destroy(publicId , {
+            resource_type: 'image'
+        })
         console.log(`File deleted from cloudinary`);
+        return { message: "File deleted from cloudinary" }
     } catch (error) {
         console.log(error)
     }
 }
+
 
 const thumbnailImageForCourse = (publicId) => {
     try {
@@ -91,11 +95,25 @@ const uploadVideoToCloudinary = async (fileBuffer) => {
     }
 }
 
+const deleteVideoFromCloudinary = async (publicId) => {
+    try {
+        await cloudinary.uploader.destroy(publicId , {
+            resource_type: 'video'
+        })
+        console.log(`File deleted from cloudinary`);
+        return { message: "File deleted from cloudinary" }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 
 export {
     uploadOnCloudinary,
-    deleteFromCloudinary,
+    deleteImageFromCloudinary,
     thumbnailImageForCourse,
-    uploadVideoToCloudinary
+    uploadVideoToCloudinary,
+    deleteVideoFromCloudinary
 }; 
