@@ -17,12 +17,13 @@ const createVideo = async (req, res) => {
         const videoUri = await uploadVideoToVimeo(videoBuffer, title, description);
 
         // Wait for the video to be processed by Vimeo
+        const processedVideo = await waitForProcessing(videoUri.split("/")[2]); // Get video ID from URI
 
         // Respond with the video URL and other details
         res.json({
-            videoUri,
-            title,
-            description
+            message: "Video uploaded successfully",
+            videoUrl: processedVideo.link, // Processed video URL
+            videoId: processedVideo.uri.split("/")[2], // Video ID
         });
     } catch (error) {
         console.error("Error uploading video:", error);
