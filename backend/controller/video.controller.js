@@ -8,31 +8,32 @@ import uploadVideoToVimeo from "../config/vimeo.config.js";
 const createVideo = async (req, res) => {
     const { title, description } = req.body;
     const { courseId } = req.params;
-    const fileBuffer = req.file?.buffer; // Get the buffer from the uploaded file
+    const fileBuffer = req.file?.buffer;
 
     if (!title || !description) {
         return res
-        .status(400)
-        .json(new ApiError(400, "Fill all fields"));
+            .status(400)
+            .json(new ApiError(400, "Fill all fields"));
     }
 
     if (!fileBuffer) {
+        console.error("No video file buffer provided");
         return res
-        .status(400)
-        .json(new ApiError(400, "Video file is required"));
+            .status(400)
+            .json(new ApiError(400, "Video file is required"));
     }
 
     if (!courseId) {
         return res
-        .status(400)
-        .json(new ApiError(400, "Course ID is required"));
+            .status(400)
+            .json(new ApiError(400, "Course ID is required"));
     }
 
     try {
-        // Upload video to Vimeo
+        console.log("Uploading video to Vimeo...");
         const response = await uploadVideoToVimeo(fileBuffer, title, description);
 
-        // Create new video in the database
+        console.log("Video uploaded. Creating database entry...");
         const video = await videoModel.create({
             title,
             description,
@@ -41,31 +42,30 @@ const createVideo = async (req, res) => {
             course: courseId,
         });
 
-        // Update the course by adding the new video and recalculating the course duration
         const course = await courseModel.findById(courseId);
 
         if (!course) {
+            console.error("Course not found:", courseId);
             return res
                 .status(404)
                 .json(new ApiError(404, "Course not found"));
         }
 
-        // Update course with the new video and recalculate duration
         course.videos.push(video._id);
-        const updatedDuration = course.courseDuration + response.duration;
-        course.courseDuration = updatedDuration;
-
+        course.courseDuration += response.duration;
         await course.save();
 
         return res
             .status(201)
             .json(new ApiResponse(201, { video, updatedCourse: course }, "Video created and course updated successfully"));
     } catch (error) {
+        console.error("Error during video upload or database update:", error);
         return res
             .status(500)
-            .json(new ApiError(500, error.message));
+            .json(new ApiError(500, error.message || "Internal Server Error"));
     }
 };
+
 
 // Update video
 const updateVideo = async (req, res) => {
