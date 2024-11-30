@@ -9,7 +9,6 @@ const createVideo = async (req, res) => {
     const { title, description } = req.body;
     const { courseId } = req.params;
     const fileBuffer = req.file?.buffer;
-    const originalFilename = req.file.originalname; 
 
     if (!title || !description) {
         return res
@@ -32,7 +31,7 @@ const createVideo = async (req, res) => {
 
     try {
         console.log("Uploading video to Vimeo...");
-        const response = await uploadVideoToVimeo(fileBuffer, originalFilename, title, description);
+        const response = await uploadVideoToVimeo(fileBuffer,  title, description);
         console.log("Video uploaded to Vimeo:", response);
 
         console.log("Video uploaded. Creating database entry...");
