@@ -16,18 +16,16 @@ const createVideo = async (req, res) => {
         // Upload the video to Vimeo
         const videoResponse = await uploadVideoToVimeo(videoBuffer, title, description);
     
-        // Wait for the video to be processed on Vimeo
-        const processedVideo = await waitForProcessing(videoResponse.uri.split('/')[2]); // Extract video ID from URI
+   
     
         // Respond with video details
         res.json({
           message: 'Video uploaded successfully',
-          videoUrl: processedVideo.link,  // Vimeo video URL
-          videoId: processedVideo.uri.split('/')[2],  // Vimeo video ID
+          video: videoResponse
         });
       } catch (error) {
         console.error('Error uploading video:', );
-        res.status(500).json({ error: error , message: 'Failed to upload video' });
+        res.status(500).json({ error: error.message , message: 'Failed to upload video' });
       }
 };
 
