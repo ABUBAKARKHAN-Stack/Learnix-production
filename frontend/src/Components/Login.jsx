@@ -24,7 +24,6 @@ export function SignIn() {
   }
 
   const onSubmit = async (data) => {
-    console.log('data', data);
     try {
       setLoading(true);
       const res = await signInUser(data);
@@ -38,7 +37,7 @@ export function SignIn() {
           navigate('/dashboard');
         }, 2500);
       }
-      ;
+      console.log(res);
     } catch (error) {
       const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
       showErrorToast(errorMessage);
