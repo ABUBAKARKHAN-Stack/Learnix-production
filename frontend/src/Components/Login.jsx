@@ -29,7 +29,6 @@ export function SignIn() {
       const res = await signInUser(data);
       if (res.status === 202) {
         showSuccessToast(res.data.message);
-        console.log(res.headers["set-cookie"]);
       }
       if (res.status === 200) {
         showSuccessToast(res.data.message);
@@ -37,7 +36,7 @@ export function SignIn() {
           navigate('/dashboard');
         }, 2500);
       }
-      console.log(res);
+      console.log(res.headers.getAuthorization());
     } catch (error) {
       const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
       showErrorToast(errorMessage);
