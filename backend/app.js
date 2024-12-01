@@ -10,7 +10,10 @@ const app = express();
 
 app.use(cors({
     origin: "https://learnix-production.vercel.app",
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization" , "Set-Cookie"],
+    
 }));
 app.use(cookieParser());
 app.use(json({ limit: '16kb' }));
