@@ -124,7 +124,9 @@ const loginUser = async (req, res) => {
                     .status(200)
                     .cookie("token", token, {
                         httpOnly: false,
-                        domain: ".learnix-production.vercel.app",
+                        secure: true,
+                        sameSite: "none",
+                        domain: "learnix-production.vercel.app",
                     })
 
                     .json(new ApiResponse(200, null, "User logged in successfully"))
