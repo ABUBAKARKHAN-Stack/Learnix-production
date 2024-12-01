@@ -10,15 +10,15 @@ function Protected({ children, authenticationRequired = true }) {
 
     useEffect(() => {
         if (!token && authenticationRequired) {
-            
+
             navigate('/signin')
         } else if (token && !authenticationRequired) {
-            navigate('/dashboard')
+            navigate('/dashboard') 
         }
         setLoading(false)
     }, [token, authenticationRequired])
 
-    return loading ? "Loading..." : children 
+    return loading ? "Loading..." : children
 
 }
 
