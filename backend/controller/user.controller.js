@@ -122,14 +122,14 @@ const loginUser = async (req, res) => {
             setTimeout(() => {
                 return res
                     .status(200)
-                    .cookie("token", token, {
-                        httpOnly: false,  // Ensures the cookie is not accessible from JavaScript (security best practice)
-                        secure: true,    // Ensures the cookie is only sent over HTTPS
-                        sameSite: "None", // Allows the cookie to be sent cross-origin (required for third-party cookies)
-                        domain: "learnix-production.vercel.app",  // Optional: Ensure this matches your frontend's domain
-                        maxAge: 30 * 24 * 60 * 60 * 1000  // Cookie expiration (30 days)
-                    })
-                    .setHeader("token", token )
+                    // .cookie("token", token, {
+                    //     httpOnly: false,  // Ensures the cookie is not accessible from JavaScript (security best practice)
+                    //     secure: true,    // Ensures the cookie is only sent over HTTPS
+                    //     sameSite: "None", // Allows the cookie to be sent cross-origin (required for third-party cookies)
+                    //     domain: "learnix-production.vercel.app",  // Optional: Ensure this matches your frontend's domain
+                    //     maxAge: 30 * 24 * 60 * 60 * 1000  // Cookie expiration (30 days)
+                    // })
+                    .setHeader("Authorization", `Bearer ${token}`  )
                     .json(new ApiResponse(200, null, "User logged in successfully"))
             }, 750)
 

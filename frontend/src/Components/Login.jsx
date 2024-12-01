@@ -14,12 +14,12 @@ import { showErrorToast, showSuccessToast } from '../utils/ToastNotification'
 
 export function SignIn() {
   const { handleSubmit, register, formState: { errors } } = useForm()
-  const[password,SetPassword] = useState(false)
+  const [password, SetPassword] = useState(false)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
-  const handlePass = ()=>{
+  const handlePass = () => {
     SetPassword(!password)
   }
 
@@ -30,6 +30,7 @@ export function SignIn() {
       const res = await signInUser(data);
       if (res.status === 202) {
         showSuccessToast(res.data.message);
+        console.log(res.headers["authorization"]);
       }
       if (res.status === 200) {
         showSuccessToast(res.data.message);
@@ -37,7 +38,7 @@ export function SignIn() {
           navigate('/dashboard');
         }, 2500);
       }
-      console.log(res);
+      ;
     } catch (error) {
       const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
       showErrorToast(errorMessage);
@@ -101,16 +102,16 @@ export function SignIn() {
               </label>
               <div className='relative'>
                 <input
-                type={password ? 'text' : 'password' }
-                placeholder='password'
-                id="password"
-                {...register('password', { required: 'Password is required' })}
-                className='outline-none pl-2 relative border text-xs focus:ring-1 py-2 w-full rounded-md'
-              />
-             {
-              password ? <FaEyeSlash className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} />
-             }</div>
-              
+                  type={password ? 'text' : 'password'}
+                  placeholder='password'
+                  id="password"
+                  {...register('password', { required: 'Password is required' })}
+                  className='outline-none pl-2 relative border text-xs focus:ring-1 py-2 w-full rounded-md'
+                />
+                {
+                  password ? <FaEyeSlash className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} /> : <FaEye className='absolute top-2.5 right-3 cursor-pointer ' onClick={handlePass} />
+                }</div>
+
               {errors.password && <p className='text-red-500 tracking-wide text-[10px]'>{errors.password.message}</p>}
             </div>
             <div className='mx-auto'>
