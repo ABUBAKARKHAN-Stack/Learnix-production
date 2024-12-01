@@ -123,13 +123,14 @@ const loginUser = async (req, res) => {
                 return res
                     .status(200)
                     .cookie("token", token, {
-                        httpOnly: false,
-                        secure: true,
-                        sameSite: "none",
-                        maxAge: 30 * 24 * 60 * 60 * 1000})
-
-                    .json(new ApiResponse(200, null, "User logged in successfully"))
-            }, 750)
+                        httpOnly: true,
+                        secure: true,      
+                        sameSite:  "none",
+                        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+                    })
+                    .json(new ApiResponse(200, null, "User logged in successfully"));
+            }, 750);
+            
 
         }
 
