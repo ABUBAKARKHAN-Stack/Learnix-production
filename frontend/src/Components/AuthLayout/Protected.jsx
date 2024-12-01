@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Cookies from 'universal-cookie';
+import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 
 function Protected({ children, authenticationRequired = true }) {
 
-    const cookies = new Cookies();
-    const token = cookies.get('token')
+  
+    const token = Cookies.get('token')
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
 
