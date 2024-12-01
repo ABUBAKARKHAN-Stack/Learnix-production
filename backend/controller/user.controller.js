@@ -123,23 +123,23 @@ const loginUser = async (req, res) => {
                 return res
                     .status(200)
                     .cookie("token", token, {
-                        httpOnly: false, 
-                        secure: true,    
-                        sameSite: "None",
-                        maxAge: 30 * 24 * 60 * 60 * 1000 
+                        httpOnly: false, // or true if you want to restrict access to the cookie from JavaScript
+                        secure: true,    // This is required for cookies set with SameSite=None in production
+                        sameSite: "None", // Allows the cookie to be sent cross-origin
+                        maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
                     })
                     .json(new ApiResponse(200, null, "User logged in successfully"))
-            }, 750)
+        }, 750)
 
-        }
+    }
 
     } catch (error) {
-        setTimeout(() => {
-            return res
-                .status(500)
-                .json(new ApiError(500, error.message))
-        }, 750);
-    }
+    setTimeout(() => {
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message))
+    }, 750);
+}
 
 }
 

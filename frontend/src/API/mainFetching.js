@@ -13,7 +13,8 @@ const signUpUser = async (data) => {
 // API call to sign in the user
 const signInUser = async (data) => {
     return await api.post('users/login', data, {
-        withCredentials: true
+        withCredentials: true,
+    
     })
 }
 
