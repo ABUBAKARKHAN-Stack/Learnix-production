@@ -119,18 +119,14 @@ const loginUser = async (req, res) => {
                 expiresIn: "30d"
             })
 
-           
-                return res
-                    .status(200)
-                    .cookie("token", token, {
-                        httpOnly: false, // Accessible via frontend JavaScript
-                        secure: true, // HTTPS only in production
-                        sameSite: "none", // Required for cross-origin requests
-                        maxAge: 30 * 24 * 60 * 60 * 1000, // Expiry time
-                        path: "/", // Cookie available throughout the site
-                    })
-                    .json(new ApiResponse(200, null, "User logged in successfully"));
-          
+
+            return res
+                .status(200)
+                .cookie("token", token, {
+                    secure: true, // HTTPS only in production
+                    maxAge: 30 * 24 * 60 * 60 * 1000, // Expiry time
+                })
+                .json(new ApiResponse(200, null, "User logged in successfully"));
         }
 
     } catch (error) {
