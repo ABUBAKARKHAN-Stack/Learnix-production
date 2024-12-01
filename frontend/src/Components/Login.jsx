@@ -118,7 +118,7 @@ export function SignIn() {
                 disabled={loading ? true : false}
                 type='submit'
                 className='w-full rounded-md mt-5 bg-black transition-colors duration-200 ease-linear disabled:opacity-50 disabled:cursor-not-allowed text-white py-2 shadow-lg outline-none'>
-                Sign In
+                {loading ? 'Signing In...' : 'Sign In'}
               </button>
             </div>
             <div className='mt-20 flex flex-col justify-center items-center gap-y-1 text-xs'>

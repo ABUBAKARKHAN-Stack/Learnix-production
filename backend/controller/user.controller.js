@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
             return res
                 .status(201)
                 .json(new ApiResponse(201, user, "User created successfully"))
-        }, 1500);
+        }, 750);
 
     } catch (error) {
         setTimeout(() => {
@@ -44,7 +44,7 @@ const createUser = async (req, res) => {
             return res
                 .status(500)
                 .json(new ApiError(500, error, "Something went wrong"))
-        }, 1500);
+        }, 750);
 
     }
 
@@ -106,7 +106,7 @@ const loginUser = async (req, res) => {
                 return res
                     .status(202)
                     .json(new ApiResponse(202, null, "A verification email has been sent to your inbox."))
-            }, 1500);
+            }, 750);
 
         } else {
 
@@ -124,7 +124,7 @@ const loginUser = async (req, res) => {
                     .status(200)
                     .cookie("token", token, { httpOnly: false, maxAge: 30 * 24 * 60 * 60 * 1000 })
                     .json(new ApiResponse(200, null, "User logged in successfully"))
-            }, 1500);
+            }, 750);
         }
 
     } catch (error) {
@@ -132,7 +132,7 @@ const loginUser = async (req, res) => {
             return res
                 .status(500)
                 .json(new ApiError(500, error.message))
-        }, 1500);
+        }, 750);
     }
 
 }

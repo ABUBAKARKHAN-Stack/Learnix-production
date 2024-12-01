@@ -225,8 +225,8 @@ export function SignUp() {
                   <button
                     disabled={loading ? true : false}
                     type='submit'
-                    className='w-full rounded-md mt-5 transition-opacity duration-200 ease-linear bg-black text-white disabled:cursor-not-allowed disabled:opacity-50 py-2 shadow-lg outline-none'>
-                    Sign Up
+                    className='w-full  rounded-md mt-5 transition-opacity duration-200 ease-linear bg-black text-white disabled:cursor-not-allowed disabled:opacity-50 py-2 shadow-lg outline-none'>
+                    {loading ? 'Signing Up...' : 'Sign Up'}
                   </button>
                 </div>
                 {/* Sign In Link */}
@@ -327,7 +327,7 @@ export function SignUp() {
                     disabled={loading ? true : false}
                     type='submit'
                     className='w-full rounded-md mt-5 transition-opacity duration-200 ease-linear bg-black text-white disabled:cursor-not-allowed disabled:opacity-50 py-2 shadow-lg outline-none'>
-                    Sign Up
+                    {loading ? 'Signing Up...' : 'Sign Up'}
                   </button>
                 </div>
                 <p className='text-center text-[12px] mt-10 '>
