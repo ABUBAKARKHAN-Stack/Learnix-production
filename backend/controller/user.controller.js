@@ -122,7 +122,7 @@ const loginUser = async (req, res) => {
             setTimeout(() => {
                 return res
                     .status(200)
-                    .cookie("token", token, { httpOnly: false, maxAge: 30 * 24 * 60 * 60 * 1000 })
+                    .cookie("token", token, { httpOnly: false, secure: false, sameSite: "none", maxAge: 30 * 24 * 60 * 60 * 1000 })
                     .json(new ApiResponse(200, null, "User logged in successfully"))
             }, 750);
         }
