@@ -4,13 +4,12 @@ import cors from "cors";
 import "dotenv/config";
 import { connectDB } from "./config/index.js";
 import helmet from "helmet";
-import {ApiResponse , ApiError} from "./utils/index.js";
 
 
 const app = express();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: "https://learnix-production.vercel.app",
     credentials: true
 }));
 app.use(cookieParser());
