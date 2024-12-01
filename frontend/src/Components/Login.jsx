@@ -27,24 +27,31 @@ export function SignIn() {
     try {
       setLoading(true);
       const res = await signInUser(data);
-      if (res.status === 202) {
-        showSuccessToast(res.data.message);
-        console.log(res.headers["authorization"]);
+
+      if (res.status === 202 || res.status === 200) {
+        const token = res.headers["authorization"];
+        if (token) {
+          localStorage.setItem("authToken", token.split(" ")[1]); // Remove 'Bearer ' if present
+          showSuccessToast(res.data.message);
+
+          if (res.status === 200) {
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 2500);
+          }
+        } else {
+          showErrorToast("Authorization token missing in response headers.");
+        }
       }
-      if (res.status === 200) {
-        showSuccessToast(res.data.message);
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 2500);
-      }
-      console.log(res);
     } catch (error) {
-      const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
+      const errorMessage =
+        error.response?.data?.error || error.message || "An error occurred. Please try again.";
       showErrorToast(errorMessage);
     } finally {
       setLoading(false);
     }
-  }
+  };
+
 
   return (
     <div className='h-screen overflow-hidden pt-12'>
