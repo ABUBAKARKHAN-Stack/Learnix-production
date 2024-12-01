@@ -9,6 +9,7 @@ function Protected({ children, authenticationRequired = true }) {
     const navigate = useNavigate()
 
     useEffect(() => {
+        console.log(token);
         if (!token && authenticationRequired) {
 
             navigate('/signin')
