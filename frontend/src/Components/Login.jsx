@@ -36,7 +36,7 @@ export function SignIn() {
           navigate('/dashboard');
         }, 2500);
       }
-      console.log(res.data);
+      console.log(res.data.data.token);
     } catch (error) {
       const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
       showErrorToast(errorMessage);
