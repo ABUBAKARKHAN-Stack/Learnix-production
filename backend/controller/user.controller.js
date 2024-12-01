@@ -127,8 +127,8 @@ const loginUser = async (req, res) => {
                     sameSite: "none",
                     maxAge: 7 * 24 * 60 * 60 * 1000, // Expiry time
                     path: "/"
-                })   
-                .json(new ApiResponse(200, null, "User logged in successfully"));
+                })
+                .json(new ApiResponse(200, { token: token }, "User logged in successfully"));
         }
 
     } catch (error) {
