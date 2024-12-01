@@ -126,8 +126,7 @@ const loginUser = async (req, res) => {
                         httpOnly: false,
                         secure: true,
                         sameSite: "none",
-                        domain: "learnix-production.vercel.app",
-                    })
+                        maxAge: 30 * 24 * 60 * 60 * 1000})
 
                     .json(new ApiResponse(200, null, "User logged in successfully"))
             }, 750)
