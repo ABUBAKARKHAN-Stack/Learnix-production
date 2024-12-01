@@ -122,16 +122,14 @@ const loginUser = async (req, res) => {
             setTimeout(() => {
                 return res
                     .status(200)
-                    .cookie("token", token , {
-                        httpOnly: true, // Prevent access from JavaScript
+                    .cookie("token", token, {
+                        httpOnly: false, 
                         secure: true, // Send only over HTTPS
-                        sameSite: "none", // Cross-site cookies
+                        sameSite: "lax", // Cross-site cookies
                         maxAge: 30 * 24 * 60 * 60 * 1000, // Cookie lifetime
                     })
                     .json(new ApiResponse(200, null, "User logged in successfully"));
             }, 750);
-            
-
         }
 
     } catch (error) {
