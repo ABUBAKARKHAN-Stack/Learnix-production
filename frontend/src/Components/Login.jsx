@@ -32,11 +32,11 @@ export function SignIn() {
       }
       if (res.status === 200) {
         showSuccessToast(res.data.message);
+        localStorage.setItem('authToken', res.data.token);
         setTimeout(() => {
           navigate('/dashboard');
         }, 2500);
       }
-      console.log(res.data.data.token);
     } catch (error) {
       const errorMessage = error.response.data.error || error.message || 'An error occurred. Please try again.';
       showErrorToast(errorMessage);

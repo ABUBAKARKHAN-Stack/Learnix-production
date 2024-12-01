@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 function Protected({ children, authenticationRequired = true }) {
 
 
-    const token = Cookies.get('authToken')
+    const token = localStorage.getItem('authToken')
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
 
