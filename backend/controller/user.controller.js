@@ -122,7 +122,7 @@ const loginUser = async (req, res) => {
             setTimeout(() => {
                 return res
                     .status(200)
-                    .cookie("token", token)
+                    .cookie("token", token, { httpOnly: false, maxAge: 30 * 24 * 60 * 60 * 1000 })
                     .json(new ApiResponse(200, null, "User logged in successfully"))
             }, 1500);
         }
@@ -401,7 +401,7 @@ const updateUser = async (req, res) => {
         setTimeout(() => {
             return res
                 .status(200)
-                .json(new ApiResponse(200,  {updatedUser , publicId: file.secure_url.split("/").pop().split(".")[0]}, "User updated successfully"))
+                .json(new ApiResponse(200, { updatedUser, publicId: file.secure_url.split("/").pop().split(".")[0] }, "User updated successfully"))
         }, 1000);
     } catch (error) {
 
