@@ -119,7 +119,7 @@ const loginUser = async (req, res) => {
                 expiresIn: "30d"
             })
 
-            setTimeout(() => {
+           
                 return res
                     .status(200)
                     .cookie("token", token, {
@@ -130,7 +130,7 @@ const loginUser = async (req, res) => {
                         path: "/", // Cookie available throughout the site
                     })
                     .json(new ApiResponse(200, null, "User logged in successfully"));
-            }, 750);
+          
         }
 
     } catch (error) {
