@@ -4,20 +4,20 @@ import { useNavigate } from 'react-router-dom'
 
 function Protected({ children, authenticationRequired = true }) {
 
-    const token = Cookies.get('token')
+    // const token = Cookies.get('token')
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(token);
-        if (!token && authenticationRequired) {
+        
+        if (authenticationRequired) {
 
             navigate('/signin')
-        } else if (token && !authenticationRequired) {
+        } else if (!authenticationRequired) {
             navigate('/dashboard') 
         }
         setLoading(false)
-    }, [token, authenticationRequired])
+    }, [ authenticationRequired])
 
     return loading ? "Loading..." : children
 
