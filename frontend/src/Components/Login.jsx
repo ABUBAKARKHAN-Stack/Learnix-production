@@ -32,7 +32,7 @@ export function SignIn() {
       }
       if (res.status === 200) {
         showSuccessToast(res.data.message);
-        localStorage.setItem('authToken', res.data.token);
+        localStorage.setItem('authToken', res.data.data.token);
         setTimeout(() => {
           navigate('/dashboard');
         }, 2500);
