@@ -129,7 +129,7 @@ const loginUser = async (req, res) => {
                         domain: "learnix-production.vercel.app",  // Optional: Ensure this matches your frontend's domain
                         maxAge: 30 * 24 * 60 * 60 * 1000  // Cookie expiration (30 days)
                     })
-                    .setHeader("Access-Control-Allow-Origin", "https://learnix-production.vercel.app")
+                    .setHeader("token", token )
                     .json(new ApiResponse(200, null, "User logged in successfully"))
             }, 750)
 
