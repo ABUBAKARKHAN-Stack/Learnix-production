@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, json, useNavigate } from 'react-router-dom'
 import logo from '../assets/imgs/LogoText.png'
 import img from '../assets/imgs/loginImage.webp'
 import mobileLogo from '../assets/imgs/mobile-logo.png'
@@ -30,9 +30,10 @@ export function SignIn() {
       if (res.status === 202) {
         showSuccessToast(res.data.message);
       }
+      console.log(res.data.data.token);
       if (res.status === 200) {
         showSuccessToast(res.data.message);
-        localStorage.setItem('authToken', res.data.data.token);
+        localStorage.setItem('authToken', JSON.stringify(res.data.data.token));
         setTimeout(() => {
           navigate('/dashboard');
         }, 2500);
