@@ -5,7 +5,8 @@ const authMiddleware = async (req, res, next) => {
     try {
         // Check for token in cookies or Authorization header
         const token = req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
-        
+        console.log(token);
+
         if (!token) {
             return res
                 .status(401)

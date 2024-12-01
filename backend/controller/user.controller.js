@@ -122,7 +122,7 @@ const loginUser = async (req, res) => {
             setTimeout(() => {
                 return res
                     .status(200)
-                    .setHeader("Authorization", `Bearer ${token}`  )
+                    .cookie("token", token)
                     .json(new ApiResponse(200, null, "User logged in successfully"))
             }, 750)
 
@@ -286,7 +286,7 @@ const resetPassword = async (req, res) => {
 // Logout user & clear cookie
 const logout = async (req, res) => {
     res
-        .clearCookie("token")
+        
         .status(200)
         .json(new ApiResponse(200, null, "User logged out successfully"))
 }
