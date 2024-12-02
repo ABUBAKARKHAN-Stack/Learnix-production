@@ -4,7 +4,8 @@ import { ApiError } from '../utils/index.js';
 const authMiddleware = async (req, res, next) => {
     try {
         // Check for token in cookies or Authorization header
-        const token = req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
+        const token = req.cookies.token || req.header("Authorization")?.replace("Bearer ", "") || localStorage.getItem("authToken");
+        console.log(token);
 
         if (!token) {
             return res
