@@ -10,8 +10,6 @@ const signUpUser = async (data) => {
     return await api.post('users/register', data)
 }
 
-
-
 // API call to sign in the user
 const signInUser = async (data) => {
     return await api.post('users/login', data, {

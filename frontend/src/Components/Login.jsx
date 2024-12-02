@@ -34,12 +34,7 @@ export function SignIn() {
       console.log(res.data.data.token);
       if (res.status === 200) {
         showSuccessToast(res.data.message);
-        Cookies.set('token', res.data.data.token , {
-          expires: 7,
-          sameSite: "None",
-          secure: true,
-          path: "/",
-        });
+        Cookies.set('token', res.data.data.token);
         setTimeout(() => {
           navigate('/dashboard');
         }, 2500);
