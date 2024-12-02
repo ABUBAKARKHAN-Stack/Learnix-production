@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom'
 function Protected({ children, authenticationRequired = true }) {
 
 
-    const token = localStorage.getItem('authToken')
+    const token = Cookies.get('token')
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(token);
+    
+
         if (!token && authenticationRequired) {
 
             navigate('/signin')

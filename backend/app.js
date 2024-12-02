@@ -9,7 +9,7 @@ import helmet from "helmet";
 const app = express();
 
 app.use(cors({
-    origin: "https://learnix-production.vercel.app",
+    origin: "http://localhost:5173",
     credentials: true,
 }));
 app.use(cookieParser());

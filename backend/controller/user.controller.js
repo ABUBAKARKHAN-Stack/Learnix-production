@@ -122,7 +122,7 @@ const loginUser = async (req, res) => {
 
             return res
                 .status(200)
-                .cookie("authToken", token, {
+                .cookie("token", token, {
                     secure: true, // HTTPS only in production
                     sameSite: "none",
                     maxAge: 7 * 24 * 60 * 60 * 1000, // Expiry time

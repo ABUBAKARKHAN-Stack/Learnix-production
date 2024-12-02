@@ -10,16 +10,15 @@ const signUpUser = async (data) => {
     return await api.post('users/register', data)
 }
 
+
+
 // API call to sign in the user
 const signInUser = async (data) => {
     return await api.post('users/login', data, {
         withCredentials: true,
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`
-        }
-
     })
 }
+
 
 // API call to verify the user's email address
 const verifyEmail = async (token) => {

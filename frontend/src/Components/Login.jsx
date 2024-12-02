@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, json, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/imgs/LogoText.png'
 import img from '../assets/imgs/loginImage.webp'
 import mobileLogo from '../assets/imgs/mobile-logo.png'
@@ -10,6 +10,7 @@ import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa';
 import { signInUser } from '../API/mainFetching';
 import { showErrorToast, showSuccessToast } from '../utils/ToastNotification'
+import Cookies from 'js-cookie';
 
 
 export function SignIn() {
@@ -33,7 +34,7 @@ export function SignIn() {
       console.log(res.data.data.token);
       if (res.status === 200) {
         showSuccessToast(res.data.message);
-        localStorage.setItem('authToken', JSON.stringify(res.data.data.token));
+        Cookies.set('token', res.data.data.token);
         setTimeout(() => {
           navigate('/dashboard');
         }, 2500);
