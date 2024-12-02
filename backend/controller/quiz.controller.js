@@ -41,11 +41,10 @@ const createQuiz = async (req, res) => {
 
         await course.updateOne({ $push: { quiz: quiz } });
 
-        return setTimeout(() => {
-            res
-                .status(201)
-                .json(new ApiResponse(201, quiz, "Quiz created successfully"));
-        }, 1000);
+        return res
+            .status(201)
+            .json(new ApiResponse(201, quiz, "Quiz created successfully"));
+
     } catch (error) {
         return res.status(500).json(new ApiError(500, error.message));
     }

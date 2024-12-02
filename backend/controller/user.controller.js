@@ -27,24 +27,24 @@ const createUser = async (req, res) => {
             isAdmin
         })
 
-        setTimeout(() => {
-            return res
-                .status(201)
-                .json(new ApiResponse(201, user, "User created successfully"))
-        }, 750);
+
+        return res
+            .status(201)
+            .json(new ApiResponse(201, user, "User created successfully"))
+
 
     } catch (error) {
-        setTimeout(() => {
-            if (error.code === 11000) {
-                return res
-                    .status(400)
-                    .json(new ApiError(400, error.keyValue, `User with ${error.keyValue.email || error.keyValue.username} already exists`))
 
-            }
+        if (error.code === 11000) {
             return res
-                .status(500)
-                .json(new ApiError(500, error, "Something went wrong"))
-        }, 750);
+                .status(400)
+                .json(new ApiError(400, error.keyValue, `User with ${error.keyValue.email || error.keyValue.username} already exists`))
+
+        }
+        return res
+            .status(500)
+            .json(new ApiError(500, error, "Something went wrong"))
+
 
     }
 
@@ -102,11 +102,11 @@ const loginUser = async (req, res) => {
             <p>This link will expire in 1 hour.</p>
             `)
 
-            setTimeout(() => {
-                return res
-                    .status(202)
-                    .json(new ApiResponse(202, null, "A verification email has been sent to your inbox."))
-            }, 750);
+
+            return res
+                .status(202)
+                .json(new ApiResponse(202, null, "A verification email has been sent to your inbox."))
+
 
         } else {
 
@@ -125,13 +125,12 @@ const loginUser = async (req, res) => {
         }
 
     } catch (error) {
-        setTimeout(() => {
-            return res
-                .status(500)
-                .json(new ApiError(500, error.message))
-        }, 750);
-    }
 
+        return res
+            .status(500)
+            .json(new ApiError(500, error.message))
+
+    }
 }
 
 
@@ -167,18 +166,18 @@ const verifyEmail = async (req, res) => {
         }
 
 
-        setTimeout(() => {
-            return res
-                .status(200)
-                .json(new ApiResponse(200, null, "Email verified successfully"))
-        }, 1000);
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, null, "Email verified successfully"))
+
 
     } catch (error) {
-        setTimeout(() => {
-            return res
-                .status(500)
-                .json(new ApiError(500, error))
-        }, 1000);
+
+        return res
+            .status(500)
+            .json(new ApiError(500, error))
+
 
     }
 
@@ -265,11 +264,11 @@ const resetPassword = async (req, res) => {
             }
         })
 
-        setTimeout(() => {
-            return res
-                .status(200)
-                .json(new ApiResponse(200, null, "Password reset successfully"))
-        }, 500);
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, null, "Password reset successfully"))
+
     } catch (error) {
 
         return res
@@ -395,11 +394,11 @@ const updateUser = async (req, res) => {
             new: true
         })
 
-        setTimeout(() => {
-            return res
-                .status(200)
-                .json(new ApiResponse(200, { updatedUser, publicId: file.secure_url.split("/").pop().split(".")[0] }, "User updated successfully"))
-        }, 1000);
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, { updatedUser, publicId: file.secure_url.split("/").pop().split(".")[0] }, "User updated successfully"))
+
     } catch (error) {
 
         if (file && file.public_id) {

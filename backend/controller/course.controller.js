@@ -41,11 +41,11 @@ const createCourse = async (req, res) => {
         })
 
 
-        return  setTimeout(() => {
+        return  
              res
                 .status(201)
                 .json(new ApiResponse(201, course, "Course created successfully"))
-        }, 1000);
+       
     } catch (error) {
         if (courseImage?.public_id) {
             deleteImageFromCloudinary(courseImage?.public_id)
@@ -109,11 +109,11 @@ const updateCourse = async (req, res) => {
         // Save the updated course
         const updatedCourse = await course.save();
 
-        setTimeout(() => {
+        
             return res
                 .status(200)
                 .json(new ApiResponse(200, updatedCourse, "Course updated successfully!"));
-        }, 1000);
+       
     } catch (error) {
         console.error("Error updating course:", error);
         return res
@@ -138,11 +138,11 @@ const deleteCourse = async (req, res) => {
         }
 
         await course.deleteOne()
-        setTimeout(() => {
+        
             return res
                 .status(200)
                 .json(new ApiResponse(200, null, "Course deleted successfully"))
-        }, 1000);
+       
     } catch (error) {
         return res
             .status(500)
@@ -164,11 +164,11 @@ const publishCourse = async (req, res) => {
 
         course.isPublish = true
         await course.save()
-        setTimeout(() => {
+        
             return res
                 .status(200)
                 .json(new ApiResponse(200, null, "Course published successfully"))
-        }, 1000);
+       
     } catch (error) {
         return res
             .status(500)
