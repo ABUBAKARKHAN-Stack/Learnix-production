@@ -121,6 +121,12 @@ const loginUser = async (req, res) => {
 
             return res
                 .status(200)
+                .cookie("token", token, {
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                    httpOnly: false,
+                    sameSite: "none" ,
+                    secure: true
+                })
                 .json(new ApiResponse(200, { token: token }, "User logged in successfully"));
         }
 
