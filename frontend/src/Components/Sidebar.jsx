@@ -15,6 +15,8 @@ import Logo from "../assets/imgs/mobile-logo.png";
 import LogoText from "../assets/imgs/LogoText.png";
 import { logoutUser, getLoggedInUser } from "../API/mainFetching";
 import { FaPlus } from "react-icons/fa";
+import Cookies from 'js-cookie';
+
 
 const Sidebar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,6 +39,7 @@ const Sidebar = () => {
   const handleLogout = async () => {
     try {
       await logoutUser(); // Log out the user
+      Cookies.remove('token')
       navigate('/signin')
     } catch (error) {
       console.error("Logout error:", error);
