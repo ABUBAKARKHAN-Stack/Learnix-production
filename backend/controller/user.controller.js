@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import sendEmails from '../middlewares/nodemailer.middleware.js'
 import { uploadOnCloudinary, deleteImageFromCloudinary } from '../config/cloudinary.config.js'
+import Cookies from 'js-cookie'
 
 
 
@@ -119,9 +120,11 @@ const loginUser = async (req, res) => {
                 expiresIn: "30d"
             })
 
+            // Set cookie
+            Cookies.set("token", token)
+
             return res
                 .status(200)
-                .cookie("token", token)
                 .json(new ApiResponse(200, { token: token }, "User logged in successfully"));
         }
 
